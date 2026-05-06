@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -13,95 +12,31 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    setMenuOpen(false);
+    setScrolled(false);
   }, [location]);
 
   return (
-    <>
-      <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled ? "bg-background/95 backdrop-blur-sm border-b border-border" : "bg-transparent"
-        }`}
-      >
-        <div className="content-max flex items-center justify-end h-16 md:h-20">
-
-          {/* Desktop */}
-          <div className="hidden md:flex items-center gap-8">
-            <Link
-              to="/models"
-              className="small-label transition-colors"
-              style={{ color: scrolled ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.8)" }}
-            >
-              Models
-            </Link>
-            <Link
-              to="/about"
-              className="small-label transition-colors"
-              style={{ color: scrolled ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.8)" }}
-            >
-              About
-            </Link>
-            <Link
-              to="/#contact"
-              className={`small-label px-5 py-2.5 transition-colors ${
-                scrolled
-                  ? "bg-primary text-primary-foreground hover:bg-accent"
-                  : "border border-white/60 text-white hover:bg-white hover:text-foreground"
-              }`}
-            >
-              Get Started
-            </Link>
-          </div>
-
-          {/* Mobile hamburger */}
-          <button
-            className="md:hidden flex flex-col gap-1.5 p-2"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Menu"
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? "bg-background/95 backdrop-blur-sm border-b border-border" : "bg-transparent"
+      }`}
+    >
+      <div className="content-max flex items-center justify-end h-16 md:h-20">
+        <div className="flex items-center gap-8">
+          <Link
+            to="/models"
+            className="small-label text-foreground transition-colors"
           >
-            <span
-              className={`block w-5 h-px transition-transform duration-300 ${
-                menuOpen ? "rotate-45 translate-y-[3.5px]" : ""
-              }`}
-              style={{ background: scrolled || menuOpen ? "hsl(var(--foreground))" : "white" }}
-            />
-            <span
-              className={`block w-5 h-px transition-opacity duration-300 ${
-                menuOpen ? "opacity-0" : ""
-              }`}
-              style={{ background: scrolled || menuOpen ? "hsl(var(--foreground))" : "white" }}
-            />
-            <span
-              className={`block w-5 h-px transition-transform duration-300 ${
-                menuOpen ? "-rotate-45 -translate-y-[3.5px]" : ""
-              }`}
-              style={{ background: scrolled || menuOpen ? "hsl(var(--foreground))" : "white" }}
-            />
-          </button>
-        </div>
-      </nav>
-
-      {/* Mobile drawer */}
-      <div
-        className={`fixed inset-0 z-40 bg-background transition-transform duration-300 md:hidden ${
-          menuOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <div className="flex flex-col items-start gap-8 pt-24 px-6">
-          <Link to="/models" className="display-heading text-3xl text-foreground">
             Models
           </Link>
-          <Link to="/about" className="display-heading text-3xl text-foreground">
-            About
-          </Link>
           <Link
-            to="/#contact"
-            className="small-label bg-primary text-primary-foreground px-6 py-3 mt-4"
+            to="/about"
+            className="small-label text-foreground transition-colors"
           >
-            Start Permitting
+            About
           </Link>
         </div>
       </div>
-    </>
+    </nav>
   );
 }
