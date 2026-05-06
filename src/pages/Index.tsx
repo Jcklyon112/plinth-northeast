@@ -22,6 +22,15 @@ export default function Index() {
           alt="Plinth ADU units in a forest setting"
           className="absolute inset-0 w-full h-full object-cover"
         />
+        {/* Brand mark — upper left, black text, no banner */}
+        <div className="absolute top-6 left-6 md:top-10 md:left-10 z-[60]">
+          <span
+            className="display-heading text-foreground"
+            style={{ fontSize: "clamp(14px, 1.6vw, 20px)", letterSpacing: "0.04em" }}
+          >
+            *PLINTH-HOME
+          </span>
+        </div>
         {/* Hero copy — bottom left */}
         <div className="absolute bottom-16 md:bottom-20 left-6 md:left-10 z-10 max-w-[720px]">
           <h1
