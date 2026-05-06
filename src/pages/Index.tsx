@@ -319,14 +319,14 @@ export default function Index() {
         <div className="px-6 md:px-12 pt-24 md:pt-40 pb-16 md:pb-24" style={{ maxWidth: "1400px" }}>
           <AnimatedSection>
             <p
-              className="text-foreground leading-relaxed mb-8"
-              style={{ fontSize: "clamp(18px, 2.2vw, 28px)" }}
+              className="leading-tight mb-8"
+              style={{ fontSize: "clamp(18px, 2.2vw, 28px)", fontWeight: 700, color: "hsl(var(--foreground) / 0.35)", fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}
             >
               Own a backyard. Turn it into a dwelling that earns income, houses family, or makes your property worth more.
             </p>
             <p
-              className="text-foreground leading-relaxed"
-              style={{ fontSize: "clamp(18px, 2.2vw, 28px)" }}
+              className="leading-tight"
+              style={{ fontSize: "clamp(18px, 2.2vw, 28px)", fontWeight: 700, color: "hsl(var(--foreground) / 0.35)", fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}
             >
               Own acreage. Turn it into a cluster development — five, ten, fifty units delivered faster and cleaner than the alternative.
             </p>
