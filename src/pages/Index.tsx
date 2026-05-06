@@ -332,7 +332,7 @@ export default function Index() {
         {/* — The Backyard — */}
         <AnimatedSection>
           <div className="relative w-full">
-            <div className="aspect-[16/9] overflow-hidden" style={{ background: "#ffffff" }}>
+            <div className="aspect-[16/9] overflow-hidden bg-background">
               <img src={backyardImg} alt="Backyard ADU deployment isometric view" className="w-full h-full object-contain" />
             </div>
             <h3
