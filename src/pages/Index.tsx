@@ -316,22 +316,7 @@ export default function Index() {
 
       {/* ——— SECTION 2B: TYPES OF DEPLOYMENT ——— */}
       <section className="section-light">
-        <div className="px-6 md:px-12 pt-24 md:pt-40 pb-16 md:pb-24">
-          <AnimatedSection>
-            <p
-              className="leading-tight mb-10"
-              style={{ fontSize: "clamp(24px, 3.5vw, 48px)", fontWeight: 700, color: "hsl(var(--foreground) / 0.35)", fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}
-            >
-              The homeowner. Own a backyard, a side lot, or ground that's never paid you back. Turn it into a dwelling that earns income, houses family, or compounds your equity.
-            </p>
-            <p
-              className="leading-tight"
-              style={{ fontSize: "clamp(24px, 3.5vw, 48px)", fontWeight: 700, color: "hsl(var(--foreground) / 0.35)", fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}
-            >
-              The landowner. Own five, ten, fifty parcels of potential. Turn it into a cluster development — small, intentional communities delivered faster and cleaner than anything else on the market.
-            </p>
-          </AnimatedSection>
-        </div>
+
 
         {/* — The Backyard — */}
         <AnimatedSection>
