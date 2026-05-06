@@ -574,16 +574,16 @@ export default function Index() {
       {/* ——— SECTION 3: HOW IT WORKS ——— */}
       <ProcessStepsSection />
 
-      {/* ——— SECTION 4: MODELS HORIZONTAL SCROLL ——— */}
-      <section className="section-dark">
+      {/* ——— SECTION 4: MODELS CARDS ——— */}
+      <section style={{ background: "#0a0a0a" }}>
         <div className="py-24 md:py-40">
-          <div className="content-max mb-12">
+          <div className="content-max mb-16">
             <AnimatedSection>
-              <p className="small-label mb-6" style={{ color: "hsl(var(--dark-muted))" }}>THE LINEUP</p>
-              <h2 className="display-heading mb-4" style={{ color: "hsl(var(--dark-fg))", fontSize: "clamp(36px, 5vw, 64px)" }}>
+              <p className="small-label mb-6" style={{ color: "rgba(255,255,255,0.4)", letterSpacing: "0.2em" }}>THE LINEUP</p>
+              <h2 className="display-heading mb-4" style={{ color: "#fff", fontSize: "clamp(36px, 5vw, 64px)" }}>
                 Three models.
               </h2>
-              <p style={{ color: "hsl(var(--dark-muted))" }}>Refined with our manufacturer. Engineered for the Northeast.</p>
+              <p style={{ color: "rgba(255,255,255,0.5)" }}>Refined with our manufacturer. Engineered for the Northeast.</p>
             </AnimatedSection>
           </div>
 
@@ -593,26 +593,7 @@ export default function Index() {
             style={{ scrollbarWidth: "none" }}
           >
             {models.map((model) => (
-              <div
-                key={model.id}
-                className="snap-start shrink-0"
-                style={{ width: "min(80vw, 900px)" }}
-              >
-                <div className="aspect-[16/10] overflow-hidden mb-6">
-                  <img src={model.image} alt={model.title} className="w-full h-full object-cover" loading="lazy" />
-                </div>
-                <p className="small-label mb-2" style={{ color: "hsl(var(--dark-muted))" }}>MODEL {model.number}</p>
-                <h3 className="display-heading text-2xl md:text-3xl mb-2" style={{ color: "hsl(var(--dark-fg))" }}>{model.title}</h3>
-                <p className="text-sm mb-2" style={{ color: "hsl(var(--dark-muted))" }}>{model.specLine}</p>
-                <p className="display-heading text-lg mb-4" style={{ color: "hsl(var(--dark-fg))" }}>{model.price}</p>
-                <button
-                  onClick={() => setModalModel(model)}
-                  className="small-label transition-colors inline-block border-b pb-0.5"
-                  style={{ color: "hsl(var(--dark-fg))", borderColor: "hsl(var(--dark-fg) / 0.4)" }}
-                >
-                  View →
-                </button>
-              </div>
+              <ModelCard key={model.id} model={model} onViewDetails={() => setModalModel(model)} />
             ))}
           </div>
         </div>
