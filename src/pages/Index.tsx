@@ -346,69 +346,7 @@ export default function Index() {
       </section>
 
       {/* ——— SECTION 3: HOW IT WORKS ——— */}
-      <section className="section-light">
-        <div className="content-max py-24 md:py-40">
-          <AnimatedSection>
-            <p className="small-label text-muted-foreground mb-6">HOW IT WORKS</p>
-            <h2 className="display-heading text-foreground mb-20 md:mb-28" style={{ fontSize: "clamp(32px, 5vw, 56px)" }}>
-              Four steps. The hard one is ours.
-            </h2>
-          </AnimatedSection>
-
-          <div className="space-y-0">
-            <AnimatedSection>
-              <div className="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-4 md:gap-8 py-8 border-t border-border">
-                <p className="display-heading text-3xl text-foreground/20">01</p>
-                <div>
-                  <p className="small-label text-muted-foreground mb-3">PICK A MODEL</p>
-                  <p className="text-foreground max-w-[520px]">Three signature designs. One conversation to lock pricing and finishes.</p>
-                </div>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection>
-              <div className="py-12 md:py-16 border-t border-border" style={{ background: "hsl(var(--dark-bg))", margin: "0 -24px", padding: "48px 24px" }}>
-                <div className="md:ml-[120px] md:pl-8">
-                  <p className="display-heading text-5xl md:text-7xl text-primary-foreground/20 mb-2">02</p>
-                  <p className="small-label mb-4" style={{ color: "hsl(var(--accent))" }}>WE HANDLE PERMITS</p>
-                  <h3 className="display-heading text-2xl md:text-3xl mb-6" style={{ color: "hsl(var(--dark-fg))" }}>
-                    This is the step that kills most projects. It's the one we built our company around.
-                  </h3>
-                  <p className="max-w-[520px] leading-relaxed" style={{ color: "hsl(var(--dark-muted))" }}>
-                    Plinth manages the full permit application across municipal, state, and utility review. You don't talk to your town. You don't fill out forms. You don't wait on hold. We do.
-                  </p>
-                </div>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection>
-              <div className="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-4 md:gap-8 py-8 border-t border-border">
-                <p className="display-heading text-3xl text-foreground/20">03</p>
-                <div>
-                  <p className="small-label text-muted-foreground mb-3">BUILT IN-FACTORY</p>
-                  <p className="text-foreground max-w-[520px]">Your unit is manufactured at our partner facility in upstate New York while permits process in parallel.</p>
-                </div>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection>
-              <div className="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-4 md:gap-8 py-8 border-t border-border border-b">
-                <p className="display-heading text-3xl text-foreground/20">04</p>
-                <div>
-                  <p className="small-label text-muted-foreground mb-3">DELIVERED ON-SITE</p>
-                  <p className="text-foreground max-w-[520px]">Fully built, delivered, connected. Certificate of occupancy in hand.</p>
-                </div>
-              </div>
-            </AnimatedSection>
-
-            <AnimatedSection>
-              <p className="text-muted-foreground mt-12 text-sm">
-                Total typical timeline — 22 to 28 weeks. About a third of the time of a custom build.
-              </p>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
+      <ProcessStepsSection />
 
       {/* ——— SECTION 4: MODELS HORIZONTAL SCROLL ——— */}
       <section className="section-dark">
