@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import ContactForm from "@/components/ContactForm";
 import ModelModal from "@/components/ModelModal";
 import { models } from "@/data/models";
+import heroHeader from "@/assets/hero-header.png";
 
 export default function Index() {
   const [modalModel, setModalModel] = useState<typeof models[0] | null>(null);
