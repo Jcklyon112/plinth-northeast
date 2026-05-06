@@ -1,6 +1,5 @@
 import { useState, useRef } from "react";
 import AnimatedSection from "@/components/AnimatedSection";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ContactForm from "@/components/ContactForm";
 import ModelModal from "@/components/ModelModal";
@@ -13,14 +12,12 @@ export default function Index() {
 
   return (
     <>
-      <Navbar />
-
       {/* ——— HERO IMAGE ——— */}
       <section className="relative w-full" style={{ height: "100vh" }}>
         <img
           src={heroHeader}
           alt="Plinth ADU units in a forest setting"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute -top-[16%] left-0 w-full h-[116%] object-cover"
         />
         {/* Brand mark — upper left, black text, no banner */}
         <div className="absolute top-6 left-6 md:top-10 md:left-10 z-[60]">
