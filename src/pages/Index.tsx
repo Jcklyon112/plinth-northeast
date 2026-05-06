@@ -22,7 +22,7 @@ export default function Index() {
           alt="Plinth ADU units in a forest setting"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
+        
       </section>
 
       {/* ——— SECTION 1: HERO ——— */}
