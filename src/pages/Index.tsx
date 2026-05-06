@@ -317,6 +317,59 @@ function BackyardCarousel() {
   );
 }
 
+const clusterImages = [clusterImg, clusterRender];
+
+function ClusterCarousel() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const goNext = () => setCurrentIndex((prev) => (prev + 1) % clusterImages.length);
+  const goPrev = () => setCurrentIndex((prev) => (prev - 1 + clusterImages.length) % clusterImages.length);
+
+  return (
+    <div className="relative w-full group">
+      <div className="overflow-hidden bg-background">
+        <img
+          src={clusterImages[currentIndex]}
+          alt={`Cluster development view ${currentIndex + 1}`}
+          className="w-full object-contain transition-opacity duration-500"
+        />
+      </div>
+      <h3
+        className={`display-heading absolute bottom-16 left-0 right-0 px-6 md:px-12 transition-colors duration-500 ${currentIndex === 0 ? "text-foreground" : "text-white"}`}
+        style={{ fontSize: "clamp(32px, 5vw, 64px)" }}
+      >
+        The Cluster
+      </h3>
+      <button
+        onClick={goPrev}
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-background/70 hover:bg-background border border-foreground/20 rounded-full transition-all opacity-0 group-hover:opacity-100"
+        aria-label="Previous image"
+      >
+        <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-foreground" />
+      </button>
+      <button
+        onClick={goNext}
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-background/70 hover:bg-background border border-foreground/20 rounded-full transition-all opacity-0 group-hover:opacity-100"
+        aria-label="Next image"
+      >
+        <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-foreground" />
+      </button>
+      {clusterImages.length > 1 && (
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+          {clusterImages.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentIndex(i)}
+              className={`w-2 h-2 rounded-full transition-colors ${i === currentIndex ? "bg-foreground" : "bg-foreground/30"}`}
+              aria-label={`Go to image ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Index() {
   const [modalModel, setModalModel] = useState<typeof models[0] | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
