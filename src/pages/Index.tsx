@@ -338,7 +338,6 @@ export default function Index() {
                 >
                   Own a backyard. Turn it into a dwelling that earns income, houses family, or makes your property worth more.
                 </p>
-                </p>
                 <p
                   className="text-muted-foreground leading-relaxed mb-8"
                   style={{ fontSize: "clamp(15px, 1.6vw, 18px)" }}
