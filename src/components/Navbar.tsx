@@ -63,19 +63,23 @@ export default function Navbar() {
             aria-label="Menu"
           >
             <span
-              className={`block w-5 h-px bg-foreground transition-transform duration-300 ${
+              className={`block w-5 h-px transition-transform duration-300 ${
                 menuOpen ? "rotate-45 translate-y-[3.5px]" : ""
               }`}
+              style={{ background: scrolled || menuOpen ? "hsl(var(--foreground))" : "white" }}
             />
             <span
-              className={`block w-5 h-px bg-foreground transition-opacity duration-300 ${
+              className={`block w-5 h-px transition-opacity duration-300 ${
                 menuOpen ? "opacity-0" : ""
               }`}
+              style={{ background: scrolled || menuOpen ? "hsl(var(--foreground))" : "white" }}
             />
             <span
-              className={`block w-5 h-px bg-foreground transition-transform duration-300 ${
+              className={`block w-5 h-px transition-transform duration-300 ${
                 menuOpen ? "-rotate-45 -translate-y-[3.5px]" : ""
               }`}
+              style={{ background: scrolled || menuOpen ? "hsl(var(--foreground))" : "white" }}
+            />
             />
           </button>
         </div>
