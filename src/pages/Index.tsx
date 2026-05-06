@@ -418,9 +418,9 @@ export default function Index() {
               <img src={clusterImg} alt="Cluster development isometric view" className="w-full object-contain" />
             </div>
           </div>
-          <div className="px-6 md:px-12 pt-2 pb-24 md:pb-32" style={{ maxWidth: "1400px" }}>
+          <div className="px-6 md:px-12 pt-0 pb-24 md:pb-32" style={{ maxWidth: "1400px" }}>
             <h3
-              className="display-heading text-foreground mb-6"
+              className="display-heading text-foreground mb-4"
               style={{ fontSize: "clamp(32px, 5vw, 64px)" }}
             >
               The<br />Cluster
