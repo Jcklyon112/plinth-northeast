@@ -340,10 +340,10 @@ export default function Index() {
               <img src={backyardImg} alt="Backyard ADU deployment isometric view" className="w-full object-contain" />
             </div>
             <h3
-              className="display-heading text-foreground absolute bottom-8 left-0 px-6 md:px-12"
+              className="display-heading text-foreground absolute bottom-16 left-0 right-0 px-6 md:px-12"
               style={{ fontSize: "clamp(32px, 5vw, 64px)" }}
             >
-              The<br />Backyard
+              The Backyard
             </h3>
           </div>
           <div className="px-6 md:px-12 pt-8 pb-24 md:pb-32" style={{ maxWidth: "1400px" }}>
