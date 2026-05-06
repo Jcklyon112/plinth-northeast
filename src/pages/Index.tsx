@@ -333,17 +333,17 @@ export default function Index() {
         {/* — The Backyard — */}
         <AnimatedSection>
           <div className="relative w-full">
-            <div className="aspect-[16/9] overflow-hidden bg-background">
-              <img src={backyardImg} alt="Backyard ADU deployment isometric view" className="w-full h-full object-contain" />
+            <div className="overflow-hidden bg-background">
+              <img src={backyardImg} alt="Backyard ADU deployment isometric view" className="w-full object-contain" />
             </div>
             <h3
-              className="absolute bottom-6 left-6 md:bottom-10 md:left-12 display-heading text-foreground"
+              className="absolute bottom-0 left-6 md:left-12 display-heading text-foreground"
               style={{ fontSize: "clamp(32px, 5vw, 64px)" }}
             >
               The<br />Backyard
             </h3>
           </div>
-          <div className="px-6 md:px-12 pt-10 pb-24 md:pb-32" style={{ maxWidth: "1400px" }}>
+          <div className="px-6 md:px-12 pt-4 pb-24 md:pb-32" style={{ maxWidth: "1400px" }}>
             <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_1fr] gap-8 md:gap-10">
               <div>
                 <p
@@ -414,17 +414,17 @@ export default function Index() {
         {/* — Cluster Development — */}
         <AnimatedSection delay={100}>
           <div className="relative w-full">
-            <div className="aspect-[16/9] overflow-hidden bg-background">
-              <img src={clusterImg} alt="Cluster development isometric view" className="w-full h-full object-contain" />
+            <div className="overflow-hidden bg-background">
+              <img src={clusterImg} alt="Cluster development isometric view" className="w-full object-contain" />
             </div>
             <h3
-              className="absolute bottom-6 left-6 md:bottom-10 md:left-12 display-heading text-foreground"
+              className="absolute bottom-0 left-6 md:left-12 display-heading text-foreground"
               style={{ fontSize: "clamp(32px, 5vw, 64px)" }}
             >
               The<br />Cluster
             </h3>
           </div>
-          <div className="px-6 md:px-12 pt-10 pb-24 md:pb-32" style={{ maxWidth: "1400px" }}>
+          <div className="px-6 md:px-12 pt-4 pb-24 md:pb-32" style={{ maxWidth: "1400px" }}>
             <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_1fr] gap-8 md:gap-10">
               <div>
                 <p
