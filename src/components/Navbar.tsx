@@ -32,21 +32,27 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-8">
             <Link
               to="/models"
-              className="small-label text-muted-foreground hover:text-foreground transition-colors"
+              className="small-label transition-colors"
+              style={{ color: scrolled ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.8)" }}
             >
               Models
             </Link>
             <Link
               to="/about"
-              className="small-label text-muted-foreground hover:text-foreground transition-colors"
+              className="small-label transition-colors"
+              style={{ color: scrolled ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.8)" }}
             >
               About
             </Link>
             <Link
               to="/#contact"
-              className="small-label bg-primary text-primary-foreground px-5 py-2.5 hover:bg-accent transition-colors"
+              className={`small-label px-5 py-2.5 transition-colors ${
+                scrolled
+                  ? "bg-primary text-primary-foreground hover:bg-accent"
+                  : "border border-white/60 text-white hover:bg-white hover:text-foreground"
+              }`}
             >
-              Start Permitting
+              Get Started
             </Link>
           </div>
 
