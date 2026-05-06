@@ -15,8 +15,8 @@ export default function AnimatedSection({ children, className = "", delay = 0 }:
       className={className}
       style={{
         opacity: inView ? 1 : 0,
-        transform: inView ? "translateY(0)" : "translateY(12px)",
-        transition: `opacity 500ms ease-out ${delay}ms, transform 500ms ease-out ${delay}ms`,
+        transform: inView ? "translateY(0)" : "translateY(8px)",
+        transition: `opacity 600ms ease-out ${delay}ms, transform 600ms ease-out ${delay}ms`,
       }}
     >
       {children}

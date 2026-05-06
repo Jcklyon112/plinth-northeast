@@ -14,8 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        sans: ["'Helvetica Neue'", 'Helvetica', 'Arial', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -51,11 +50,10 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        "light-bg": "hsl(var(--light-bg))",
-        "light-fg": "hsl(var(--light-fg))",
-        "light-muted": "hsl(var(--light-muted))",
-        "light-border": "hsl(var(--light-border))",
-        "contact-bg": "hsl(var(--contact-bg))",
+        "dark-bg": "hsl(var(--dark-bg))",
+        "dark-fg": "hsl(var(--dark-fg))",
+        "dark-muted": "hsl(var(--dark-muted))",
+        "dark-border": "hsl(var(--dark-border))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
