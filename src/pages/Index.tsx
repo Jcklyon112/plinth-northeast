@@ -316,20 +316,6 @@ export default function Index() {
 
       {/* ——— SECTION 2B: TYPES OF DEPLOYMENT ——— */}
       <section className="section-light">
-        <div className="px-6 md:px-12 pt-24 md:pt-40" style={{ maxWidth: "1400px" }}>
-          <AnimatedSection>
-            <h2
-              className="display-heading mb-16 md:mb-24"
-              style={{
-                color: "hsl(var(--foreground) / 0.15)",
-                fontSize: "clamp(40px, 6vw, 88px)",
-              }}
-            >
-              Infill Exists in<br />Two Mediums
-            </h2>
-          </AnimatedSection>
-        </div>
-
         {/* — The Backyard — */}
         <AnimatedSection>
           <div className="relative w-full">
@@ -350,7 +336,7 @@ export default function Index() {
                   className="text-foreground leading-relaxed mb-6"
                   style={{ fontSize: "clamp(15px, 1.6vw, 18px)" }}
                 >
-                  For aging parents, extra income, or a recent grad priced out of their first apartment — <strong>the answer is already in your backyard.</strong>
+                  Own a backyard. Turn it into a dwelling that earns income, houses family, or makes your property worth more.
                 </p>
                 <p
                   className="text-muted-foreground leading-relaxed mb-8"
@@ -431,7 +417,7 @@ export default function Index() {
                   className="text-foreground leading-relaxed mb-6"
                   style={{ fontSize: "clamp(15px, 1.6vw, 18px)" }}
                 >
-                  Group multiple units on a single parcel or across adjacent lots — <strong>purpose-built micro-communities at scale.</strong>
+                  Own acreage. Turn it into a cluster development — five, ten, fifty units delivered faster and cleaner than the alternative.
                 </p>
                 <p
                   className="text-muted-foreground leading-relaxed mb-8"
