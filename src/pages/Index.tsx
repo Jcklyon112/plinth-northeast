@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import Navbar from "@/components/Navbar";
 import AnimatedSection from "@/components/AnimatedSection";
 import Footer from "@/components/Footer";
 import ContactForm from "@/components/ContactForm";
