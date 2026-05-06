@@ -60,6 +60,108 @@ export default function Index() {
         </div>
       </section>
 
+const BODY_TEXT = "Most homeowners never realize what their property is actually capable of. Our intelligence layer scans your parcel against zoning, setbacks, utilities, and environmental constraints — then tells you exactly what you can build, where it fits, and what it's worth. From there, we manage the entire process: permits, manufacturing, and delivery.";
+const ACCENT_TEXT = "One platform, from address to dwelling.";
+const ALL_WORDS = [...BODY_TEXT.split(" "), ...ACCENT_TEXT.split(" ")];
+const ACCENT_START = BODY_TEXT.split(" ").length;
+
+function ScrollRevealSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [progress, setProgress] = useState(0);
+
+  const handleScroll = useCallback(() => {
+    if (!sectionRef.current) return;
+    const rect = sectionRef.current.getBoundingClientRect();
+    const sectionHeight = rect.height;
+    const viewportHeight = window.innerHeight;
+    // progress 0 when section top hits viewport bottom, 1 when section bottom hits viewport top
+    const rawProgress = (viewportHeight - rect.top) / (sectionHeight + viewportHeight);
+    setProgress(Math.max(0, Math.min(1, rawProgress)));
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
+  const totalWords = ALL_WORDS.length;
+
+  return (
+    <section ref={sectionRef} className="section-dark">
+      <div className="px-6 md:px-12 py-24 md:py-40" style={{ maxWidth: "1400px" }}>
+        <p className="small-label mb-4" style={{ color: "hsl(var(--dark-muted))" }}>*PLINTH-LABS</p>
+        <h2
+          className="display-heading mb-12"
+          style={{
+            color: "hsl(var(--dark-fg))",
+            fontSize: "clamp(36px, 5vw, 72px)",
+          }}
+        >
+          The Opportunity.
+        </h2>
+        <p
+          style={{
+            fontSize: "clamp(20px, 2.8vw, 32px)",
+            lineHeight: 1.45,
+            maxWidth: "960px",
+          }}
+        >
+          {ALL_WORDS.map((word, i) => {
+            // Map scroll progress to word reveal — words light up sequentially
+            const wordProgress = (progress - 0.15) / 0.55; // start revealing at 15% scroll, finish at 70%
+            const wordThreshold = i / totalWords;
+            const isLit = wordProgress > wordThreshold;
+            const isAccent = i >= ACCENT_START;
+
+            return (
+              <span
+                key={i}
+                style={{
+                  color: isLit
+                    ? isAccent
+                      ? "hsl(var(--dark-muted))"
+                      : "hsl(var(--dark-fg))"
+                    : "hsl(var(--dark-fg) / 0.15)",
+                  transition: "color 0.2s ease-out",
+                }}
+              >
+                {word}{" "}
+              </span>
+            );
+          })}
+        </p>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mt-20 md:mt-32">
+          {[
+            { stat: "$60K+", desc: "in average annual rental income from a permitted ADU in the Northeast." },
+            { stat: "30%", desc: "average property value lift from adding a permitted accessory dwelling." },
+            { stat: "8M+", desc: "single-family parcels with backyard space large enough for an ADU." },
+            { stat: "<48 hrs", desc: "to know whether your property qualifies — at no cost." },
+          ].map((item) => (
+            <div key={item.stat}>
+              <p
+                className="display-heading mb-3"
+                style={{
+                  color: "hsl(var(--dark-fg) / 0.5)",
+                  fontSize: "clamp(28px, 4vw, 56px)",
+                  fontWeight: 400,
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                {item.stat}
+              </p>
+              <p className="text-xs md:text-sm leading-relaxed" style={{ color: "hsl(var(--dark-muted))" }}>
+                {item.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 
       {/* ——— SECTION 2: THE OPPORTUNITY ——— */}
       <ScrollRevealSection />
