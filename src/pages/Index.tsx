@@ -316,6 +316,23 @@ export default function Index() {
 
       {/* ——— SECTION 2B: TYPES OF DEPLOYMENT ——— */}
       <section className="section-light">
+        <div className="px-6 md:px-12 pt-24 md:pt-40 pb-16 md:pb-24" style={{ maxWidth: "1400px" }}>
+          <AnimatedSection>
+            <p
+              className="text-foreground leading-relaxed mb-8"
+              style={{ fontSize: "clamp(18px, 2.2vw, 28px)" }}
+            >
+              Own a backyard. Turn it into a dwelling that earns income, houses family, or makes your property worth more.
+            </p>
+            <p
+              className="text-foreground leading-relaxed"
+              style={{ fontSize: "clamp(18px, 2.2vw, 28px)" }}
+            >
+              Own acreage. Turn it into a cluster development — five, ten, fifty units delivered faster and cleaner than the alternative.
+            </p>
+          </AnimatedSection>
+        </div>
+
         {/* — The Backyard — */}
         <AnimatedSection>
           <div className="relative w-full">
