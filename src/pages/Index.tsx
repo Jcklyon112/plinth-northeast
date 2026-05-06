@@ -316,7 +316,7 @@ export default function Index() {
 
       {/* ——— SECTION 2B: TYPES OF DEPLOYMENT ——— */}
       <section className="section-light">
-        <div className="px-6 md:px-12 pt-24 md:pt-40 pb-16 md:pb-24" style={{ maxWidth: "1400px" }}>
+        <div className="px-6 md:px-12 pt-24 md:pt-40 pb-16 md:pb-24">
           <AnimatedSection>
             <p
               className="leading-tight mb-10"
