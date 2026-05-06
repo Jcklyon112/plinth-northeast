@@ -321,17 +321,7 @@ export default function Index() {
 
         {/* — The Backyard — */}
         <AnimatedSection>
-          <div className="relative w-full">
-            <div className="overflow-hidden bg-background">
-              <img src={backyardImg} alt="Backyard ADU deployment isometric view" className="w-full object-contain" />
-            </div>
-            <h3
-              className="display-heading text-foreground absolute bottom-16 left-0 right-0 px-6 md:px-12"
-              style={{ fontSize: "clamp(32px, 5vw, 64px)" }}
-            >
-              The Backyard
-            </h3>
-          </div>
+          <BackyardCarousel />
           <div className="px-6 md:px-12 pt-8 pb-24 md:pb-32" style={{ maxWidth: "1400px" }}>
             <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_1fr] gap-8 md:gap-10">
               <div>
