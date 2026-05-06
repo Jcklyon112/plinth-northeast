@@ -60,37 +60,6 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ——— SECTION 1: HERO ——— */}
-      <section className="section-light min-h-screen flex flex-col justify-end pb-20 md:pb-32 pt-32">
-        <div className="px-6 md:px-12">
-          <h1
-            className="display-heading text-foreground"
-            style={{
-              fontSize: "clamp(56px, 12vw, 160px)",
-              marginLeft: "-0.04em",
-            }}
-          >
-            Permits,<br />handled.
-          </h1>
-          <p className="mt-8 md:mt-12 text-foreground/80 max-w-[640px]" style={{ fontSize: "clamp(18px, 2.5vw, 24px)", lineHeight: 1.4 }}>
-            Plinth manages the entire permitting process for accessory dwelling units across the Northeast — and delivers a fully built unit on your property in under six months.
-          </p>
-          <div className="mt-10 flex items-center gap-6">
-            <a
-              href="#contact"
-              className="small-label bg-primary text-primary-foreground px-6 py-3.5 hover:bg-accent transition-colors inline-block"
-            >
-              Start permitting
-            </a>
-            <a
-              href="/models"
-              className="small-label text-foreground border-b border-foreground/40 pb-0.5 hover:border-foreground transition-colors inline-block"
-            >
-              See models
-            </a>
-          </div>
-        </div>
-      </section>
 
       {/* ——— SECTION 2: THE OPPORTUNITY ——— */}
       <section className="section-dark">
