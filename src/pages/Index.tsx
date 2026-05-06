@@ -317,19 +317,6 @@ export default function Index() {
       {/* ——— SECTION 2B: TYPES OF DEPLOYMENT ——— */}
       <section className="section-light">
         <div className="px-6 md:px-12 pt-24 md:pt-40" style={{ maxWidth: "1400px" }}>
-          <AnimatedSection>
-            <h2
-              className="display-heading mb-16 md:mb-24"
-              style={{
-                color: "hsl(var(--foreground) / 0.15)",
-                fontSize: "clamp(40px, 6vw, 88px)",
-              }}
-            >
-              Infill Exists in<br />Two Mediums
-            </h2>
-          </AnimatedSection>
-        </div>
-
         {/* — The Backyard — */}
         <AnimatedSection>
           <div className="relative w-full">
