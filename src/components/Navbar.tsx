@@ -24,29 +24,35 @@ export default function Navbar() {
         }`}
       >
         <div className="content-max flex items-center justify-between h-16 md:h-20">
-          <Link to="/" className="display-heading text-sm tracking-widest uppercase text-foreground">
-            PLINTH
+          <Link to="/" className="display-heading text-sm tracking-widest uppercase" style={{ color: scrolled ? "hsl(var(--foreground))" : "white" }}>
+            *PLINTH-HOME
           </Link>
 
           {/* Desktop */}
           <div className="hidden md:flex items-center gap-8">
             <Link
               to="/models"
-              className="small-label text-muted-foreground hover:text-foreground transition-colors"
+              className="small-label transition-colors"
+              style={{ color: scrolled ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.8)" }}
             >
               Models
             </Link>
             <Link
               to="/about"
-              className="small-label text-muted-foreground hover:text-foreground transition-colors"
+              className="small-label transition-colors"
+              style={{ color: scrolled ? "hsl(var(--muted-foreground))" : "rgba(255,255,255,0.8)" }}
             >
               About
             </Link>
             <Link
               to="/#contact"
-              className="small-label bg-primary text-primary-foreground px-5 py-2.5 hover:bg-accent transition-colors"
+              className={`small-label px-5 py-2.5 transition-colors ${
+                scrolled
+                  ? "bg-primary text-primary-foreground hover:bg-accent"
+                  : "border border-white/60 text-white hover:bg-white hover:text-foreground"
+              }`}
             >
-              Start Permitting
+              Get Started
             </Link>
           </div>
 
@@ -57,19 +63,22 @@ export default function Navbar() {
             aria-label="Menu"
           >
             <span
-              className={`block w-5 h-px bg-foreground transition-transform duration-300 ${
+              className={`block w-5 h-px transition-transform duration-300 ${
                 menuOpen ? "rotate-45 translate-y-[3.5px]" : ""
               }`}
+              style={{ background: scrolled || menuOpen ? "hsl(var(--foreground))" : "white" }}
             />
             <span
-              className={`block w-5 h-px bg-foreground transition-opacity duration-300 ${
+              className={`block w-5 h-px transition-opacity duration-300 ${
                 menuOpen ? "opacity-0" : ""
               }`}
+              style={{ background: scrolled || menuOpen ? "hsl(var(--foreground))" : "white" }}
             />
             <span
-              className={`block w-5 h-px bg-foreground transition-transform duration-300 ${
+              className={`block w-5 h-px transition-transform duration-300 ${
                 menuOpen ? "-rotate-45 -translate-y-[3.5px]" : ""
               }`}
+              style={{ background: scrolled || menuOpen ? "hsl(var(--foreground))" : "white" }}
             />
           </button>
         </div>
