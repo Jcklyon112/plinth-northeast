@@ -17,7 +17,7 @@ export default function Index() {
         <img
           src={heroHeader}
           alt="Plinth ADU units in a forest setting"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute -top-[16%] left-0 w-full h-[116%] object-cover"
         />
         {/* Brand mark — upper left, black text, no banner */}
         <div className="absolute top-6 left-6 md:top-10 md:left-10 z-[60]">
