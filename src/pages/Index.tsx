@@ -195,14 +195,40 @@ function ProcessStepsSection() {
             })}
           </div>
 
-          {/* Active step content */}
-          <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div
-              style={{
-                gridColumn: `${activeStep + 1}`,
-              }}
-              className="md:col-span-1"
-            >
+          {/* Active step content — positioned under active column */}
+          <div className="mt-12 md:mt-16">
+            <div className="hidden md:grid grid-cols-4 gap-8">
+              {PROCESS_STEPS.map((_, i) => (
+                <div key={i}>
+                  {activeStep === i && (
+                    <div>
+                      <p
+                        className="mb-4 leading-relaxed"
+                        style={{
+                          color: "hsl(var(--dark-muted))",
+                          fontSize: "clamp(14px, 1.4vw, 16px)",
+                        }}
+                      >
+                        <span style={{ color: "hsl(var(--dark-fg))" }}>
+                          {PROCESS_STEPS[activeStep].heading}
+                        </span>{" "}
+                        {PROCESS_STEPS[activeStep].body}
+                      </p>
+                      <div
+                        className="mt-6 aspect-square rounded-lg overflow-hidden"
+                        style={{ background: "hsl(var(--dark-fg) / 0.08)" }}
+                      >
+                        <div className="w-full h-full flex items-center justify-center text-sm" style={{ color: "hsl(var(--dark-muted))" }}>
+                          Step {PROCESS_STEPS[activeStep].number} image
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+            {/* Mobile: just show content below */}
+            <div className="md:hidden">
               <p
                 className="mb-4 leading-relaxed"
                 style={{
