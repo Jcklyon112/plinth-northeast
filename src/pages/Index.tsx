@@ -162,6 +162,113 @@ export default function Index() {
       {/* ——— SECTION 2: THE OPPORTUNITY ——— */}
       <ScrollRevealSection />
 
+      {/* ——— SECTION 2B: TYPES OF DEPLOYMENT ——— */}
+      <section className="section-light">
+        <div className="px-6 md:px-12 py-24 md:py-40" style={{ maxWidth: "1400px" }}>
+          <AnimatedSection>
+            <p className="small-label text-muted-foreground mb-4">*PLINTH-HOME</p>
+            <h2
+              className="display-heading text-foreground mb-20 md:mb-28"
+              style={{ fontSize: "clamp(36px, 5vw, 72px)" }}
+            >
+              Types of Deployment.
+            </h2>
+          </AnimatedSection>
+
+          {/* — The Backyard — */}
+          <AnimatedSection>
+            <div className="mb-24 md:mb-32">
+              <div className="aspect-[16/9] bg-muted mb-10 overflow-hidden">
+                {/* Backyard image placeholder — replace with provided image */}
+                <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">
+                  Backyard deployment image
+                </div>
+              </div>
+              <h3
+                className="display-heading text-foreground mb-6"
+                style={{ fontSize: "clamp(28px, 4vw, 48px)" }}
+              >
+                The Backyard.
+              </h3>
+              <p
+                className="text-muted-foreground max-w-[720px] leading-relaxed mb-12"
+                style={{ fontSize: "clamp(16px, 2vw, 22px)" }}
+              >
+                Turn unused yard space into a fully permitted dwelling — generating rental income, increasing property value, and housing the people who matter most.
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
+                {[
+                  { stat: "$60K+", desc: "average annual rental income from a backyard ADU in the Northeast." },
+                  { stat: "30%", desc: "average property value increase after adding a permitted unit." },
+                  { stat: "22 wks", desc: "from signed contract to certificate of occupancy." },
+                ].map((item) => (
+                  <div key={item.stat}>
+                    <p
+                      className="display-heading mb-2"
+                      style={{
+                        color: "hsl(var(--foreground) / 0.4)",
+                        fontSize: "clamp(24px, 3.5vw, 48px)",
+                        fontWeight: 400,
+                        letterSpacing: "-0.02em",
+                      }}
+                    >
+                      {item.stat}
+                    </p>
+                    <p className="text-xs md:text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </AnimatedSection>
+
+          {/* — Cluster Development — */}
+          <AnimatedSection delay={100}>
+            <div>
+              <div className="aspect-[16/9] bg-muted mb-10 overflow-hidden">
+                {/* Cluster development image placeholder — replace with provided image */}
+                <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">
+                  Cluster development image
+                </div>
+              </div>
+              <h3
+                className="display-heading text-foreground mb-6"
+                style={{ fontSize: "clamp(28px, 4vw, 48px)" }}
+              >
+                Cluster Development.
+              </h3>
+              <p
+                className="text-muted-foreground max-w-[720px] leading-relaxed mb-12"
+                style={{ fontSize: "clamp(16px, 2vw, 22px)" }}
+              >
+                Group multiple units on a single parcel or across adjacent lots — purpose-built micro-communities that meet zoning, maximize density, and deliver workforce or attainable housing at scale.
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
+                {[
+                  { stat: "8M+", desc: "single-family parcels with space for multi-unit infill development." },
+                  { stat: "3–8x", desc: "revenue potential versus a single backyard unit." },
+                  { stat: "<48 hrs", desc: "to know whether your site qualifies — at no cost." },
+                ].map((item) => (
+                  <div key={item.stat}>
+                    <p
+                      className="display-heading mb-2"
+                      style={{
+                        color: "hsl(var(--foreground) / 0.4)",
+                        fontSize: "clamp(24px, 3.5vw, 48px)",
+                        fontWeight: 400,
+                        letterSpacing: "-0.02em",
+                      }}
+                    >
+                      {item.stat}
+                    </p>
+                    <p className="text-xs md:text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
       {/* ——— SECTION 3: HOW IT WORKS ——— */}
       <section className="section-light">
         <div className="content-max py-24 md:py-40">
