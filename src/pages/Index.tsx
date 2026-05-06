@@ -15,6 +15,16 @@ export default function Index() {
     <>
       <Navbar />
 
+      {/* ——— HERO IMAGE ——— */}
+      <section className="relative w-full" style={{ height: "clamp(400px, 70vh, 800px)" }}>
+        <img
+          src={heroHeader}
+          alt="Plinth ADU units in a forest setting"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
+      </section>
+
       {/* ——— SECTION 1: HERO ——— */}
       <section className="section-light min-h-screen flex flex-col justify-end pb-20 md:pb-32 pt-32">
         <div className="px-6 md:px-12">
