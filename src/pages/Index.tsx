@@ -10,6 +10,7 @@ import heroHeader from "@/assets/hero-header.png";
 import backyardImg from "@/assets/backyard-deployment.png";
 import clusterImg from "@/assets/cluster-deployment.png";
 import backyardRender from "@/assets/backyard-render.png";
+import clusterRender from "@/assets/cluster-render.png";
 
 const BODY_TEXT = "Most homeowners never realize what their property is actually capable of. Our intelligence layer scans your parcel against zoning, setbacks, utilities, and environmental constraints — then tells you exactly what you can build, where it fits, and what it's worth. From there, we manage the entire process: permits, manufacturing, and delivery.";
 const ACCENT_TEXT = "One platform, from address to dwelling.";
@@ -316,6 +317,59 @@ function BackyardCarousel() {
   );
 }
 
+const clusterImages = [clusterImg, clusterRender];
+
+function ClusterCarousel() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const goNext = () => setCurrentIndex((prev) => (prev + 1) % clusterImages.length);
+  const goPrev = () => setCurrentIndex((prev) => (prev - 1 + clusterImages.length) % clusterImages.length);
+
+  return (
+    <div className="relative w-full group">
+      <div className="overflow-hidden bg-background">
+        <img
+          src={clusterImages[currentIndex]}
+          alt={`Cluster development view ${currentIndex + 1}`}
+          className="w-full object-contain transition-opacity duration-500"
+        />
+      </div>
+      <h3
+        className={`display-heading absolute bottom-16 left-0 right-0 px-6 md:px-12 transition-colors duration-500 ${currentIndex === 0 ? "text-foreground" : "text-white"}`}
+        style={{ fontSize: "clamp(32px, 5vw, 64px)" }}
+      >
+        The Cluster
+      </h3>
+      <button
+        onClick={goPrev}
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-background/70 hover:bg-background border border-foreground/20 rounded-full transition-all opacity-0 group-hover:opacity-100"
+        aria-label="Previous image"
+      >
+        <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-foreground" />
+      </button>
+      <button
+        onClick={goNext}
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-background/70 hover:bg-background border border-foreground/20 rounded-full transition-all opacity-0 group-hover:opacity-100"
+        aria-label="Next image"
+      >
+        <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-foreground" />
+      </button>
+      {clusterImages.length > 1 && (
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+          {clusterImages.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentIndex(i)}
+              className={`w-2 h-2 rounded-full transition-colors ${i === currentIndex ? "bg-foreground" : "bg-foreground/30"}`}
+              aria-label={`Go to image ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Index() {
   const [modalModel, setModalModel] = useState<typeof models[0] | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -373,7 +427,6 @@ export default function Index() {
 
       {/* ——— SECTION 2B: TYPES OF DEPLOYMENT ——— */}
       <section className="section-light">
-
 
         {/* — The Backyard — */}
         <AnimatedSection>
@@ -448,17 +501,7 @@ export default function Index() {
 
         {/* — Cluster Development — */}
         <AnimatedSection delay={100}>
-          <div className="relative w-full">
-            <div className="overflow-hidden bg-background">
-              <img src={clusterImg} alt="Cluster development isometric view" className="w-full object-contain" />
-            </div>
-            <h3
-              className="display-heading text-foreground absolute bottom-16 left-0 right-0 px-6 md:px-12"
-              style={{ fontSize: "clamp(32px, 5vw, 64px)" }}
-            >
-              The Cluster
-            </h3>
-          </div>
+          <ClusterCarousel />
           <div className="px-6 md:px-12 pt-8 pb-24 md:pb-32" style={{ maxWidth: "1400px" }}>
             <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_1fr] gap-8 md:gap-10">
               <div>
