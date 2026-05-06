@@ -417,7 +417,7 @@ export default function Index() {
                   className="text-foreground leading-relaxed mb-6"
                   style={{ fontSize: "clamp(15px, 1.6vw, 18px)" }}
                 >
-                  Group multiple units on a single parcel or across adjacent lots — <strong>purpose-built micro-communities at scale.</strong>
+                  Own acreage. Turn it into a cluster development — five, ten, fifty units delivered faster and cleaner than the alternative.
                 </p>
                 <p
                   className="text-muted-foreground leading-relaxed mb-8"
