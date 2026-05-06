@@ -30,8 +30,7 @@ export default function Index() {
             *PLINTH-HOME
           </span>
         </div>
-        {/* Hero copy — bottom left */}
-        <div className="absolute bottom-16 md:bottom-20 left-6 md:left-10 z-10 max-w-[720px]">
+        <div className="absolute bottom-8 md:bottom-12 left-6 md:left-10 z-10 max-w-[720px]">
           <h1
             className="display-heading text-white"
             style={{
