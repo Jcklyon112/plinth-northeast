@@ -370,6 +370,99 @@ function ClusterCarousel() {
   );
 }
 
+function ModelCard({ model, onViewDetails }: { model: typeof models[0]; onViewDetails: () => void }) {
+  const allImages = [model.image, ...model.gallery];
+  const [imgIndex, setImgIndex] = useState(0);
+  const nextImg = () => setImgIndex((i) => (i + 1) % allImages.length);
+  const prevImg = () => setImgIndex((i) => (i - 1 + allImages.length) % allImages.length);
+  const keySpecs = model.specs.slice(0, 5);
+
+  return (
+    <div
+      className="snap-start shrink-0 flex flex-col"
+      style={{
+        width: "min(85vw, 420px)",
+        background: "rgba(255,255,255,0.04)",
+        border: "1px solid rgba(255,255,255,0.08)",
+        borderRadius: "12px",
+        overflow: "hidden",
+      }}
+    >
+      <div className="relative aspect-[4/3] overflow-hidden" style={{ background: "#111" }}>
+        {allImages.map((img, i) => (
+          <img
+            key={i}
+            src={img}
+            alt={`${model.title} ${i + 1}`}
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
+            style={{ opacity: i === imgIndex ? 1 : 0 }}
+            loading="lazy"
+          />
+        ))}
+        <button
+          onClick={prevImg}
+          className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full"
+          style={{ background: "rgba(0,0,0,0.5)", color: "#fff", backdropFilter: "blur(8px)" }}
+        >
+          <ChevronLeft size={16} />
+        </button>
+        <button
+          onClick={nextImg}
+          className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full"
+          style={{ background: "rgba(0,0,0,0.5)", color: "#fff", backdropFilter: "blur(8px)" }}
+        >
+          <ChevronRight size={16} />
+        </button>
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+          {allImages.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setImgIndex(i)}
+              className="w-1.5 h-1.5 rounded-full transition-all"
+              style={{ background: i === imgIndex ? "#fff" : "rgba(255,255,255,0.35)" }}
+            />
+          ))}
+        </div>
+        <div
+          className="absolute top-3 left-3 px-2.5 py-1 rounded text-[10px] font-medium tracking-widest uppercase"
+          style={{ background: "rgba(0,0,0,0.6)", color: "rgba(255,255,255,0.7)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.1)" }}
+        >
+          Model {model.number}
+        </div>
+      </div>
+      <div className="flex flex-col flex-1 p-5">
+        <h3 className="display-heading text-xl mb-1" style={{ color: "#fff" }}>{model.title}</h3>
+        <p className="text-sm mb-1" style={{ color: "rgba(255,255,255,0.5)" }}>{model.specLine}</p>
+        <p className="display-heading text-lg mb-4" style={{ color: "#fff" }}>{model.price}</p>
+        <div className="mb-5 space-y-0" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+          {keySpecs.map((spec) => (
+            <div key={spec.label} className="flex justify-between py-2 text-xs" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+              <span style={{ color: "rgba(255,255,255,0.4)", letterSpacing: "0.08em", textTransform: "uppercase", fontSize: "10px" }}>{spec.label}</span>
+              <span style={{ color: "rgba(255,255,255,0.8)" }}>{spec.value}</span>
+            </div>
+          ))}
+        </div>
+        <div className="mt-auto flex flex-col gap-2">
+          <a
+            href="/#contact"
+            className="w-full text-center py-3 text-xs font-medium tracking-widest uppercase transition-all"
+            style={{ background: "hsl(var(--primary))", color: "#fff", borderRadius: "6px", letterSpacing: "0.12em" }}
+          >
+            On Your Property Now
+          </a>
+          <button
+            onClick={onViewDetails}
+            className="w-full text-center py-2.5 text-xs font-medium tracking-widest uppercase transition-colors"
+            style={{ color: "rgba(255,255,255,0.5)", background: "transparent", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "6px", letterSpacing: "0.12em" }}
+          >
+            View Details
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Index() {
   const [modalModel, setModalModel] = useState<typeof models[0] | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -574,16 +667,16 @@ export default function Index() {
       {/* ——— SECTION 3: HOW IT WORKS ——— */}
       <ProcessStepsSection />
 
-      {/* ——— SECTION 4: MODELS HORIZONTAL SCROLL ——— */}
-      <section className="section-dark">
+      {/* ——— SECTION 4: MODELS CARDS ——— */}
+      <section style={{ background: "#0a0a0a" }}>
         <div className="py-24 md:py-40">
-          <div className="content-max mb-12">
+          <div className="content-max mb-16">
             <AnimatedSection>
-              <p className="small-label mb-6" style={{ color: "hsl(var(--dark-muted))" }}>THE LINEUP</p>
-              <h2 className="display-heading mb-4" style={{ color: "hsl(var(--dark-fg))", fontSize: "clamp(36px, 5vw, 64px)" }}>
+              <p className="small-label mb-6" style={{ color: "rgba(255,255,255,0.4)", letterSpacing: "0.2em" }}>THE LINEUP</p>
+              <h2 className="display-heading mb-4" style={{ color: "#fff", fontSize: "clamp(36px, 5vw, 64px)" }}>
                 Three models.
               </h2>
-              <p style={{ color: "hsl(var(--dark-muted))" }}>Refined with our manufacturer. Engineered for the Northeast.</p>
+              <p style={{ color: "rgba(255,255,255,0.5)" }}>Refined with our manufacturer. Engineered for the Northeast.</p>
             </AnimatedSection>
           </div>
 
@@ -593,26 +686,7 @@ export default function Index() {
             style={{ scrollbarWidth: "none" }}
           >
             {models.map((model) => (
-              <div
-                key={model.id}
-                className="snap-start shrink-0"
-                style={{ width: "min(80vw, 900px)" }}
-              >
-                <div className="aspect-[16/10] overflow-hidden mb-6">
-                  <img src={model.image} alt={model.title} className="w-full h-full object-cover" loading="lazy" />
-                </div>
-                <p className="small-label mb-2" style={{ color: "hsl(var(--dark-muted))" }}>MODEL {model.number}</p>
-                <h3 className="display-heading text-2xl md:text-3xl mb-2" style={{ color: "hsl(var(--dark-fg))" }}>{model.title}</h3>
-                <p className="text-sm mb-2" style={{ color: "hsl(var(--dark-muted))" }}>{model.specLine}</p>
-                <p className="display-heading text-lg mb-4" style={{ color: "hsl(var(--dark-fg))" }}>{model.price}</p>
-                <button
-                  onClick={() => setModalModel(model)}
-                  className="small-label transition-colors inline-block border-b pb-0.5"
-                  style={{ color: "hsl(var(--dark-fg))", borderColor: "hsl(var(--dark-fg) / 0.4)" }}
-                >
-                  View →
-                </button>
-              </div>
+              <ModelCard key={model.id} model={model} onViewDetails={() => setModalModel(model)} />
             ))}
           </div>
         </div>
