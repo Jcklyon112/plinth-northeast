@@ -22,7 +22,17 @@ export default function Index() {
           alt="Plinth ADU units in a forest setting"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        
+        <div className="absolute top-6 left-6 md:top-10 md:left-12 z-10">
+          <span
+            className="display-heading text-white"
+            style={{
+              fontSize: "clamp(48px, 8vw, 120px)",
+              textShadow: "0 2px 20px rgba(0,0,0,0.3)",
+            }}
+          >
+            Plinth-Home
+          </span>
+        </div>
       </section>
 
       {/* ——— SECTION 1: HERO ——— */}
