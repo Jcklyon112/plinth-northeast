@@ -92,23 +92,61 @@ export default function Index() {
         </div>
       </section>
 
-      {/* ——— SECTION 2: THE WEDGE ——— */}
+      {/* ——— SECTION 2: THE OPPORTUNITY ——— */}
       <section className="section-dark">
         <div className="content-max py-24 md:py-40">
           <AnimatedSection>
-            <p className="small-label mb-8" style={{ color: "hsl(var(--dark-muted))" }}>WHY PLINTH</p>
+            <p className="small-label mb-4" style={{ color: "hsl(var(--dark-muted))" }}>*PLINTH-LABS</p>
             <h2
-              className="display-heading mb-10"
+              className="display-heading mb-12"
               style={{
                 color: "hsl(var(--dark-fg))",
-                fontSize: "clamp(32px, 5vw, 64px)",
+                fontSize: "clamp(36px, 5vw, 72px)",
               }}
             >
-              Most ADU projects don't fail<br className="hidden md:block" /> in construction. They fail<br className="hidden md:block" /> in the permit office.
+              The Opportunity.
             </h2>
-            <p className="max-w-[600px] leading-relaxed" style={{ color: "hsl(var(--dark-muted))" }}>
-              Permitting is the part of building on your property that breaks budgets, kills timelines, and burns out homeowners. Every town is different. Every reviewer is different. Most homeowners give up before they break ground. Plinth exists to take that entire process off your plate.
+            <p
+              className="max-w-[960px] leading-relaxed"
+              style={{
+                color: "hsl(var(--dark-fg))",
+                fontSize: "clamp(20px, 2.8vw, 32px)",
+                lineHeight: 1.45,
+              }}
+            >
+              Most homeowners never realize what their property is actually capable of. Our intelligence layer scans your parcel against zoning, setbacks, utilities, and environmental constraints — then tells you exactly what you can build, where it fits, and what it's worth. From there, we manage the entire process: permits, manufacturing, and delivery.{" "}
+              <span style={{ color: "hsl(var(--dark-muted))" }}>
+                One platform, from address to dwelling.
+              </span>
             </p>
+          </AnimatedSection>
+
+          <AnimatedSection delay={200}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mt-20 md:mt-32">
+              {[
+                { stat: "$60K+", desc: "in average annual rental income from a permitted ADU in the Northeast." },
+                { stat: "30%", desc: "average property value lift from adding a permitted accessory dwelling." },
+                { stat: "8M+", desc: "single-family parcels with backyard space large enough for an ADU." },
+                { stat: "<48 hrs", desc: "to know whether your property qualifies — at no cost." },
+              ].map((item) => (
+                <div key={item.stat}>
+                  <p
+                    className="display-heading mb-3"
+                    style={{
+                      color: "hsl(var(--dark-fg) / 0.5)",
+                      fontSize: "clamp(28px, 4vw, 56px)",
+                      fontWeight: 400,
+                      letterSpacing: "-0.02em",
+                    }}
+                  >
+                    {item.stat}
+                  </p>
+                  <p className="text-xs md:text-sm leading-relaxed" style={{ color: "hsl(var(--dark-muted))" }}>
+                    {item.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
           </AnimatedSection>
         </div>
       </section>
