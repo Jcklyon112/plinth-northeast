@@ -16,31 +16,49 @@ export default function Index() {
       <Navbar />
 
       {/* ——— HERO IMAGE ——— */}
-      <section className="relative w-full" style={{ height: "clamp(400px, 70vh, 800px)" }}>
+      <section className="relative w-full" style={{ height: "100vh" }}>
         <img
           src={heroHeader}
           alt="Plinth ADU units in a forest setting"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute top-6 left-3 md:top-10 md:left-8 z-10">
+        {/* Brand mark — upper left */}
+        <div className="absolute top-6 left-6 md:top-10 md:left-10 z-10">
           <span
-            className="display-heading text-foreground"
+            className="display-heading text-white"
+            style={{ fontSize: "clamp(14px, 1.6vw, 20px)", letterSpacing: "0.04em" }}
+          >
+            *PLINTH-HOME
+          </span>
+        </div>
+        {/* Hero copy — bottom left */}
+        <div className="absolute bottom-16 md:bottom-20 left-6 md:left-10 z-10 max-w-[720px]">
+          <h1
+            className="display-heading text-white"
             style={{
-              fontSize: "clamp(56px, 10vw, 140px)",
+              fontSize: "clamp(40px, 7vw, 80px)",
+              lineHeight: 1,
+              marginBottom: "20px",
             }}
           >
-            **Plinth-Home
-          </span>
+            Housing Systems for Resilient Communities.
+          </h1>
           <p
-            className="display-heading text-foreground mt-2 max-w-[480px]"
+            className="text-white/80 max-w-[560px]"
             style={{
-              fontSize: "clamp(14px, 1.8vw, 20px)",
-              lineHeight: 1.35,
-              letterSpacing: "-0.01em",
+              fontSize: "clamp(14px, 1.6vw, 18px)",
+              lineHeight: 1.45,
+              marginBottom: "24px",
             }}
           >
             Your land is worth more than you think. We make adding a dwelling to it as simple as entering your address — permits, build, and delivery, all handled.
           </p>
+          <a
+            href="#contact"
+            className="small-label inline-block text-white border border-white/60 px-6 py-3 hover:bg-white hover:text-foreground transition-colors"
+          >
+            Feasibility study
+          </a>
         </div>
       </section>
 
