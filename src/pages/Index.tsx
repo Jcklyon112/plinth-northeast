@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import Navbar from "@/components/Navbar";
 import AnimatedSection from "@/components/AnimatedSection";
 import Footer from "@/components/Footer";
@@ -6,6 +6,106 @@ import ContactForm from "@/components/ContactForm";
 import ModelModal from "@/components/ModelModal";
 import { models } from "@/data/models";
 import heroHeader from "@/assets/hero-header.png";
+
+const BODY_TEXT = "Most homeowners never realize what their property is actually capable of. Our intelligence layer scans your parcel against zoning, setbacks, utilities, and environmental constraints — then tells you exactly what you can build, where it fits, and what it's worth. From there, we manage the entire process: permits, manufacturing, and delivery.";
+const ACCENT_TEXT = "One platform, from address to dwelling.";
+const ALL_WORDS = [...BODY_TEXT.split(" "), ...ACCENT_TEXT.split(" ")];
+const ACCENT_START = BODY_TEXT.split(" ").length;
+
+function ScrollRevealSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [progress, setProgress] = useState(0);
+
+  const handleScroll = useCallback(() => {
+    if (!sectionRef.current) return;
+    const rect = sectionRef.current.getBoundingClientRect();
+    const sectionHeight = rect.height;
+    const viewportHeight = window.innerHeight;
+    const rawProgress = (viewportHeight - rect.top) / (sectionHeight + viewportHeight);
+    setProgress(Math.max(0, Math.min(1, rawProgress)));
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
+  const totalWords = ALL_WORDS.length;
+
+  return (
+    <section ref={sectionRef} className="section-dark">
+      <div className="px-6 md:px-12 py-24 md:py-40" style={{ maxWidth: "1400px" }}>
+        <p className="small-label mb-4" style={{ color: "hsl(var(--dark-muted))" }}>*PLINTH-LABS</p>
+        <h2
+          className="display-heading mb-12"
+          style={{
+            color: "hsl(var(--dark-fg))",
+            fontSize: "clamp(36px, 5vw, 72px)",
+          }}
+        >
+          The Opportunity.
+        </h2>
+        <p
+          style={{
+            fontSize: "clamp(20px, 2.8vw, 32px)",
+            lineHeight: 1.45,
+            maxWidth: "960px",
+          }}
+        >
+          {ALL_WORDS.map((word, i) => {
+            const wordProgress = (progress - 0.15) / 0.55;
+            const wordThreshold = i / totalWords;
+            const isLit = wordProgress > wordThreshold;
+            const isAccent = i >= ACCENT_START;
+
+            return (
+              <span
+                key={i}
+                style={{
+                  color: isLit
+                    ? isAccent
+                      ? "hsl(var(--dark-muted))"
+                      : "hsl(var(--dark-fg))"
+                    : "hsl(var(--dark-fg) / 0.15)",
+                  transition: "color 0.2s ease-out",
+                }}
+              >
+                {word}{" "}
+              </span>
+            );
+          })}
+        </p>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mt-20 md:mt-32">
+          {[
+            { stat: "$60K+", desc: "in average annual rental income from a permitted ADU in the Northeast." },
+            { stat: "30%", desc: "average property value lift from adding a permitted accessory dwelling." },
+            { stat: "8M+", desc: "single-family parcels with backyard space large enough for an ADU." },
+            { stat: "<48 hrs", desc: "to know whether your property qualifies — at no cost." },
+          ].map((item) => (
+            <div key={item.stat}>
+              <p
+                className="display-heading mb-3"
+                style={{
+                  color: "hsl(var(--dark-fg) / 0.5)",
+                  fontSize: "clamp(28px, 4vw, 56px)",
+                  fontWeight: 400,
+                  letterSpacing: "-0.02em",
+                }}
+              >
+                {item.stat}
+              </p>
+              <p className="text-xs md:text-sm leading-relaxed" style={{ color: "hsl(var(--dark-muted))" }}>
+                {item.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function Index() {
   const [modalModel, setModalModel] = useState<typeof models[0] | null>(null);
@@ -21,7 +121,6 @@ export default function Index() {
           alt="Plinth ADU units in a forest setting"
           className="absolute -top-[16%] left-0 w-full h-[116%] object-cover"
         />
-        {/* Brand mark — upper left, black text, no banner */}
         <div className="absolute top-6 left-6 md:top-10 md:left-10 z-[60]">
           <span
             className="display-heading text-foreground"
@@ -60,65 +159,8 @@ export default function Index() {
         </div>
       </section>
 
-
       {/* ——— SECTION 2: THE OPPORTUNITY ——— */}
-      <section className="section-dark">
-        <div className="content-max py-24 md:py-40">
-          <AnimatedSection>
-            <p className="small-label mb-4" style={{ color: "hsl(var(--dark-muted))" }}>*PLINTH-LABS</p>
-            <h2
-              className="display-heading mb-12"
-              style={{
-                color: "hsl(var(--dark-fg))",
-                fontSize: "clamp(36px, 5vw, 72px)",
-              }}
-            >
-              The Opportunity.
-            </h2>
-            <p
-              className="max-w-[960px] leading-relaxed"
-              style={{
-                color: "hsl(var(--dark-fg))",
-                fontSize: "clamp(20px, 2.8vw, 32px)",
-                lineHeight: 1.45,
-              }}
-            >
-              Most homeowners never realize what their property is actually capable of. Our intelligence layer scans your parcel against zoning, setbacks, utilities, and environmental constraints — then tells you exactly what you can build, where it fits, and what it's worth. From there, we manage the entire process: permits, manufacturing, and delivery.{" "}
-              <span style={{ color: "hsl(var(--dark-muted))" }}>
-                One platform, from address to dwelling.
-              </span>
-            </p>
-          </AnimatedSection>
-
-          <AnimatedSection delay={200}>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mt-20 md:mt-32">
-              {[
-                { stat: "$60K+", desc: "in average annual rental income from a permitted ADU in the Northeast." },
-                { stat: "30%", desc: "average property value lift from adding a permitted accessory dwelling." },
-                { stat: "8M+", desc: "single-family parcels with backyard space large enough for an ADU." },
-                { stat: "<48 hrs", desc: "to know whether your property qualifies — at no cost." },
-              ].map((item) => (
-                <div key={item.stat}>
-                  <p
-                    className="display-heading mb-3"
-                    style={{
-                      color: "hsl(var(--dark-fg) / 0.5)",
-                      fontSize: "clamp(28px, 4vw, 56px)",
-                      fontWeight: 400,
-                      letterSpacing: "-0.02em",
-                    }}
-                  >
-                    {item.stat}
-                  </p>
-                  <p className="text-xs md:text-sm leading-relaxed" style={{ color: "hsl(var(--dark-muted))" }}>
-                    {item.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
+      <ScrollRevealSection />
 
       {/* ——— SECTION 3: HOW IT WORKS ——— */}
       <section className="section-light">
@@ -131,7 +173,6 @@ export default function Index() {
           </AnimatedSection>
 
           <div className="space-y-0">
-            {/* Step 01 */}
             <AnimatedSection>
               <div className="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-4 md:gap-8 py-8 border-t border-border">
                 <p className="display-heading text-3xl text-foreground/20">01</p>
@@ -142,7 +183,6 @@ export default function Index() {
               </div>
             </AnimatedSection>
 
-            {/* Step 02 — THE HERO STEP */}
             <AnimatedSection>
               <div className="py-12 md:py-16 border-t border-border" style={{ background: "hsl(var(--dark-bg))", margin: "0 -24px", padding: "48px 24px" }}>
                 <div className="md:ml-[120px] md:pl-8">
@@ -158,7 +198,6 @@ export default function Index() {
               </div>
             </AnimatedSection>
 
-            {/* Step 03 */}
             <AnimatedSection>
               <div className="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-4 md:gap-8 py-8 border-t border-border">
                 <p className="display-heading text-3xl text-foreground/20">03</p>
@@ -169,7 +208,6 @@ export default function Index() {
               </div>
             </AnimatedSection>
 
-            {/* Step 04 */}
             <AnimatedSection>
               <div className="grid grid-cols-1 md:grid-cols-[120px_1fr] gap-4 md:gap-8 py-8 border-t border-border border-b">
                 <p className="display-heading text-3xl text-foreground/20">04</p>
@@ -309,7 +347,6 @@ export default function Index() {
               Every Plinth unit is built at our manufacturer's facility in upstate New York. Factory-controlled conditions, consistent materials, quality standards that don't exist on a typical job site. Then delivered, fully built, to your property.
             </p>
           </AnimatedSection>
-          {/* Facility photo placeholder */}
           <div className="mt-16 aspect-[21/9] bg-muted" />
         </div>
       </section>
