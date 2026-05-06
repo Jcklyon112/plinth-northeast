@@ -22,16 +22,25 @@ export default function Index() {
           alt="Plinth ADU units in a forest setting"
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute top-6 left-6 md:top-10 md:left-12 z-10">
+        <div className="absolute top-6 left-3 md:top-10 md:left-8 z-10">
           <span
-            className="display-heading text-white"
+            className="display-heading text-foreground"
             style={{
-              fontSize: "clamp(48px, 8vw, 120px)",
-              textShadow: "0 2px 20px rgba(0,0,0,0.3)",
+              fontSize: "clamp(56px, 10vw, 140px)",
             }}
           >
-            Plinth-Home
+            **Plinth-Home
           </span>
+          <p
+            className="display-heading text-foreground mt-2 max-w-[480px]"
+            style={{
+              fontSize: "clamp(14px, 1.8vw, 20px)",
+              lineHeight: 1.35,
+              letterSpacing: "-0.01em",
+            }}
+          >
+            Your land is worth more than you think. We make adding a dwelling to it as simple as entering your address — permits, build, and delivery, all handled.
+          </p>
         </div>
       </section>
 
