@@ -25,34 +25,28 @@ export default function Navbar() {
       >
         <div className="content-max flex items-center justify-between h-16 md:h-20">
           <Link to="/" className="display-heading text-sm tracking-widest uppercase text-foreground">
-            *PLINTH-LABS
+            PLINTH
           </Link>
 
           {/* Desktop */}
           <div className="hidden md:flex items-center gap-8">
             <Link
-              to="/#intelligence"
-              className="mono-label text-muted-foreground hover:text-foreground transition-colors"
-            >
-              *Plinth-Intelligence
-            </Link>
-            <Link
               to="/models"
-              className="mono-label text-muted-foreground hover:text-foreground transition-colors"
+              className="small-label text-muted-foreground hover:text-foreground transition-colors"
             >
               Models
             </Link>
             <Link
-              to="/#faq"
-              className="mono-label text-muted-foreground hover:text-foreground transition-colors"
+              to="/about"
+              className="small-label text-muted-foreground hover:text-foreground transition-colors"
             >
-              FAQ
+              About
             </Link>
             <Link
               to="/#contact"
-              className="mono-label border border-foreground text-foreground px-5 py-2 hover:bg-foreground hover:text-background transition-colors"
+              className="small-label bg-primary text-primary-foreground px-5 py-2.5 hover:bg-accent transition-colors"
             >
-              Get Started
+              Start Permitting
             </Link>
           </div>
 
@@ -88,20 +82,17 @@ export default function Navbar() {
         }`}
       >
         <div className="flex flex-col items-start gap-8 pt-24 px-6">
-          <Link to="/#intelligence" className="display-heading text-3xl text-foreground">
-            *Plinth-Intelligence
-          </Link>
           <Link to="/models" className="display-heading text-3xl text-foreground">
             Models
           </Link>
-          <Link to="/#faq" className="display-heading text-3xl text-foreground">
-            FAQ
+          <Link to="/about" className="display-heading text-3xl text-foreground">
+            About
           </Link>
           <Link
             to="/#contact"
-            className="mono-label border border-foreground text-foreground px-6 py-3 mt-4"
+            className="small-label bg-primary text-primary-foreground px-6 py-3 mt-4"
           >
-            Get Started
+            Start Permitting
           </Link>
         </div>
       </div>

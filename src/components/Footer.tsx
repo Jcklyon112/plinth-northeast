@@ -1,38 +1,35 @@
+import { Link } from "react-router-dom";
+
 export default function Footer() {
   return (
-    <footer className="section-dark">
+    <footer className="section-light">
       <div className="content-max py-20 md:py-32">
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_auto] gap-12 md:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
           <div>
-            <h3 className="display-heading text-lg text-foreground mb-4">Follow Us</h3>
-            <div className="flex gap-4">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Instagram
-              </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                LinkedIn
-              </a>
-            </div>
-          </div>
-          <div>
-            <h3 className="display-heading text-lg text-foreground mb-4">Headquarters</h3>
-            <p className="text-sm text-muted-foreground">200 Division Street</p>
-            <p className="text-sm text-muted-foreground">Sag Harbor, New York</p>
-          </div>
-          <div>
-            <h3 className="display-heading text-lg text-foreground mb-4">Contact</h3>
-            <a href="mailto:business@plinth-labs.com" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              business@plinth-labs.com
+            <p className="display-heading text-lg text-foreground mb-4">PLINTH</p>
+            <a href="mailto:hello@plinth.co" className="text-sm text-muted-foreground hover:text-foreground transition-colors block mb-1">
+              hello@plinth.co
+            </a>
+            <a href="tel:+16315551234" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
+              (631) 555-1234
             </a>
           </div>
-        </div>
-        <div className="mt-20 pt-8 border-t border-border flex flex-col md:flex-row justify-between gap-4">
-          <p className="text-sm text-muted-foreground">© 2026 *Plinth-Labs LLC. All rights reserved.</p>
-          <div className="flex gap-6">
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy</a>
-            <a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Terms of Service</a>
+          <div>
+            <Link to="/models" className="text-sm text-muted-foreground hover:text-foreground transition-colors block mb-2">
+              Models
+            </Link>
+            <Link to="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
+              About
+            </Link>
+          </div>
+          <div>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Serving the Northeast US — Long Island, the Hamptons, Connecticut shoreline, Hudson Valley, and select Vermont and New Hampshire markets.
+            </p>
           </div>
         </div>
+        <hr className="my-12 border-border" />
+        <p className="text-sm text-muted-foreground">© 2026 Plinth · Built in New York</p>
       </div>
     </footer>
   );
