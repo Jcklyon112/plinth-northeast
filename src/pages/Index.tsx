@@ -9,6 +9,7 @@ import { models } from "@/data/models";
 import heroHeader from "@/assets/hero-header.png";
 import backyardImg from "@/assets/backyard-deployment.png";
 import clusterImg from "@/assets/cluster-deployment.png";
+import backyardRender from "@/assets/backyard-render.png";
 
 const BODY_TEXT = "Most homeowners never realize what their property is actually capable of. Our intelligence layer scans your parcel against zoning, setbacks, utilities, and environmental constraints — then tells you exactly what you can build, where it fits, and what it's worth. From there, we manage the entire process: permits, manufacturing, and delivery.";
 const ACCENT_TEXT = "One platform, from address to dwelling.";
@@ -260,7 +261,7 @@ function ProcessStepsSection() {
   );
 }
 
-const backyardImages = [backyardImg, backyardImg]; // Replace second with your new image
+const backyardImages = [backyardImg, backyardRender];
 
 function BackyardCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
