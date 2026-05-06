@@ -13,6 +13,7 @@ export default function Index() {
 
   return (
     <>
+      <Navbar />
       {/* ——— HERO IMAGE ——— */}
       <section className="relative w-full" style={{ height: "100vh" }}>
         <img
