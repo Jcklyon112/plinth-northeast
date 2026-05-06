@@ -107,6 +107,130 @@ function ScrollRevealSection() {
   );
 }
 
+const PROCESS_STEPS = [
+  {
+    number: "01",
+    title: "Study",
+    heading: "Know What's Possible Before You Commit.",
+    body: "We analyze your parcel — zoning, setbacks, utility access, and financial projections — so you have a clear picture of what can be built, what it will cost, and what it will earn. No guesswork, no surprises.",
+  },
+  {
+    number: "02A",
+    title: "Permit",
+    heading: "We Handle the Part That Stops Everyone Else.",
+    body: "Permitting is where most ADU projects die. Plinth manages every submission, every agency response, and every approval milestone. You never call the building department.",
+    isOurs: true,
+  },
+  {
+    number: "02B",
+    title: "Build",
+    heading: "Your Unit Builds While Permits Process.",
+    body: "Traditional construction waits for permits. Ours doesn't. Manufacturing runs in parallel — so by the time your permit is approved, your unit is ready to ship.",
+  },
+  {
+    number: "03",
+    title: "Install",
+    heading: "From Flatbed to Front Door.",
+    body: "Plinth coordinates delivery, site prep, crane logistics, utility connections, and final inspections.",
+  },
+];
+
+function ProcessStepsSection() {
+  const [activeStep, setActiveStep] = useState(0);
+
+  return (
+    <section className="section-dark">
+      <div className="px-6 md:px-12 py-24 md:py-40" style={{ maxWidth: "1400px" }}>
+        <AnimatedSection>
+          <h2
+            className="display-heading mb-20 md:mb-32"
+            style={{
+              color: "hsl(var(--dark-fg))",
+              fontSize: "clamp(32px, 5vw, 56px)",
+            }}
+          >
+            Four steps. The hard one is ours.
+          </h2>
+        </AnimatedSection>
+
+        <AnimatedSection delay={100}>
+          {/* Step headers — 4 columns */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+            {PROCESS_STEPS.map((step, i) => {
+              const isActive = activeStep === i;
+              return (
+                <button
+                  key={step.number}
+                  onClick={() => setActiveStep(i)}
+                  className="text-left group cursor-pointer"
+                >
+                  <p
+                    className="display-heading mb-2"
+                    style={{
+                      fontSize: "clamp(40px, 6vw, 80px)",
+                      color: isActive
+                        ? "hsl(var(--dark-fg))"
+                        : "hsl(var(--dark-fg) / 0.2)",
+                      fontWeight: isActive ? 700 : 400,
+                      transition: "color 0.3s, font-weight 0.3s",
+                    }}
+                  >
+                    {step.number}
+                  </p>
+                  <p
+                    className="display-heading"
+                    style={{
+                      fontSize: "clamp(24px, 4vw, 56px)",
+                      color: isActive
+                        ? "hsl(var(--dark-fg))"
+                        : "hsl(var(--dark-fg) / 0.15)",
+                      fontWeight: isActive ? 400 : 400,
+                      transition: "color 0.3s",
+                    }}
+                  >
+                    {step.title}
+                  </p>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Active step content */}
+          <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div
+              style={{
+                gridColumn: `${activeStep + 1}`,
+              }}
+              className="md:col-span-1"
+            >
+              <p
+                className="mb-4 leading-relaxed"
+                style={{
+                  color: "hsl(var(--dark-muted))",
+                  fontSize: "clamp(14px, 1.4vw, 16px)",
+                }}
+              >
+                <span style={{ color: "hsl(var(--dark-fg))" }}>
+                  {PROCESS_STEPS[activeStep].heading}
+                </span>{" "}
+                {PROCESS_STEPS[activeStep].body}
+              </p>
+              <div
+                className="mt-6 aspect-square rounded-lg overflow-hidden"
+                style={{ background: "hsl(var(--dark-fg) / 0.08)" }}
+              >
+                <div className="w-full h-full flex items-center justify-center text-sm" style={{ color: "hsl(var(--dark-muted))" }}>
+                  Step {PROCESS_STEPS[activeStep].number} image
+                </div>
+              </div>
+            </div>
+          </div>
+        </AnimatedSection>
+      </div>
+    </section>
+  );
+}
+
 export default function Index() {
   const [modalModel, setModalModel] = useState<typeof models[0] | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
