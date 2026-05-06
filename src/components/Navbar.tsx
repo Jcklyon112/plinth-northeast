@@ -80,7 +80,6 @@ export default function Navbar() {
               }`}
               style={{ background: scrolled || menuOpen ? "hsl(var(--foreground))" : "white" }}
             />
-            />
           </button>
         </div>
       </nav>
