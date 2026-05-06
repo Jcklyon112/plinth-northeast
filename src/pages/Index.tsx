@@ -39,7 +39,7 @@ export default function Index() {
               marginBottom: "20px",
             }}
           >
-            Housing Systems for Resilient Communities.
+            Plinth-Home
           </h1>
           <p
             className="text-white/80 max-w-[560px]"
