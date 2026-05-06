@@ -164,109 +164,185 @@ export default function Index() {
 
       {/* ——— SECTION 2B: TYPES OF DEPLOYMENT ——— */}
       <section className="section-light">
-        <div className="px-6 md:px-12 py-24 md:py-40" style={{ maxWidth: "1400px" }}>
+        <div className="px-6 md:px-12 pt-24 md:pt-40" style={{ maxWidth: "1400px" }}>
           <AnimatedSection>
-            <p className="small-label text-muted-foreground mb-4">*PLINTH-HOME</p>
             <h2
-              className="display-heading text-foreground mb-20 md:mb-28"
-              style={{ fontSize: "clamp(36px, 5vw, 72px)" }}
+              className="display-heading mb-16 md:mb-24"
+              style={{
+                color: "hsl(var(--foreground) / 0.15)",
+                fontSize: "clamp(40px, 6vw, 88px)",
+              }}
             >
-              Types of Deployment.
+              Infill Exists in<br />Two Mediums
             </h2>
           </AnimatedSection>
-
-          {/* — The Backyard — */}
-          <AnimatedSection>
-            <div className="mb-24 md:mb-32">
-              <div className="aspect-[16/9] bg-muted mb-10 overflow-hidden">
-                {/* Backyard image placeholder — replace with provided image */}
-                <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">
-                  Backyard deployment image
-                </div>
-              </div>
-              <h3
-                className="display-heading text-foreground mb-6"
-                style={{ fontSize: "clamp(28px, 4vw, 48px)" }}
-              >
-                The Backyard.
-              </h3>
-              <p
-                className="text-muted-foreground max-w-[720px] leading-relaxed mb-12"
-                style={{ fontSize: "clamp(16px, 2vw, 22px)" }}
-              >
-                Turn unused yard space into a fully permitted dwelling — generating rental income, increasing property value, and housing the people who matter most.
-              </p>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
-                {[
-                  { stat: "$60K+", desc: "average annual rental income from a backyard ADU in the Northeast." },
-                  { stat: "30%", desc: "average property value increase after adding a permitted unit." },
-                  { stat: "22 wks", desc: "from signed contract to certificate of occupancy." },
-                ].map((item) => (
-                  <div key={item.stat}>
-                    <p
-                      className="display-heading mb-2"
-                      style={{
-                        color: "hsl(var(--foreground) / 0.4)",
-                        fontSize: "clamp(24px, 3.5vw, 48px)",
-                        fontWeight: 400,
-                        letterSpacing: "-0.02em",
-                      }}
-                    >
-                      {item.stat}
-                    </p>
-                    <p className="text-xs md:text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </AnimatedSection>
-
-          {/* — Cluster Development — */}
-          <AnimatedSection delay={100}>
-            <div>
-              <div className="aspect-[16/9] bg-muted mb-10 overflow-hidden">
-                {/* Cluster development image placeholder — replace with provided image */}
-                <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">
-                  Cluster development image
-                </div>
-              </div>
-              <h3
-                className="display-heading text-foreground mb-6"
-                style={{ fontSize: "clamp(28px, 4vw, 48px)" }}
-              >
-                Cluster Development.
-              </h3>
-              <p
-                className="text-muted-foreground max-w-[720px] leading-relaxed mb-12"
-                style={{ fontSize: "clamp(16px, 2vw, 22px)" }}
-              >
-                Group multiple units on a single parcel or across adjacent lots — purpose-built micro-communities that meet zoning, maximize density, and deliver workforce or attainable housing at scale.
-              </p>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
-                {[
-                  { stat: "8M+", desc: "single-family parcels with space for multi-unit infill development." },
-                  { stat: "3–8x", desc: "revenue potential versus a single backyard unit." },
-                  { stat: "<48 hrs", desc: "to know whether your site qualifies — at no cost." },
-                ].map((item) => (
-                  <div key={item.stat}>
-                    <p
-                      className="display-heading mb-2"
-                      style={{
-                        color: "hsl(var(--foreground) / 0.4)",
-                        fontSize: "clamp(24px, 3.5vw, 48px)",
-                        fontWeight: 400,
-                        letterSpacing: "-0.02em",
-                      }}
-                    >
-                      {item.stat}
-                    </p>
-                    <p className="text-xs md:text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </AnimatedSection>
         </div>
+
+        {/* — The Backyard — */}
+        <AnimatedSection>
+          <div className="relative w-full">
+            <div className="aspect-[16/9] bg-muted overflow-hidden">
+              <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">
+                Backyard deployment image
+              </div>
+            </div>
+            <h3
+              className="absolute bottom-6 left-6 md:bottom-10 md:left-12 display-heading text-foreground"
+              style={{ fontSize: "clamp(32px, 5vw, 64px)" }}
+            >
+              The<br />Backyard
+            </h3>
+          </div>
+          <div className="px-6 md:px-12 pt-10 pb-24 md:pb-32" style={{ maxWidth: "1400px" }}>
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_1fr] gap-8 md:gap-10">
+              <div>
+                <p
+                  className="text-foreground leading-relaxed mb-6"
+                  style={{ fontSize: "clamp(15px, 1.6vw, 18px)" }}
+                >
+                  For aging parents, extra income, or a recent grad priced out of their first apartment — <strong>the answer is already in your backyard.</strong>
+                </p>
+                <p
+                  className="text-muted-foreground leading-relaxed mb-8"
+                  style={{ fontSize: "clamp(15px, 1.6vw, 18px)" }}
+                >
+                  Plinth's end-to-end process takes you from zoning check to move-in day, so yours is one that does.
+                </p>
+                <a
+                  href="#contact"
+                  className="small-label inline-block border border-foreground px-5 py-3 text-foreground hover:bg-foreground hover:text-background transition-colors"
+                >
+                  View solutions
+                </a>
+              </div>
+              {[
+                {
+                  title: "Our Aging Parents.",
+                  stat: "$75K",
+                  desc: "Average annual cost of assisted living. Keep your loved ones close and save thousands.",
+                },
+                {
+                  title: "The Missing Middle.",
+                  stat: "10M",
+                  desc: "The deficit of housing units in the U.S. Rent to the teachers, nurses and service workers your community depends on.",
+                },
+                {
+                  title: "A Priced-Out Generation.",
+                  stat: "40",
+                  desc: "Average age of a first-time homebuyer. Give your recent graduate a place to land.",
+                },
+              ].map((item) => (
+                <div key={item.stat}>
+                  <p
+                    className="display-heading mb-1"
+                    style={{
+                      fontSize: "clamp(18px, 2vw, 24px)",
+                      color: "hsl(var(--foreground))",
+                      fontWeight: 700,
+                    }}
+                  >
+                    {item.title}
+                  </p>
+                  <p
+                    className="display-heading mb-3"
+                    style={{
+                      fontSize: "clamp(36px, 5vw, 72px)",
+                      color: "hsl(var(--foreground) / 0.25)",
+                      fontWeight: 400,
+                      letterSpacing: "-0.02em",
+                    }}
+                  >
+                    {item.stat}
+                  </p>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </AnimatedSection>
+
+        {/* — Cluster Development — */}
+        <AnimatedSection delay={100}>
+          <div className="relative w-full">
+            <div className="aspect-[16/9] bg-muted overflow-hidden">
+              <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">
+                Cluster development image
+              </div>
+            </div>
+            <h3
+              className="absolute bottom-6 left-6 md:bottom-10 md:left-12 display-heading text-foreground"
+              style={{ fontSize: "clamp(32px, 5vw, 64px)" }}
+            >
+              The<br />Cluster
+            </h3>
+          </div>
+          <div className="px-6 md:px-12 pt-10 pb-24 md:pb-32" style={{ maxWidth: "1400px" }}>
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_1fr] gap-8 md:gap-10">
+              <div>
+                <p
+                  className="text-foreground leading-relaxed mb-6"
+                  style={{ fontSize: "clamp(15px, 1.6vw, 18px)" }}
+                >
+                  Group multiple units on a single parcel or across adjacent lots — <strong>purpose-built micro-communities at scale.</strong>
+                </p>
+                <p
+                  className="text-muted-foreground leading-relaxed mb-8"
+                  style={{ fontSize: "clamp(15px, 1.6vw, 18px)" }}
+                >
+                  Meet zoning, maximize density, and deliver workforce or attainable housing where it's needed most.
+                </p>
+                <a
+                  href="#contact"
+                  className="small-label inline-block border border-foreground px-5 py-3 text-foreground hover:bg-foreground hover:text-background transition-colors"
+                >
+                  View solutions
+                </a>
+              </div>
+              {[
+                {
+                  title: "Workforce Housing.",
+                  stat: "8M+",
+                  desc: "Single-family parcels with space for multi-unit infill development across the Northeast.",
+                },
+                {
+                  title: "Revenue at Scale.",
+                  stat: "3–8x",
+                  desc: "Revenue potential versus a single backyard unit when clustering multiple dwellings.",
+                },
+                {
+                  title: "Instant Feasibility.",
+                  stat: "<48hrs",
+                  desc: "To know whether your site qualifies for cluster development — at no cost.",
+                },
+              ].map((item) => (
+                <div key={item.stat}>
+                  <p
+                    className="display-heading mb-1"
+                    style={{
+                      fontSize: "clamp(18px, 2vw, 24px)",
+                      color: "hsl(var(--foreground))",
+                      fontWeight: 700,
+                    }}
+                  >
+                    {item.title}
+                  </p>
+                  <p
+                    className="display-heading mb-3"
+                    style={{
+                      fontSize: "clamp(36px, 5vw, 72px)",
+                      color: "hsl(var(--foreground) / 0.25)",
+                      fontWeight: 400,
+                      letterSpacing: "-0.02em",
+                    }}
+                  >
+                    {item.stat}
+                  </p>
+                  <p className="text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </AnimatedSection>
       </section>
 
       {/* ——— SECTION 3: HOW IT WORKS ——— */}
