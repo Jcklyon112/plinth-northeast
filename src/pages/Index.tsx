@@ -261,7 +261,7 @@ function ProcessStepsSection() {
   );
 }
 
-const backyardImages = [backyardImg, backyardImg]; // Replace second with your new image
+const backyardImages = [backyardImg, backyardRender];
 
 function BackyardCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
