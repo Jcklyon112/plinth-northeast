@@ -332,18 +332,18 @@ export default function Index() {
 
         {/* — The Backyard — */}
         <AnimatedSection>
-          <div className="w-full">
+          <div className="relative w-full">
             <div className="overflow-hidden bg-background">
               <img src={backyardImg} alt="Backyard ADU deployment isometric view" className="w-full object-contain" />
             </div>
-          </div>
-          <div className="px-6 md:px-12 pt-0 pb-24 md:pb-32" style={{ maxWidth: "1400px" }}>
             <h3
-              className="display-heading text-foreground mb-4"
+              className="display-heading text-foreground absolute bottom-0 left-0 px-6 md:px-12 pb-4"
               style={{ fontSize: "clamp(32px, 5vw, 64px)" }}
             >
               The<br />Backyard
             </h3>
+          </div>
+          <div className="px-6 md:px-12 pt-8 pb-24 md:pb-32" style={{ maxWidth: "1400px" }}>
             <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_1fr] gap-8 md:gap-10">
               <div>
                 <p
@@ -413,18 +413,18 @@ export default function Index() {
 
         {/* — Cluster Development — */}
         <AnimatedSection delay={100}>
-          <div className="w-full">
+          <div className="relative w-full">
             <div className="overflow-hidden bg-background">
               <img src={clusterImg} alt="Cluster development isometric view" className="w-full object-contain" />
             </div>
-          </div>
-          <div className="px-6 md:px-12 pt-0 pb-24 md:pb-32" style={{ maxWidth: "1400px" }}>
             <h3
-              className="display-heading text-foreground mb-4"
+              className="display-heading text-foreground absolute bottom-0 left-0 px-6 md:px-12 pb-4"
               style={{ fontSize: "clamp(32px, 5vw, 64px)" }}
             >
               The<br />Cluster
             </h3>
+          </div>
+          <div className="px-6 md:px-12 pt-8 pb-24 md:pb-32" style={{ maxWidth: "1400px" }}>
             <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_1fr] gap-8 md:gap-10">
               <div>
                 <p
