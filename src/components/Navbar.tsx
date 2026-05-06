@@ -23,10 +23,7 @@ export default function Navbar() {
           scrolled ? "bg-background/95 backdrop-blur-sm border-b border-border" : "bg-transparent"
         }`}
       >
-        <div className="content-max flex items-center justify-between h-16 md:h-20">
-          <Link to="/" className="display-heading text-sm tracking-widest uppercase" style={{ color: scrolled ? "hsl(var(--foreground))" : "white" }}>
-            *PLINTH-HOME
-          </Link>
+        <div className="content-max flex items-center justify-end h-16 md:h-20">
 
           {/* Desktop */}
           <div className="hidden md:flex items-center gap-8">
