@@ -501,17 +501,7 @@ export default function Index() {
 
         {/* — Cluster Development — */}
         <AnimatedSection delay={100}>
-          <div className="relative w-full">
-            <div className="overflow-hidden bg-background">
-              <img src={clusterImg} alt="Cluster development isometric view" className="w-full object-contain" />
-            </div>
-            <h3
-              className="display-heading text-foreground absolute bottom-16 left-0 right-0 px-6 md:px-12"
-              style={{ fontSize: "clamp(32px, 5vw, 64px)" }}
-            >
-              The Cluster
-            </h3>
-          </div>
+          <ClusterCarousel />
           <div className="px-6 md:px-12 pt-8 pb-24 md:pb-32" style={{ maxWidth: "1400px" }}>
             <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_1fr] gap-8 md:gap-10">
               <div>
