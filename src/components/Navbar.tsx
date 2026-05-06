@@ -24,8 +24,8 @@ export default function Navbar() {
         }`}
       >
         <div className="content-max flex items-center justify-between h-16 md:h-20">
-          <Link to="/" className="display-heading text-sm tracking-widest uppercase text-foreground">
-            PLINTH
+          <Link to="/" className="display-heading text-sm tracking-widest uppercase" style={{ color: scrolled ? "hsl(var(--foreground))" : "white" }}>
+            *PLINTH-HOME
           </Link>
 
           {/* Desktop */}
