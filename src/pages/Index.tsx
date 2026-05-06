@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import Navbar from "@/components/Navbar";
 import AnimatedSection from "@/components/AnimatedSection";
 import Footer from "@/components/Footer";
 import ContactForm from "@/components/ContactForm";
@@ -12,6 +13,7 @@ export default function Index() {
 
   return (
     <>
+      <Navbar />
       {/* ——— HERO IMAGE ——— */}
       <section className="relative w-full" style={{ height: "100vh" }}>
         <img
