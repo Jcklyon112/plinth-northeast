@@ -7,6 +7,7 @@ import ModelModal from "@/components/ModelModal";
 import { models } from "@/data/models";
 import heroHeader from "@/assets/hero-header.png";
 import backyardImg from "@/assets/backyard-deployment.png";
+import clusterImg from "@/assets/cluster-deployment.png";
 
 const BODY_TEXT = "Most homeowners never realize what their property is actually capable of. Our intelligence layer scans your parcel against zoning, setbacks, utilities, and environmental constraints — then tells you exactly what you can build, where it fits, and what it's worth. From there, we manage the entire process: permits, manufacturing, and delivery.";
 const ACCENT_TEXT = "One platform, from address to dwelling.";
@@ -413,10 +414,8 @@ export default function Index() {
         {/* — Cluster Development — */}
         <AnimatedSection delay={100}>
           <div className="relative w-full">
-            <div className="aspect-[16/9] bg-muted overflow-hidden">
-              <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">
-                Cluster development image
-              </div>
+            <div className="aspect-[16/9] overflow-hidden bg-background">
+              <img src={clusterImg} alt="Cluster development isometric view" className="w-full h-full object-contain" />
             </div>
             <h3
               className="absolute bottom-6 left-6 md:bottom-10 md:left-12 display-heading text-foreground"
