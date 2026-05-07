@@ -371,109 +371,137 @@ function ClusterCarousel() {
 }
 
 function RivianModelScroller({ onViewDetails }: { onViewDetails: (model: typeof models[0]) => void }) {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [translateX, setTranslateX] = useState(0);
+  const numModels = models.length;
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const scrollDistance = containerRef.current.offsetHeight - window.innerHeight;
+      const scrolled = -rect.top;
+      const progress = Math.max(0, Math.min(1, scrolled / scrollDistance));
+      const maxTranslate = (numModels - 1) * 100;
+      const tx = progress * maxTranslate;
+      setTranslateX(tx);
+      setActiveIndex(Math.min(numModels - 1, Math.floor(progress * numModels)));
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [numModels]);
 
   return (
-    <section className="section-light">
-      <div className="py-24 md:py-40">
-        <div className="content-max mb-12">
-          <p className="small-label text-muted-foreground mb-6" style={{ letterSpacing: "0.2em" }}>THE LINEUP</p>
+    <section
+      ref={containerRef}
+      className="relative section-light"
+      style={{ height: `${numModels * 100}vh` }}
+    >
+      <div className="sticky top-0 h-screen overflow-hidden flex flex-col">
+        {/* Header */}
+        <div className="px-6 md:px-12 pt-16 md:pt-24 pb-6">
+          <p className="small-label text-muted-foreground" style={{ letterSpacing: "0.2em" }}>THE LINEUP</p>
         </div>
 
-        <div
-          ref={scrollRef}
-          className="flex overflow-x-auto snap-x snap-mandatory"
-          style={{ scrollbarWidth: "none" }}
-        >
-          {models.map((model) => (
-            <div
-              key={model.id}
-              className="snap-start shrink-0 flex flex-col items-center"
-              style={{ width: "100vw", minWidth: "100vw" }}
-            >
-              {/* Big model name */}
-              <div className="relative w-full flex flex-col items-center">
-                <h2
-                  className="display-heading text-center select-none"
-                  style={{
-                    fontSize: "clamp(100px, 18vw, 260px)",
-                    color: "hsl(var(--foreground))",
-                    lineHeight: 0.85,
-                    marginBottom: "-0.15em",
-                    position: "relative",
-                    zIndex: 0,
-                  }}
-                >
-                  {model.title.replace("The ", "")}
-                </h2>
+        {/* Sliding models track */}
+        <div className="flex-1 relative overflow-hidden">
+          <div
+            className="flex h-full transition-transform duration-100 ease-out"
+            style={{ transform: `translateX(-${translateX}vw)`, width: `${numModels * 100}vw` }}
+          >
+            {models.map((model) => (
+              <div
+                key={model.id}
+                className="flex flex-col items-center justify-center"
+                style={{ width: "100vw", minWidth: "100vw" }}
+              >
+                {/* Big model name */}
+                <div className="relative w-full flex flex-col items-center">
+                  <h2
+                    className="display-heading text-center select-none"
+                    style={{
+                      fontSize: "clamp(80px, 15vw, 220px)",
+                      color: "hsl(var(--foreground))",
+                      lineHeight: 0.85,
+                      marginBottom: "-0.1em",
+                      position: "relative",
+                      zIndex: 0,
+                    }}
+                  >
+                    {model.title.replace("The ", "")}
+                  </h2>
 
-                {/* Model image overlapping the text */}
-                <div
-                  className="relative z-10 w-full flex justify-center"
-                  style={{ marginTop: "-2vw", maxWidth: "900px", padding: "0 24px" }}
-                >
-                  <img
-                    src={model.image}
-                    alt={model.title}
-                    className="w-full h-auto object-contain"
-                    loading="lazy"
-                  />
+                  {/* Model image overlapping the text */}
+                  <div
+                    className="relative z-10 w-full flex justify-center"
+                    style={{ marginTop: "-2vw", maxWidth: "800px", padding: "0 24px" }}
+                  >
+                    <img
+                      src={model.image}
+                      alt={model.title}
+                      className="w-full h-auto object-contain"
+                      style={{ maxHeight: "40vh" }}
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+
+                {/* Description + specs */}
+                <div className="w-full px-6 md:px-12 mt-4" style={{ maxWidth: "900px" }}>
+                  <p
+                    className="text-center text-foreground mb-1"
+                    style={{ fontSize: "clamp(14px, 1.6vw, 20px)", fontWeight: 500 }}
+                  >
+                    {model.description.split(".")[0]}.
+                  </p>
+                  <p
+                    className="text-center text-muted-foreground mb-4"
+                    style={{ fontSize: "clamp(12px, 1.2vw, 15px)" }}
+                  >
+                    {model.price} · {model.specLine}
+                  </p>
+
+                  <div className="flex flex-wrap justify-center gap-x-6 gap-y-2 mb-6">
+                    {model.specs.slice(0, 5).map((spec) => (
+                      <div key={spec.label} className="text-center">
+                        <p className="small-label text-muted-foreground mb-0.5">{spec.label}</p>
+                        <p className="text-sm text-foreground font-medium">{spec.value}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex justify-center gap-4">
+                    <a
+                      href="/#contact"
+                      className="small-label inline-block border border-foreground px-6 py-3 text-foreground hover:bg-foreground hover:text-background transition-colors"
+                    >
+                      On Your Property Now
+                    </a>
+                    <button
+                      onClick={() => onViewDetails(model)}
+                      className="small-label inline-block px-6 py-3 text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      Learn More
+                    </button>
+                  </div>
                 </div>
               </div>
-
-              {/* Description + specs underneath */}
-              <div className="w-full px-6 md:px-12 mt-8" style={{ maxWidth: "900px" }}>
-                <p
-                  className="text-center text-foreground mb-2"
-                  style={{ fontSize: "clamp(16px, 2vw, 22px)", fontWeight: 500 }}
-                >
-                  {model.description.split(".")[0]}.
-                </p>
-                <p
-                  className="text-center text-muted-foreground mb-6"
-                  style={{ fontSize: "clamp(13px, 1.4vw, 16px)" }}
-                >
-                  {model.price} · {model.specLine}
-                </p>
-
-                {/* Key specs row */}
-                <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 mb-8">
-                  {model.specs.slice(0, 5).map((spec) => (
-                    <div key={spec.label} className="text-center">
-                      <p className="small-label text-muted-foreground mb-1">{spec.label}</p>
-                      <p className="text-sm text-foreground font-medium">{spec.value}</p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="flex justify-center gap-4">
-                  <a
-                    href="/#contact"
-                    className="small-label inline-block border border-foreground px-6 py-3 text-foreground hover:bg-foreground hover:text-background transition-colors"
-                  >
-                    On Your Property Now
-                  </a>
-                  <button
-                    onClick={() => onViewDetails(model)}
-                    className="small-label inline-block px-6 py-3 text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    Learn More
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
 
-        {/* Scroll indicators */}
-        <div className="flex justify-center gap-3 mt-12">
+        {/* Model tabs at bottom */}
+        <div className="flex justify-center gap-3 py-6">
           {models.map((model, i) => (
             <button
               key={model.id}
-              onClick={() => {
-                scrollRef.current?.scrollTo({ left: i * window.innerWidth, behavior: "smooth" });
-              }}
-              className="small-label px-4 py-2 text-muted-foreground hover:text-foreground transition-colors border-b-2 border-transparent hover:border-foreground"
+              className={`small-label px-4 py-2 transition-colors border-b-2 ${
+                i === activeIndex
+                  ? "text-foreground border-foreground"
+                  : "text-muted-foreground border-transparent hover:text-foreground"
+              }`}
             >
               {model.title.replace("The ", "")}
             </button>
