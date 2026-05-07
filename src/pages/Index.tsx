@@ -370,96 +370,117 @@ function ClusterCarousel() {
   );
 }
 
-function ModelCard({ model, onViewDetails }: { model: typeof models[0]; onViewDetails: () => void }) {
-  const allImages = [model.image, ...model.gallery];
-  const [imgIndex, setImgIndex] = useState(0);
-  const nextImg = () => setImgIndex((i) => (i + 1) % allImages.length);
-  const prevImg = () => setImgIndex((i) => (i - 1 + allImages.length) % allImages.length);
-  const keySpecs = model.specs.slice(0, 5);
+function RivianModelScroller({ onViewDetails }: { onViewDetails: (model: typeof models[0]) => void }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div
-      className="snap-start shrink-0 flex flex-col"
-      style={{
-        width: "min(85vw, 420px)",
-        background: "rgba(255,255,255,0.04)",
-        border: "1px solid rgba(255,255,255,0.08)",
-        borderRadius: "12px",
-        overflow: "hidden",
-      }}
-    >
-      <div className="relative aspect-[4/3] overflow-hidden" style={{ background: "#111" }}>
-        {allImages.map((img, i) => (
-          <img
-            key={i}
-            src={img}
-            alt={`${model.title} ${i + 1}`}
-            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
-            style={{ opacity: i === imgIndex ? 1 : 0 }}
-            loading="lazy"
-          />
-        ))}
-        <button
-          onClick={prevImg}
-          className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full"
-          style={{ background: "rgba(0,0,0,0.5)", color: "#fff", backdropFilter: "blur(8px)" }}
-        >
-          <ChevronLeft size={16} />
-        </button>
-        <button
-          onClick={nextImg}
-          className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center rounded-full"
-          style={{ background: "rgba(0,0,0,0.5)", color: "#fff", backdropFilter: "blur(8px)" }}
-        >
-          <ChevronRight size={16} />
-        </button>
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
-          {allImages.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setImgIndex(i)}
-              className="w-1.5 h-1.5 rounded-full transition-all"
-              style={{ background: i === imgIndex ? "#fff" : "rgba(255,255,255,0.35)" }}
-            />
-          ))}
+    <section className="section-light">
+      <div className="py-24 md:py-40">
+        <div className="content-max mb-12">
+          <p className="small-label text-muted-foreground mb-6" style={{ letterSpacing: "0.2em" }}>THE LINEUP</p>
         </div>
+
         <div
-          className="absolute top-3 left-3 px-2.5 py-1 rounded text-[10px] font-medium tracking-widest uppercase"
-          style={{ background: "rgba(0,0,0,0.6)", color: "rgba(255,255,255,0.7)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.1)" }}
+          ref={scrollRef}
+          className="flex overflow-x-auto snap-x snap-mandatory"
+          style={{ scrollbarWidth: "none" }}
         >
-          Model {model.number}
-        </div>
-      </div>
-      <div className="flex flex-col flex-1 p-5">
-        <h3 className="display-heading text-xl mb-1" style={{ color: "#fff" }}>{model.title}</h3>
-        <p className="text-sm mb-1" style={{ color: "rgba(255,255,255,0.5)" }}>{model.specLine}</p>
-        <p className="display-heading text-lg mb-4" style={{ color: "#fff" }}>{model.price}</p>
-        <div className="mb-5 space-y-0" style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-          {keySpecs.map((spec) => (
-            <div key={spec.label} className="flex justify-between py-2 text-xs" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-              <span style={{ color: "rgba(255,255,255,0.4)", letterSpacing: "0.08em", textTransform: "uppercase", fontSize: "10px" }}>{spec.label}</span>
-              <span style={{ color: "rgba(255,255,255,0.8)" }}>{spec.value}</span>
+          {models.map((model) => (
+            <div
+              key={model.id}
+              className="snap-start shrink-0 flex flex-col items-center"
+              style={{ width: "100vw", minWidth: "100vw" }}
+            >
+              {/* Big model name */}
+              <div className="relative w-full flex flex-col items-center">
+                <h2
+                  className="display-heading text-center select-none"
+                  style={{
+                    fontSize: "clamp(100px, 18vw, 260px)",
+                    color: "hsl(var(--foreground))",
+                    lineHeight: 0.85,
+                    marginBottom: "-0.15em",
+                    position: "relative",
+                    zIndex: 0,
+                  }}
+                >
+                  {model.title.replace("The ", "")}
+                </h2>
+
+                {/* Model image overlapping the text */}
+                <div
+                  className="relative z-10 w-full flex justify-center"
+                  style={{ marginTop: "-2vw", maxWidth: "900px", padding: "0 24px" }}
+                >
+                  <img
+                    src={model.image}
+                    alt={model.title}
+                    className="w-full h-auto object-contain"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              {/* Description + specs underneath */}
+              <div className="w-full px-6 md:px-12 mt-8" style={{ maxWidth: "900px" }}>
+                <p
+                  className="text-center text-foreground mb-2"
+                  style={{ fontSize: "clamp(16px, 2vw, 22px)", fontWeight: 500 }}
+                >
+                  {model.description.split(".")[0]}.
+                </p>
+                <p
+                  className="text-center text-muted-foreground mb-6"
+                  style={{ fontSize: "clamp(13px, 1.4vw, 16px)" }}
+                >
+                  {model.price} · {model.specLine}
+                </p>
+
+                {/* Key specs row */}
+                <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 mb-8">
+                  {model.specs.slice(0, 5).map((spec) => (
+                    <div key={spec.label} className="text-center">
+                      <p className="small-label text-muted-foreground mb-1">{spec.label}</p>
+                      <p className="text-sm text-foreground font-medium">{spec.value}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex justify-center gap-4">
+                  <a
+                    href="/#contact"
+                    className="small-label inline-block border border-foreground px-6 py-3 text-foreground hover:bg-foreground hover:text-background transition-colors"
+                  >
+                    On Your Property Now
+                  </a>
+                  <button
+                    onClick={() => onViewDetails(model)}
+                    className="small-label inline-block px-6 py-3 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    Learn More
+                  </button>
+                </div>
+              </div>
             </div>
           ))}
         </div>
-        <div className="mt-auto flex flex-col gap-2">
-          <a
-            href="/#contact"
-            className="w-full text-center py-3 text-xs font-medium tracking-widest uppercase transition-all"
-            style={{ background: "hsl(var(--primary))", color: "#fff", borderRadius: "6px", letterSpacing: "0.12em" }}
-          >
-            On Your Property Now
-          </a>
-          <button
-            onClick={onViewDetails}
-            className="w-full text-center py-2.5 text-xs font-medium tracking-widest uppercase transition-colors"
-            style={{ color: "rgba(255,255,255,0.5)", background: "transparent", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "6px", letterSpacing: "0.12em" }}
-          >
-            View Details
-          </button>
+
+        {/* Scroll indicators */}
+        <div className="flex justify-center gap-3 mt-12">
+          {models.map((model, i) => (
+            <button
+              key={model.id}
+              onClick={() => {
+                scrollRef.current?.scrollTo({ left: i * window.innerWidth, behavior: "smooth" });
+              }}
+              className="small-label px-4 py-2 text-muted-foreground hover:text-foreground transition-colors border-b-2 border-transparent hover:border-foreground"
+            >
+              {model.title.replace("The ", "")}
+            </button>
+          ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
