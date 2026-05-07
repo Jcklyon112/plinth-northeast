@@ -486,7 +486,6 @@ function RivianModelScroller({ onViewDetails }: { onViewDetails: (model: typeof 
 
 export default function Index() {
   const [modalModel, setModalModel] = useState<typeof models[0] | null>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
 
   return (
     <>
