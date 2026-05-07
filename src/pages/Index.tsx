@@ -688,30 +688,8 @@ export default function Index() {
       {/* ——— SECTION 3: HOW IT WORKS ——— */}
       <ProcessStepsSection />
 
-      {/* ——— SECTION 4: MODELS CARDS ——— */}
-      <section style={{ background: "#0a0a0a" }}>
-        <div className="py-24 md:py-40">
-          <div className="content-max mb-16">
-            <AnimatedSection>
-              <p className="small-label mb-6" style={{ color: "rgba(255,255,255,0.4)", letterSpacing: "0.2em" }}>THE LINEUP</p>
-              <h2 className="display-heading mb-4" style={{ color: "#fff", fontSize: "clamp(36px, 5vw, 64px)" }}>
-                Three models.
-              </h2>
-              <p style={{ color: "rgba(255,255,255,0.5)" }}>Refined with our manufacturer. Engineered for the Northeast.</p>
-            </AnimatedSection>
-          </div>
-
-          <div
-            ref={scrollRef}
-            className="flex gap-6 overflow-x-auto snap-x snap-mandatory px-6 md:px-12 pb-4"
-            style={{ scrollbarWidth: "none" }}
-          >
-            {models.map((model) => (
-              <ModelCard key={model.id} model={model} onViewDetails={() => setModalModel(model)} />
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ——— SECTION 4: MODELS ——— */}
+      <RivianModelScroller onViewDetails={(model) => setModalModel(model)} />
 
       {/* ——— SECTION 5: WHAT WE CHARGE FOR ——— */}
       <section className="section-light">
