@@ -204,7 +204,7 @@ function ProcessStepsSection() {
             {PROCESS_STEPS.map((step, i) => (
               <div key={step.number}>
                 {activeStep === i && (
-                  <div key={`content-${i}`} className="animate-fade-in">
+                  <div key={`content-${i}`} className="step-enter">
                     <p
                       className="mb-6 leading-relaxed"
                       style={{
@@ -234,7 +234,7 @@ function ProcessStepsSection() {
 
           {/* Mobile: stacked content under headers */}
           <div className="md:hidden mt-8">
-            <div key={`m-${activeStep}`} className="animate-fade-in">
+            <div key={`m-${activeStep}`} className="step-enter">
               <p
                 className="mb-6 leading-relaxed"
                 style={{
