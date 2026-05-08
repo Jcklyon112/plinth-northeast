@@ -566,6 +566,9 @@ export default function Index() {
       {/* ——— SECTION 2: THE OPPORTUNITY ——— */}
       <ScrollRevealSection />
 
+      {/* ——— SECTION 4: MODELS ——— */}
+      <RivianModelScroller onViewDetails={(model) => setModalModel(model)} />
+
       {/* ——— SECTION 2B: TYPES OF DEPLOYMENT ——— */}
       <section className="section-light">
 
@@ -714,9 +717,6 @@ export default function Index() {
 
       {/* ——— SECTION 3: HOW IT WORKS ——— */}
       <ProcessStepsSection />
-
-      {/* ——— SECTION 4: MODELS ——— */}
-      <RivianModelScroller onViewDetails={(model) => setModalModel(model)} />
 
       {/* ——— SECTION 5: WHAT WE CHARGE FOR ——— */}
       <section className="section-light">
