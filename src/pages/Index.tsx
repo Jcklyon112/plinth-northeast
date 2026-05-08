@@ -157,9 +157,9 @@ function ProcessStepsSection() {
     };
     const tick = () => {
       // Smooth lerp toward target for buttery transitions
-      currentRef.current += (targetRef.current - currentRef.current) * 0.12;
+      currentRef.current += (targetRef.current - currentRef.current) * 0.08;
       setProgress(currentRef.current);
-      if (Math.abs(targetRef.current - currentRef.current) > 0.0005) {
+      if (Math.abs(targetRef.current - currentRef.current) > 0.0002) {
         rafRef.current = requestAnimationFrame(tick);
       } else {
         rafRef.current = null;
@@ -197,11 +197,13 @@ function ProcessStepsSection() {
             {PROCESS_STEPS.map((step, i) => {
               // Distance from this step to current scroll position (0 = exact)
               const distance = Math.abs(stepFloat - i);
-              // Smooth proximity 1 (this step) → 0 (far). Falls off across one step width.
-              const proximity = Math.max(0, 1 - distance);
-              // Ease for a softer ramp
+              // Smooth proximity 1 (this step) → 0 (far). Falls off across ~1.4 step widths
+              // so adjacent headers overlap and the gray→white change is continuous.
+              const proximity = Math.max(0, 1 - distance / 1.4);
+              // Ease for a softer ramp (smoothstep)
               const eased = proximity * proximity * (3 - 2 * proximity);
-              const opacity = 0.18 + eased * 0.82; // gray 0.18 → white 1.0
+              // Wide range: deep gray (0.08) → full white (1.0) so the change is obvious
+              const opacity = 0.08 + eased * 0.92;
               return (
                 <div key={step.number} className="text-left">
                   <p
@@ -210,6 +212,7 @@ function ProcessStepsSection() {
                       fontSize: "clamp(28px, 4vw, 56px)",
                       color: `hsl(var(--dark-fg) / ${opacity})`,
                       fontWeight: 700,
+                      transition: "color 280ms cubic-bezier(0.22, 1, 0.36, 1)",
                       willChange: "color",
                     }}
                   >
@@ -221,6 +224,7 @@ function ProcessStepsSection() {
                       fontSize: "clamp(22px, 3vw, 44px)",
                       color: `hsl(var(--dark-fg) / ${opacity})`,
                       fontWeight: 400,
+                      transition: "color 280ms cubic-bezier(0.22, 1, 0.36, 1)",
                       willChange: "color",
                     }}
                   >
