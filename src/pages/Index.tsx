@@ -157,9 +157,9 @@ function ProcessStepsSection() {
     };
     const tick = () => {
       // Smooth lerp toward target for buttery transitions
-      currentRef.current += (targetRef.current - currentRef.current) * 0.12;
+      currentRef.current += (targetRef.current - currentRef.current) * 0.08;
       setProgress(currentRef.current);
-      if (Math.abs(targetRef.current - currentRef.current) > 0.0005) {
+      if (Math.abs(targetRef.current - currentRef.current) > 0.0002) {
         rafRef.current = requestAnimationFrame(tick);
       } else {
         rafRef.current = null;
