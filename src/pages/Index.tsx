@@ -142,21 +142,47 @@ const PROCESS_STEPS = [
 
 function ProcessStepsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [activeStep, setActiveStep] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const rafRef = useRef<number | null>(null);
+  const targetRef = useRef(0);
+  const currentRef = useRef(0);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const computeTarget = () => {
       if (!sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
       const total = sectionRef.current.offsetHeight - window.innerHeight;
       const scrolled = Math.max(0, -rect.top);
-      const progress = Math.max(0, Math.min(0.999, scrolled / total));
-      setActiveStep(Math.floor(progress * PROCESS_STEPS.length));
+      targetRef.current = Math.max(0, Math.min(0.9999, scrolled / total));
     };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    const tick = () => {
+      // Smooth lerp toward target for buttery transitions
+      currentRef.current += (targetRef.current - currentRef.current) * 0.12;
+      setProgress(currentRef.current);
+      if (Math.abs(targetRef.current - currentRef.current) > 0.0005) {
+        rafRef.current = requestAnimationFrame(tick);
+      } else {
+        rafRef.current = null;
+      }
+    };
+    const onScroll = () => {
+      computeTarget();
+      if (rafRef.current == null) rafRef.current = requestAnimationFrame(tick);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    computeTarget();
+    currentRef.current = targetRef.current;
+    setProgress(targetRef.current);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
   }, []);
+
+  const stepFloat = progress * PROCESS_STEPS.length;
+  const activeStep = Math.min(PROCESS_STEPS.length - 1, Math.floor(stepFloat));
 
   return (
     <section
@@ -169,16 +195,22 @@ function ProcessStepsSection() {
           {/* Step headers — 4 columns */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {PROCESS_STEPS.map((step, i) => {
-              const isActive = activeStep === i;
+              // Distance from this step to current scroll position (0 = exact)
+              const distance = Math.abs(stepFloat - i);
+              // Smooth proximity 1 (this step) → 0 (far). Falls off across one step width.
+              const proximity = Math.max(0, 1 - distance);
+              // Ease for a softer ramp
+              const eased = proximity * proximity * (3 - 2 * proximity);
+              const opacity = 0.18 + eased * 0.82; // gray 0.18 → white 1.0
               return (
                 <div key={step.number} className="text-left">
                   <p
                     className="display-heading mb-2"
                     style={{
                       fontSize: "clamp(28px, 4vw, 56px)",
-                      color: isActive ? "hsl(var(--dark-fg))" : "hsl(var(--dark-fg) / 0.2)",
+                      color: `hsl(var(--dark-fg) / ${opacity})`,
                       fontWeight: 700,
-                      transition: "color 700ms cubic-bezier(0.22, 1, 0.36, 1)",
+                      willChange: "color",
                     }}
                   >
                     {step.number}
@@ -187,9 +219,9 @@ function ProcessStepsSection() {
                     className="display-heading"
                     style={{
                       fontSize: "clamp(22px, 3vw, 44px)",
-                      color: isActive ? "hsl(var(--dark-fg))" : "hsl(var(--dark-fg) / 0.15)",
+                      color: `hsl(var(--dark-fg) / ${opacity})`,
                       fontWeight: 400,
-                      transition: "color 700ms cubic-bezier(0.22, 1, 0.36, 1)",
+                      willChange: "color",
                     }}
                   >
                     {step.title}
