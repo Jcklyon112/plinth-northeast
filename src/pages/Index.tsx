@@ -141,43 +141,44 @@ const PROCESS_STEPS = [
 ];
 
 function ProcessStepsSection() {
+  const sectionRef = useRef<HTMLDivElement>(null);
   const [activeStep, setActiveStep] = useState(0);
 
-  return (
-    <section className="section-dark">
-      <div className="px-6 md:px-12 py-24 md:py-40" style={{ maxWidth: "1400px" }}>
-        <AnimatedSection>
-          <h2
-            className="display-heading mb-20 md:mb-32"
-            style={{
-              color: "hsl(var(--dark-fg))",
-              fontSize: "clamp(32px, 5vw, 56px)",
-            }}
-          >
-            Four steps. The hard one is ours.
-          </h2>
-        </AnimatedSection>
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      const total = sectionRef.current.offsetHeight - window.innerHeight;
+      const scrolled = Math.max(0, -rect.top);
+      const progress = Math.max(0, Math.min(0.999, scrolled / total));
+      setActiveStep(Math.floor(progress * PROCESS_STEPS.length));
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-        <AnimatedSection delay={100}>
+  return (
+    <section
+      ref={sectionRef}
+      className="section-dark relative"
+      style={{ height: `${PROCESS_STEPS.length * 100}vh` }}
+    >
+      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+        <div className="px-6 md:px-12 mx-auto w-full" style={{ maxWidth: "1400px" }}>
           {/* Step headers — 4 columns */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {PROCESS_STEPS.map((step, i) => {
               const isActive = activeStep === i;
               return (
-                <button
-                  key={step.number}
-                  onClick={() => setActiveStep(i)}
-                  className="text-left group cursor-pointer"
-                >
+                <div key={step.number} className="text-left">
                   <p
                     className="display-heading mb-2"
                     style={{
-                      fontSize: "clamp(40px, 6vw, 80px)",
-                      color: isActive
-                        ? "hsl(var(--dark-fg))"
-                        : "hsl(var(--dark-fg) / 0.2)",
-                      fontWeight: isActive ? 700 : 400,
-                      transition: "color 0.3s, font-weight 0.3s",
+                      fontSize: "clamp(28px, 4vw, 56px)",
+                      color: isActive ? "hsl(var(--dark-fg))" : "hsl(var(--dark-fg) / 0.2)",
+                      fontWeight: 700,
+                      transition: "color 0.4s ease",
                     }}
                   >
                     {step.number}
@@ -185,60 +186,60 @@ function ProcessStepsSection() {
                   <p
                     className="display-heading"
                     style={{
-                      fontSize: "clamp(24px, 4vw, 56px)",
-                      color: isActive
-                        ? "hsl(var(--dark-fg))"
-                        : "hsl(var(--dark-fg) / 0.15)",
-                      fontWeight: isActive ? 400 : 400,
-                      transition: "color 0.3s",
+                      fontSize: "clamp(22px, 3vw, 44px)",
+                      color: isActive ? "hsl(var(--dark-fg))" : "hsl(var(--dark-fg) / 0.15)",
+                      fontWeight: 400,
+                      transition: "color 0.4s ease",
                     }}
                   >
                     {step.title}
                   </p>
-                </button>
+                </div>
               );
             })}
           </div>
 
-          {/* Active step content — positioned under active column */}
-          <div className="mt-12 md:mt-16">
-            <div className="hidden md:grid grid-cols-4 gap-8">
-              {PROCESS_STEPS.map((_, i) => (
-                <div key={i}>
-                  {activeStep === i && (
-                    <div>
-                      <p
-                        className="mb-4 leading-relaxed"
-                        style={{
-                          color: "hsl(var(--dark-muted))",
-                          fontSize: "clamp(14px, 1.4vw, 16px)",
-                        }}
-                      >
-                        <span style={{ color: "hsl(var(--dark-fg))" }}>
-                          {PROCESS_STEPS[activeStep].heading}
-                        </span>{" "}
-                        {PROCESS_STEPS[activeStep].body}
-                      </p>
+          {/* Active step content row — appears under the active column */}
+          <div className="hidden md:grid grid-cols-4 gap-6 md:gap-8 mt-8">
+            {PROCESS_STEPS.map((step, i) => (
+              <div key={step.number}>
+                {activeStep === i && (
+                  <div key={`content-${i}`} className="animate-fade-in">
+                    <p
+                      className="mb-6 leading-relaxed"
+                      style={{
+                        color: "hsl(var(--dark-muted))",
+                        fontSize: "clamp(13px, 1.1vw, 15px)",
+                      }}
+                    >
+                      <span style={{ color: "hsl(var(--dark-fg))" }}>{step.heading}</span>{" "}
+                      {step.body}
+                    </p>
+                    <div
+                      className="aspect-square rounded-lg overflow-hidden"
+                      style={{ background: "hsl(var(--dark-fg) / 0.08)" }}
+                    >
                       <div
-                        className="mt-6 aspect-square rounded-lg overflow-hidden"
-                        style={{ background: "hsl(var(--dark-fg) / 0.08)" }}
+                        className="w-full h-full flex items-center justify-center text-xs"
+                        style={{ color: "hsl(var(--dark-muted))" }}
                       >
-                        <div className="w-full h-full flex items-center justify-center text-sm" style={{ color: "hsl(var(--dark-muted))" }}>
-                          Step {PROCESS_STEPS[activeStep].number} image
-                        </div>
+                        Step {step.number}
                       </div>
                     </div>
-                  )}
-                </div>
-              ))}
-            </div>
-            {/* Mobile: just show content below */}
-            <div className="md:hidden">
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Mobile: stacked content under headers */}
+          <div className="md:hidden mt-8">
+            <div key={`m-${activeStep}`} className="animate-fade-in">
               <p
-                className="mb-4 leading-relaxed"
+                className="mb-6 leading-relaxed"
                 style={{
                   color: "hsl(var(--dark-muted))",
-                  fontSize: "clamp(14px, 1.4vw, 16px)",
+                  fontSize: "14px",
                 }}
               >
                 <span style={{ color: "hsl(var(--dark-fg))" }}>
@@ -247,16 +248,19 @@ function ProcessStepsSection() {
                 {PROCESS_STEPS[activeStep].body}
               </p>
               <div
-                className="mt-6 aspect-square rounded-lg overflow-hidden"
+                className="aspect-square rounded-lg overflow-hidden"
                 style={{ background: "hsl(var(--dark-fg) / 0.08)" }}
               >
-                <div className="w-full h-full flex items-center justify-center text-sm" style={{ color: "hsl(var(--dark-muted))" }}>
-                  Step {PROCESS_STEPS[activeStep].number} image
+                <div
+                  className="w-full h-full flex items-center justify-center text-xs"
+                  style={{ color: "hsl(var(--dark-muted))" }}
+                >
+                  Step {PROCESS_STEPS[activeStep].number}
                 </div>
               </div>
             </div>
           </div>
-        </AnimatedSection>
+        </div>
       </div>
     </section>
   );
