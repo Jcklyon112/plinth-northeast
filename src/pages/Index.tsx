@@ -718,9 +718,6 @@ export default function Index() {
       {/* ——— SECTION 3: HOW IT WORKS ——— */}
       <ProcessStepsSection />
 
-      {/* ——— SECTION 4: MODELS ——— */}
-      <RivianModelScroller onViewDetails={(model) => setModalModel(model)} />
-
       {/* ——— SECTION 5: WHAT WE CHARGE FOR ——— */}
       <section className="section-light">
         <div className="content-max py-24 md:py-40">
