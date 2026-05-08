@@ -195,16 +195,22 @@ function ProcessStepsSection() {
           {/* Step headers — 4 columns */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {PROCESS_STEPS.map((step, i) => {
-              const isActive = activeStep === i;
+              // Distance from this step to current scroll position (0 = exact)
+              const distance = Math.abs(stepFloat - i);
+              // Smooth proximity 1 (this step) → 0 (far). Falls off across one step width.
+              const proximity = Math.max(0, 1 - distance);
+              // Ease for a softer ramp
+              const eased = proximity * proximity * (3 - 2 * proximity);
+              const opacity = 0.18 + eased * 0.82; // gray 0.18 → white 1.0
               return (
                 <div key={step.number} className="text-left">
                   <p
                     className="display-heading mb-2"
                     style={{
                       fontSize: "clamp(28px, 4vw, 56px)",
-                      color: isActive ? "hsl(var(--dark-fg))" : "hsl(var(--dark-fg) / 0.2)",
+                      color: `hsl(var(--dark-fg) / ${opacity})`,
                       fontWeight: 700,
-                      transition: "color 700ms cubic-bezier(0.22, 1, 0.36, 1)",
+                      willChange: "color",
                     }}
                   >
                     {step.number}
@@ -213,9 +219,9 @@ function ProcessStepsSection() {
                     className="display-heading"
                     style={{
                       fontSize: "clamp(22px, 3vw, 44px)",
-                      color: isActive ? "hsl(var(--dark-fg))" : "hsl(var(--dark-fg) / 0.15)",
+                      color: `hsl(var(--dark-fg) / ${opacity})`,
                       fontWeight: 400,
-                      transition: "color 700ms cubic-bezier(0.22, 1, 0.36, 1)",
+                      willChange: "color",
                     }}
                   >
                     {step.title}
