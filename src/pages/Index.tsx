@@ -142,21 +142,47 @@ const PROCESS_STEPS = [
 
 function ProcessStepsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const [activeStep, setActiveStep] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const rafRef = useRef<number | null>(null);
+  const targetRef = useRef(0);
+  const currentRef = useRef(0);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const computeTarget = () => {
       if (!sectionRef.current) return;
       const rect = sectionRef.current.getBoundingClientRect();
       const total = sectionRef.current.offsetHeight - window.innerHeight;
       const scrolled = Math.max(0, -rect.top);
-      const progress = Math.max(0, Math.min(0.999, scrolled / total));
-      setActiveStep(Math.floor(progress * PROCESS_STEPS.length));
+      targetRef.current = Math.max(0, Math.min(0.9999, scrolled / total));
     };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    const tick = () => {
+      // Smooth lerp toward target for buttery transitions
+      currentRef.current += (targetRef.current - currentRef.current) * 0.12;
+      setProgress(currentRef.current);
+      if (Math.abs(targetRef.current - currentRef.current) > 0.0005) {
+        rafRef.current = requestAnimationFrame(tick);
+      } else {
+        rafRef.current = null;
+      }
+    };
+    const onScroll = () => {
+      computeTarget();
+      if (rafRef.current == null) rafRef.current = requestAnimationFrame(tick);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    computeTarget();
+    currentRef.current = targetRef.current;
+    setProgress(targetRef.current);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
   }, []);
+
+  const stepFloat = progress * PROCESS_STEPS.length;
+  const activeStep = Math.min(PROCESS_STEPS.length - 1, Math.floor(stepFloat));
 
   return (
     <section
