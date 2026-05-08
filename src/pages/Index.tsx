@@ -566,6 +566,9 @@ export default function Index() {
       {/* ——— SECTION 2: THE OPPORTUNITY ——— */}
       <ScrollRevealSection />
 
+      {/* ——— SECTION 4: MODELS ——— */}
+      <RivianModelScroller onViewDetails={(model) => setModalModel(model)} />
+
       {/* ——— SECTION 2B: TYPES OF DEPLOYMENT ——— */}
       <section className="section-light">
 
