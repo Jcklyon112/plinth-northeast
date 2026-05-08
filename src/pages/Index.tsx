@@ -189,7 +189,7 @@ function ProcessStepsSection() {
                       fontSize: "clamp(22px, 3vw, 44px)",
                       color: isActive ? "hsl(var(--dark-fg))" : "hsl(var(--dark-fg) / 0.15)",
                       fontWeight: 400,
-                      transition: "color 0.4s ease",
+                      transition: "color 700ms cubic-bezier(0.22, 1, 0.36, 1)",
                     }}
                   >
                     {step.title}
