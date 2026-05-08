@@ -178,7 +178,7 @@ function ProcessStepsSection() {
                       fontSize: "clamp(28px, 4vw, 56px)",
                       color: isActive ? "hsl(var(--dark-fg))" : "hsl(var(--dark-fg) / 0.2)",
                       fontWeight: 700,
-                      transition: "color 0.4s ease",
+                      transition: "color 700ms cubic-bezier(0.22, 1, 0.36, 1)",
                     }}
                   >
                     {step.number}
@@ -189,7 +189,7 @@ function ProcessStepsSection() {
                       fontSize: "clamp(22px, 3vw, 44px)",
                       color: isActive ? "hsl(var(--dark-fg))" : "hsl(var(--dark-fg) / 0.15)",
                       fontWeight: 400,
-                      transition: "color 0.4s ease",
+                      transition: "color 700ms cubic-bezier(0.22, 1, 0.36, 1)",
                     }}
                   >
                     {step.title}
@@ -204,7 +204,7 @@ function ProcessStepsSection() {
             {PROCESS_STEPS.map((step, i) => (
               <div key={step.number}>
                 {activeStep === i && (
-                  <div key={`content-${i}`} className="animate-fade-in">
+                  <div key={`content-${i}`} className="step-enter">
                     <p
                       className="mb-6 leading-relaxed"
                       style={{
@@ -234,7 +234,7 @@ function ProcessStepsSection() {
 
           {/* Mobile: stacked content under headers */}
           <div className="md:hidden mt-8">
-            <div key={`m-${activeStep}`} className="animate-fade-in">
+            <div key={`m-${activeStep}`} className="step-enter">
               <p
                 className="mb-6 leading-relaxed"
                 style={{
