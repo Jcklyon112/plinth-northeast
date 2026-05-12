@@ -183,6 +183,40 @@ function ProcessStepsSection() {
 
   const stepFloat = progress * PROCESS_STEPS.length;
   const activeStep = Math.min(PROCESS_STEPS.length - 1, Math.floor(stepFloat));
+  const localProgress = Math.max(0, Math.min(1, stepFloat - activeStep));
+
+  const renderRevealBody = (heading: string, body: string) => {
+    const tokens = body.split(/(\s+)/); // keep whitespace tokens
+    const wordCount = tokens.filter((t) => t.trim().length > 0).length;
+    // Stretch so all words finish white before the step ends
+    const reveal = Math.min(1, localProgress / 0.85);
+    let wIdx = -1;
+    return (
+      <>
+        <span style={{ color: "hsl(var(--dark-fg))" }}>{heading}</span>{" "}
+        {tokens.map((tok, i) => {
+          if (!tok.trim()) return <span key={i}>{tok}</span>;
+          wIdx++;
+          const pos = wIdx / Math.max(1, wordCount - 1);
+          const win = 0.2;
+          const t = Math.max(0, Math.min(1, (reveal - pos + win) / win));
+          const eased = t * t * (3 - 2 * t);
+          const opacity = 0.18 + eased * 0.82;
+          return (
+            <span
+              key={i}
+              style={{
+                color: `hsl(var(--dark-fg) / ${opacity})`,
+                transition: "color 220ms cubic-bezier(0.22, 1, 0.36, 1)",
+              }}
+            >
+              {tok}
+            </span>
+          );
+        })}
+      </>
+    );
+  };
 
   return (
     <section
@@ -240,16 +274,15 @@ function ProcessStepsSection() {
             {PROCESS_STEPS.map((step, i) => (
               <div key={step.number}>
                 {activeStep === i && (
-                  <div key={`content-${i}`} className="step-enter">
+                  <div key={`content-${i}`}>
                     <p
-                      className="mb-6 leading-relaxed"
+                      className="mb-6 leading-relaxed step-enter"
                       style={{
                         color: "hsl(var(--dark-muted))",
                         fontSize: "clamp(13px, 1.1vw, 15px)",
                       }}
                     >
-                      <span style={{ color: "hsl(var(--dark-fg))" }}>{step.heading}</span>{" "}
-                      {step.body}
+                      {renderRevealBody(step.heading, step.body)}
                     </p>
                     <div
                       className="aspect-square rounded-lg overflow-hidden"
@@ -270,18 +303,15 @@ function ProcessStepsSection() {
 
           {/* Mobile: stacked content under headers */}
           <div className="md:hidden mt-8">
-            <div key={`m-${activeStep}`} className="step-enter">
+            <div key={`m-${activeStep}`}>
               <p
-                className="mb-6 leading-relaxed"
+                className="mb-6 leading-relaxed step-enter"
                 style={{
                   color: "hsl(var(--dark-muted))",
                   fontSize: "14px",
                 }}
               >
-                <span style={{ color: "hsl(var(--dark-fg))" }}>
-                  {PROCESS_STEPS[activeStep].heading}
-                </span>{" "}
-                {PROCESS_STEPS[activeStep].body}
+                {renderRevealBody(PROCESS_STEPS[activeStep].heading, PROCESS_STEPS[activeStep].body)}
               </p>
               <div
                 className="aspect-square rounded-lg overflow-hidden"
