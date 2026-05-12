@@ -515,10 +515,12 @@ function RivianModelScroller({ onViewDetails }: { onViewDetails: (model: typeof 
                     style={{
                       fontSize: "clamp(80px, 15vw, 220px)",
                       color: "hsl(var(--foreground))",
-                      lineHeight: 0.85,
-                      marginBottom: "-0.1em",
+                      lineHeight: 1.05,
+                      paddingTop: "0.15em",
+                      marginBottom: "-0.15em",
                       position: "relative",
                       zIndex: 0,
+                      overflow: "visible",
                     }}
                   >
                     {model.title.replace("The ", "")}
