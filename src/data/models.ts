@@ -98,7 +98,7 @@ export const models: PlinthModel[] = [
   },
   {
     id: "model-office",
-    number: "04",
+    number: "03",
     title: "The Office",
     specLine: "240 SQ FT · WORKSPACE · 1/2 BATH",
     price: "FROM $129,000",
