@@ -1,4 +1,3 @@
-import model03 from "@/assets/model-03.jpg";
 import oneBedElevation from "@/assets/model-onebed-elevation.png";
 import studioElevation from "@/assets/model-studio-elevation.png";
 import officeElevation from "@/assets/model-office-elevation.png";
