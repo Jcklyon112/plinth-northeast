@@ -757,44 +757,36 @@ export default function Index() {
               </div>
               {[
                 {
-                  title: "Workforce Housing.",
+                  title: "Workforce Housing",
                   stat: "8M+",
-                  desc: "Single-family parcels with space for multi-unit infill development across the Northeast.",
+                  desc: "Single-family parcels with space for multi-unit infill across the Northeast.",
                 },
                 {
-                  title: "Revenue at Scale.",
-                  stat: "3–8x",
-                  desc: "Revenue potential versus a single backyard unit when clustering multiple dwellings.",
+                  title: "Revenue at Scale",
+                  stat: "3–8×",
+                  desc: "Revenue potential versus a single backyard unit when clustering dwellings.",
                 },
                 {
-                  title: "Instant Feasibility.",
-                  stat: "<48hrs",
+                  title: "Instant Feasibility",
+                  stat: "<48h",
                   desc: "To know whether your site qualifies for cluster development — at no cost.",
                 },
               ].map((item) => (
                 <div key={item.stat}>
+                  <p className="small-label mb-3 text-muted-foreground">{item.title}</p>
                   <p
-                    className="display-heading mb-1"
+                    className="mb-3"
                     style={{
-                      fontSize: "clamp(18px, 2vw, 24px)",
+                      fontSize: "clamp(28px, 3.2vw, 44px)",
                       color: "hsl(var(--foreground))",
-                      fontWeight: 700,
-                    }}
-                  >
-                    {item.title}
-                  </p>
-                  <p
-                    className="display-heading mb-3"
-                    style={{
-                      fontSize: "clamp(36px, 5vw, 72px)",
-                      color: "hsl(var(--foreground) / 0.25)",
                       fontWeight: 400,
                       letterSpacing: "-0.02em",
+                      lineHeight: 1,
                     }}
                   >
                     {item.stat}
                   </p>
-                  <p className="text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
+                  <p style={{ fontSize: "13px", lineHeight: 1.55, color: "hsl(var(--muted-foreground))" }}>{item.desc}</p>
                 </div>
               ))}
             </div>
