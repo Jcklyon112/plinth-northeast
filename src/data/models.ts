@@ -1,6 +1,7 @@
 import model03 from "@/assets/model-03.jpg";
 import oneBedElevation from "@/assets/model-onebed-elevation.png";
 import studioElevation from "@/assets/model-studio-elevation.png";
+import officeElevation from "@/assets/model-office-elevation.png";
 import interior from "@/assets/interior-01.jpg";
 import detail from "@/assets/detail-01.jpg";
 import exteriorAlt from "@/assets/exterior-alt-01.jpg";
