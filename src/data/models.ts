@@ -69,7 +69,7 @@ export const models: PlinthModel[] = [
     title: "The Studio",
     specLine: "480 SQ FT · STUDIO · 1 BATH",
     price: "FROM $189,000",
-    image: model01,
+    image: studioElevation,
     description:
       "Designed for the property owner who needs a flexible space — a guest house, a rental unit, a home office that's actually separate from home. One open room, a full kitchen wall, and a bathroom. Nothing wasted.",
     specs: [
