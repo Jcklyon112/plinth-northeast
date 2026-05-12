@@ -331,8 +331,8 @@ function BackyardCarousel() {
         ))}
       </div>
       <h3
-        className={`display-heading absolute bottom-16 left-0 right-0 px-6 md:px-12 transition-colors duration-500 ${currentIndex === 0 ? "text-foreground" : "text-white"}`}
-        style={{ fontSize: "clamp(32px, 5vw, 64px)" }}
+        className="display-heading absolute bottom-16 left-0 right-0 px-6 md:px-12 transition-colors duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+        style={{ fontSize: "clamp(32px, 5vw, 64px)", color: currentIndex === 0 ? "hsl(var(--foreground))" : "#fff" }}
       >
         The Backyard
       </h3>
