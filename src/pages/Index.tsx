@@ -312,12 +312,23 @@ function BackyardCarousel() {
 
   return (
     <div className="relative w-full group">
-      <div className="overflow-hidden bg-background">
+      <div className="relative overflow-hidden bg-background">
+        {/* Sizer keeps the container at the natural image aspect ratio */}
         <img
-          src={backyardImages[currentIndex]}
-          alt={`Backyard ADU view ${currentIndex + 1}`}
-          className="w-full object-contain transition-opacity duration-500"
+          src={backyardImages[0]}
+          alt=""
+          aria-hidden="true"
+          className="w-full object-contain invisible"
         />
+        {backyardImages.map((src, i) => (
+          <img
+            key={i}
+            src={src}
+            alt={`Backyard ADU view ${i + 1}`}
+            className="absolute inset-0 w-full h-full object-contain transition-opacity duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity]"
+            style={{ opacity: i === currentIndex ? 1 : 0 }}
+          />
+        ))}
       </div>
       <h3
         className={`display-heading absolute bottom-16 left-0 right-0 px-6 md:px-12 transition-colors duration-500 ${currentIndex === 0 ? "text-foreground" : "text-white"}`}
