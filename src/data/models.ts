@@ -31,6 +31,39 @@ export interface PlinthModel {
 
 export const models: PlinthModel[] = [
   {
+    id: "model-02",
+    number: "01",
+    title: "The One-Bedroom",
+    specLine: "640 SQ FT · 1 BED · 1 BATH",
+    price: "FROM $239,000",
+    image: oneBedElevation,
+    description:
+      "A proper one-bedroom home. Separated sleeping and living areas, a full kitchen, and enough space to live in full-time or host guests who stay more than a weekend. The model most clients choose for rental income.",
+    specs: [
+      { label: "FOOTPRINT", value: "32 × 20 FT" },
+      { label: "CEILING HEIGHT", value: "9 FT" },
+      { label: "BEDROOMS", value: "1" },
+      { label: "BATHROOMS", value: "1" },
+      { label: "KITCHEN", value: "Full galley kitchen with island" },
+      { label: "HVAC", value: "Ducted mini-split system" },
+      { label: "EXTERIOR", value: "Cedar shingle (standard)" },
+      { label: "ROOFING", value: "Standing seam metal (standard)" },
+      { label: "WINDOWS", value: "Black aluminum-clad wood" },
+    ],
+    pricing: [
+      { label: "BASE UNIT", value: "From $239,000" },
+      { label: "FEASIBILITY REPORT", value: "$2,500" },
+      { label: "SITE WORK", value: "Typically $40,000 – $75,000" },
+      { label: "FAST-TRACK PERMITTING", value: "Optional, priced separately" },
+      {
+        label: "ALL-IN TYPICAL",
+        value: "$305,000 – $345,000",
+        emphasized: true,
+      },
+    ],
+    gallery: [interior, detail, exteriorAlt],
+  },
+  {
     id: "model-01",
     number: "01",
     title: "The Studio",
