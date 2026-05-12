@@ -183,6 +183,40 @@ function ProcessStepsSection() {
 
   const stepFloat = progress * PROCESS_STEPS.length;
   const activeStep = Math.min(PROCESS_STEPS.length - 1, Math.floor(stepFloat));
+  const localProgress = Math.max(0, Math.min(1, stepFloat - activeStep));
+
+  const renderRevealBody = (heading: string, body: string) => {
+    const tokens = body.split(/(\s+)/); // keep whitespace tokens
+    const wordCount = tokens.filter((t) => t.trim().length > 0).length;
+    // Stretch so all words finish white before the step ends
+    const reveal = Math.min(1, localProgress / 0.85);
+    let wIdx = -1;
+    return (
+      <>
+        <span style={{ color: "hsl(var(--dark-fg))" }}>{heading}</span>{" "}
+        {tokens.map((tok, i) => {
+          if (!tok.trim()) return <span key={i}>{tok}</span>;
+          wIdx++;
+          const pos = wIdx / Math.max(1, wordCount - 1);
+          const win = 0.2;
+          const t = Math.max(0, Math.min(1, (reveal - pos + win) / win));
+          const eased = t * t * (3 - 2 * t);
+          const opacity = 0.18 + eased * 0.82;
+          return (
+            <span
+              key={i}
+              style={{
+                color: `hsl(var(--dark-fg) / ${opacity})`,
+                transition: "color 220ms cubic-bezier(0.22, 1, 0.36, 1)",
+              }}
+            >
+              {tok}
+            </span>
+          );
+        })}
+      </>
+    );
+  };
 
   return (
     <section
