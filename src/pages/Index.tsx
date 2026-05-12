@@ -524,16 +524,21 @@ function RivianModelScroller({ onViewDetails }: { onViewDetails: (model: typeof 
                     {model.title.replace("The ", "")}
                   </h2>
 
-                  {/* Model image overlapping the text */}
+                  {/* Model image overlapping the text — fixed-height box so all elevations
+                      share the same top/bottom baseline regardless of aspect ratio */}
                   <div
-                    className="relative z-10 w-full flex justify-center"
-                    style={{ marginTop: "-2vw", maxWidth: "800px", padding: "0 24px" }}
+                    className="relative z-10 w-full flex items-end justify-center"
+                    style={{
+                      marginTop: "-2vw",
+                      height: "38vh",
+                      maxWidth: "900px",
+                      padding: "0 24px",
+                    }}
                   >
                     <img
                       src={model.image}
                       alt={model.title}
-                      className="w-full h-auto object-contain"
-                      style={{ maxHeight: "40vh" }}
+                      className="h-full w-auto max-w-full object-contain object-bottom"
                       loading="lazy"
                     />
                   </div>
