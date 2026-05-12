@@ -1,6 +1,6 @@
-import model01 from "@/assets/model-01.jpg";
 import model03 from "@/assets/model-03.jpg";
 import oneBedElevation from "@/assets/model-onebed-elevation.png";
+import studioElevation from "@/assets/model-studio-elevation.png";
 import interior from "@/assets/interior-01.jpg";
 import detail from "@/assets/detail-01.jpg";
 import exteriorAlt from "@/assets/exterior-alt-01.jpg";
@@ -69,7 +69,7 @@ export const models: PlinthModel[] = [
     title: "The Studio",
     specLine: "480 SQ FT · STUDIO · 1 BATH",
     price: "FROM $189,000",
-    image: model01,
+    image: studioElevation,
     description:
       "Designed for the property owner who needs a flexible space — a guest house, a rental unit, a home office that's actually separate from home. One open room, a full kitchen wall, and a bathroom. Nothing wasted.",
     specs: [
