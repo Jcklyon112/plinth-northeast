@@ -303,18 +303,15 @@ function ProcessStepsSection() {
 
           {/* Mobile: stacked content under headers */}
           <div className="md:hidden mt-8">
-            <div key={`m-${activeStep}`} className="step-enter">
+            <div key={`m-${activeStep}`}>
               <p
-                className="mb-6 leading-relaxed"
+                className="mb-6 leading-relaxed step-enter"
                 style={{
                   color: "hsl(var(--dark-muted))",
                   fontSize: "14px",
                 }}
               >
-                <span style={{ color: "hsl(var(--dark-fg))" }}>
-                  {PROCESS_STEPS[activeStep].heading}
-                </span>{" "}
-                {PROCESS_STEPS[activeStep].body}
+                {renderRevealBody(PROCESS_STEPS[activeStep].heading, PROCESS_STEPS[activeStep].body)}
               </p>
               <div
                 className="aspect-square rounded-lg overflow-hidden"
