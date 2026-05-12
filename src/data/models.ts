@@ -1,6 +1,7 @@
 import model03 from "@/assets/model-03.jpg";
 import oneBedElevation from "@/assets/model-onebed-elevation.png";
 import studioElevation from "@/assets/model-studio-elevation.png";
+import officeElevation from "@/assets/model-office-elevation.png";
 import interior from "@/assets/interior-01.jpg";
 import detail from "@/assets/detail-01.jpg";
 import exteriorAlt from "@/assets/exterior-alt-01.jpg";
@@ -124,6 +125,39 @@ export const models: PlinthModel[] = [
       {
         label: "ALL-IN TYPICAL",
         value: "$375,000 – $420,000",
+        emphasized: true,
+      },
+    ],
+    gallery: [interior, detail, exteriorAlt],
+  },
+  {
+    id: "model-office",
+    number: "04",
+    title: "The Office",
+    specLine: "240 SQ FT · WORKSPACE · 1/2 BATH",
+    price: "FROM $129,000",
+    image: officeElevation,
+    description:
+      "A dedicated workspace separate from the house. Floor-to-ceiling glass, a quiet acoustic envelope, and a half bath. Built for focused work without leaving the property.",
+    specs: [
+      { label: "FOOTPRINT", value: "16 × 15 FT" },
+      { label: "CEILING HEIGHT", value: "9 FT" },
+      { label: "BEDROOMS", value: "—" },
+      { label: "BATHROOMS", value: "1/2" },
+      { label: "GLAZING", value: "Full-height sliding glass" },
+      { label: "HVAC", value: "Mini-split heat pump" },
+      { label: "EXTERIOR", value: "Cedar shingle (standard)" },
+      { label: "ROOFING", value: "Standing seam metal (standard)" },
+      { label: "WINDOWS", value: "Black aluminum-clad wood" },
+    ],
+    pricing: [
+      { label: "BASE UNIT", value: "From $129,000" },
+      { label: "FEASIBILITY REPORT", value: "$2,500" },
+      { label: "SITE WORK", value: "Typically $25,000 – $45,000" },
+      { label: "FAST-TRACK PERMITTING", value: "Optional, priced separately" },
+      {
+        label: "ALL-IN TYPICAL",
+        value: "$170,000 – $200,000",
         emphasized: true,
       },
     ],
