@@ -1,4 +1,3 @@
-import model03 from "@/assets/model-03.jpg";
 import oneBedElevation from "@/assets/model-onebed-elevation.png";
 import studioElevation from "@/assets/model-studio-elevation.png";
 import officeElevation from "@/assets/model-office-elevation.png";
@@ -98,41 +97,8 @@ export const models: PlinthModel[] = [
     gallery: [interior, detail, exteriorAlt],
   },
   {
-    id: "model-03",
-    number: "03",
-    title: "The Two-Bedroom",
-    specLine: "860 SQ FT · 2 BED · 1 BATH",
-    price: "FROM $299,000",
-    image: model03,
-    description:
-      "The largest model in the lineup. Two bedrooms, a full living area, and a kitchen designed for actual cooking. Built for families, long-term tenants, or aging parents who want independence without distance.",
-    specs: [
-      { label: "FOOTPRINT", value: "40 × 22 FT" },
-      { label: "CEILING HEIGHT", value: "9 FT" },
-      { label: "BEDROOMS", value: "2" },
-      { label: "BATHROOMS", value: "1" },
-      { label: "KITCHEN", value: "Full kitchen with pantry storage" },
-      { label: "HVAC", value: "Ducted mini-split system" },
-      { label: "EXTERIOR", value: "Cedar shingle (standard)" },
-      { label: "ROOFING", value: "Standing seam metal (standard)" },
-      { label: "WINDOWS", value: "Black aluminum-clad wood" },
-    ],
-    pricing: [
-      { label: "BASE UNIT", value: "From $299,000" },
-      { label: "FEASIBILITY REPORT", value: "$2,500" },
-      { label: "SITE WORK", value: "Typically $45,000 – $85,000" },
-      { label: "FAST-TRACK PERMITTING", value: "Optional, priced separately" },
-      {
-        label: "ALL-IN TYPICAL",
-        value: "$375,000 – $420,000",
-        emphasized: true,
-      },
-    ],
-    gallery: [interior, detail, exteriorAlt],
-  },
-  {
     id: "model-office",
-    number: "04",
+    number: "03",
     title: "The Office",
     specLine: "240 SQ FT · WORKSPACE · 1/2 BATH",
     price: "FROM $129,000",
