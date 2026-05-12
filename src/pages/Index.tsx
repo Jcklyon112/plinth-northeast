@@ -274,16 +274,15 @@ function ProcessStepsSection() {
             {PROCESS_STEPS.map((step, i) => (
               <div key={step.number}>
                 {activeStep === i && (
-                  <div key={`content-${i}`} className="step-enter">
+                  <div key={`content-${i}`}>
                     <p
-                      className="mb-6 leading-relaxed"
+                      className="mb-6 leading-relaxed step-enter"
                       style={{
                         color: "hsl(var(--dark-muted))",
                         fontSize: "clamp(13px, 1.1vw, 15px)",
                       }}
                     >
-                      <span style={{ color: "hsl(var(--dark-fg))" }}>{step.heading}</span>{" "}
-                      {step.body}
+                      {renderRevealBody(step.heading, step.body)}
                     </p>
                     <div
                       className="aspect-square rounded-lg overflow-hidden"
