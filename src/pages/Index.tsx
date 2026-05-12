@@ -666,68 +666,64 @@ export default function Index() {
         {/* — The Backyard — */}
         <AnimatedSection>
           <BackyardCarousel />
-          <div className="px-6 md:px-12 pt-8 pb-24 md:pb-32" style={{ maxWidth: "1400px" }}>
-            <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_1fr] gap-8 md:gap-10">
+          <div className="px-6 md:px-12 pt-8 pb-24 md:pb-32 mx-auto" style={{ maxWidth: "1400px" }}>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-10 items-start">
               <div>
                 <p
-                  className="text-foreground leading-relaxed mb-6"
-                  style={{ fontSize: "clamp(15px, 1.6vw, 18px)" }}
+                  className="text-foreground mb-4"
+                  style={{ fontSize: "13px", lineHeight: 1.55, fontWeight: 500 }}
                 >
-                  For aging parents, extra income, or a recent grad priced out of their first apartment — <strong>the answer is already in your backyard.</strong>
+                  For aging parents, extra income, or a recent grad priced out of their first apartment — <span style={{ fontWeight: 500, color: "hsl(var(--foreground))" }}>the answer is already in your backyard.</span>
                 </p>
                 <p
-                  className="text-muted-foreground leading-relaxed mb-8"
-                  style={{ fontSize: "clamp(15px, 1.6vw, 18px)" }}
+                  className="text-muted-foreground mb-6"
+                  style={{ fontSize: "13px", lineHeight: 1.55, fontWeight: 400 }}
                 >
-                  Plinth's end-to-end process takes you from zoning check to move-in day, so yours is one that does.
+                  Plinth's end-to-end process takes you from zoning check to move-in day.
                 </p>
                 <a
                   href="#contact"
-                  className="small-label inline-block border border-foreground px-5 py-3 text-foreground hover:bg-foreground hover:text-background transition-colors"
+                  className="small-label inline-block border-b border-foreground pb-1 text-foreground hover:text-accent hover:border-accent transition-colors"
                 >
-                  View solutions
+                  View solutions →
                 </a>
               </div>
               {[
                 {
-                  title: "Our Aging Parents.",
+                  title: "Our Aging Parents",
                   stat: "$75K",
-                  desc: "Average annual cost of assisted living. Keep your loved ones close and save thousands.",
+                  desc: "Average annual cost of assisted living. Keep loved ones close and save thousands.",
                 },
                 {
-                  title: "The Missing Middle.",
+                  title: "The Missing Middle",
                   stat: "10M",
-                  desc: "The deficit of housing units in the U.S. Rent to the teachers, nurses and service workers your community depends on.",
+                  desc: "U.S. housing-unit deficit. Rent to teachers, nurses and the workers your community depends on.",
                 },
                 {
-                  title: "A Priced-Out Generation.",
+                  title: "A Priced-Out Generation",
                   stat: "40",
                   desc: "Average age of a first-time homebuyer. Give your recent graduate a place to land.",
                 },
               ].map((item) => (
                 <div key={item.stat}>
                   <p
-                    className="display-heading mb-1"
-                    style={{
-                      fontSize: "clamp(18px, 2vw, 24px)",
-                      color: "hsl(var(--foreground))",
-                      fontWeight: 700,
-                    }}
+                    className="small-label mb-3 text-muted-foreground"
                   >
                     {item.title}
                   </p>
                   <p
-                    className="display-heading mb-3"
+                    className="mb-3"
                     style={{
-                      fontSize: "clamp(36px, 5vw, 72px)",
-                      color: "hsl(var(--foreground) / 0.25)",
+                      fontSize: "clamp(28px, 3.2vw, 44px)",
+                      color: "hsl(var(--foreground))",
                       fontWeight: 400,
                       letterSpacing: "-0.02em",
+                      lineHeight: 1,
                     }}
                   >
                     {item.stat}
                   </p>
-                  <p className="text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
+                  <p style={{ fontSize: "13px", lineHeight: 1.55, color: "hsl(var(--muted-foreground))" }}>{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -737,26 +733,26 @@ export default function Index() {
         {/* — Cluster Development — */}
         <AnimatedSection delay={100}>
           <ClusterCarousel />
-          <div className="px-6 md:px-12 pt-8 pb-24 md:pb-32" style={{ maxWidth: "1400px" }}>
-            <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_1fr] gap-8 md:gap-10">
+          <div className="px-6 md:px-12 pt-8 pb-24 md:pb-32 mx-auto" style={{ maxWidth: "1400px" }}>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-10 items-start">
               <div>
                 <p
-                  className="text-foreground leading-relaxed mb-6"
-                  style={{ fontSize: "clamp(15px, 1.6vw, 18px)" }}
+                  className="text-foreground mb-4"
+                  style={{ fontSize: "13px", lineHeight: 1.55, fontWeight: 500 }}
                 >
-                  Group multiple units on a single parcel or across adjacent lots — <strong>purpose-built micro-communities at scale.</strong>
+                  Group multiple units on a single parcel or across adjacent lots — <span style={{ fontWeight: 500 }}>purpose-built micro-communities at scale.</span>
                 </p>
                 <p
-                  className="text-muted-foreground leading-relaxed mb-8"
-                  style={{ fontSize: "clamp(15px, 1.6vw, 18px)" }}
+                  className="text-muted-foreground mb-6"
+                  style={{ fontSize: "13px", lineHeight: 1.55, fontWeight: 400 }}
                 >
-                  Meet zoning, maximize density, and deliver workforce or attainable housing where it's needed most.
+                  Meet zoning, maximize density, deliver attainable housing where it's needed most.
                 </p>
                 <a
                   href="#contact"
-                  className="small-label inline-block border border-foreground px-5 py-3 text-foreground hover:bg-foreground hover:text-background transition-colors"
+                  className="small-label inline-block border-b border-foreground pb-1 text-foreground hover:text-accent hover:border-accent transition-colors"
                 >
-                  View solutions
+                  View solutions →
                 </a>
               </div>
               {[
