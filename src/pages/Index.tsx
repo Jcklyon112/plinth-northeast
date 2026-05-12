@@ -519,7 +519,7 @@ function RivianModelScroller({ onViewDetails }: { onViewDetails: (model: typeof 
                       paddingTop: "0.32em",
                       paddingBottom: "0.04em",
                       marginTop: "-0.12em",
-                      marginBottom: "-0.26em",
+                      marginBottom: "clamp(18px, 3vw, 44px)",
                       position: "relative",
                       zIndex: 0,
                       overflow: "visible",
@@ -533,7 +533,7 @@ function RivianModelScroller({ onViewDetails }: { onViewDetails: (model: typeof 
                   <div
                     className="relative z-10 w-full flex items-end justify-center overflow-hidden"
                     style={{
-                      marginTop: "-2vw",
+                      marginTop: 0,
                       height: "38vh",
                     }}
                   >
