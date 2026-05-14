@@ -654,19 +654,21 @@ export default function Index() {
           <h1
             className="display-heading text-white"
             style={{
-              fontSize: "clamp(40px, 7vw, 80px)",
+              fontSize: "clamp(52px, 9vw, 110px)",
               lineHeight: 1,
               marginBottom: "20px",
+              fontWeight: 700,
             }}
           >
             Plinth-Home
           </h1>
           <p
-            className="text-white/80 max-w-[560px]"
+            className="text-white/90 max-w-[640px]"
             style={{
-              fontSize: "clamp(14px, 1.6vw, 18px)",
+              fontSize: "clamp(16px, 2vw, 22px)",
               lineHeight: 1.45,
-              marginBottom: "24px",
+              marginBottom: "28px",
+              fontWeight: 500,
             }}
           >
             Your land is worth more than you think. We make adding a dwelling to it as simple as entering your address — permits, build, and delivery, all handled.
