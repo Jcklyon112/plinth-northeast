@@ -369,14 +369,14 @@ function BackyardCarousel() {
       {/* Navigation arrows */}
       <button
         onClick={goPrev}
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-background/70 hover:bg-background border border-foreground/20 rounded-full transition-all opacity-0 group-hover:opacity-100"
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-background/70 hover:bg-background border border-foreground/20 rounded-full transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] opacity-0 group-hover:opacity-100"
         aria-label="Previous image"
       >
         <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-foreground" />
       </button>
       <button
         onClick={goNext}
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-background/70 hover:bg-background border border-foreground/20 rounded-full transition-all opacity-0 group-hover:opacity-100"
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-background/70 hover:bg-background border border-foreground/20 rounded-full transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] opacity-0 group-hover:opacity-100"
         aria-label="Next image"
       >
         <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-foreground" />
@@ -388,7 +388,7 @@ function BackyardCarousel() {
             <button
               key={i}
               onClick={() => setCurrentIndex(i)}
-              className={`w-2 h-2 rounded-full transition-colors ${i === currentIndex ? "bg-foreground" : "bg-foreground/30"}`}
+              className={`w-2 h-2 rounded-full transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${i === currentIndex ? "bg-foreground" : "bg-foreground/30"}`}
               aria-label={`Go to image ${i + 1}`}
             />
           ))}
@@ -433,14 +433,14 @@ function ClusterCarousel() {
       </h3>
       <button
         onClick={goPrev}
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-background/70 hover:bg-background border border-foreground/20 rounded-full transition-all opacity-0 group-hover:opacity-100"
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-background/70 hover:bg-background border border-foreground/20 rounded-full transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] opacity-0 group-hover:opacity-100"
         aria-label="Previous image"
       >
         <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-foreground" />
       </button>
       <button
         onClick={goNext}
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-background/70 hover:bg-background border border-foreground/20 rounded-full transition-all opacity-0 group-hover:opacity-100"
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-background/70 hover:bg-background border border-foreground/20 rounded-full transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] opacity-0 group-hover:opacity-100"
         aria-label="Next image"
       >
         <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-foreground" />
@@ -451,7 +451,7 @@ function ClusterCarousel() {
             <button
               key={i}
               onClick={() => setCurrentIndex(i)}
-              className={`w-2 h-2 rounded-full transition-colors ${i === currentIndex ? "bg-foreground" : "bg-foreground/30"}`}
+              className={`w-2 h-2 rounded-full transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${i === currentIndex ? "bg-foreground" : "bg-foreground/30"}`}
               aria-label={`Go to image ${i + 1}`}
             />
           ))}
@@ -466,6 +466,9 @@ function RivianModelScroller({ onViewDetails }: { onViewDetails: (model: typeof 
   const [activeIndex, setActiveIndex] = useState(0);
   const [translateX, setTranslateX] = useState(0);
   const numModels = models.length;
+  const rafRef = useRef<number | null>(null);
+  const targetRef = useRef(0);
+  const currentRef = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -474,14 +477,29 @@ function RivianModelScroller({ onViewDetails }: { onViewDetails: (model: typeof 
       const scrollDistance = containerRef.current.offsetHeight - window.innerHeight;
       const scrolled = -rect.top;
       const progress = Math.max(0, Math.min(1, scrolled / scrollDistance));
+      targetRef.current = progress;
+      if (rafRef.current == null) rafRef.current = requestAnimationFrame(tick);
+    };
+    const tick = () => {
+      currentRef.current += (targetRef.current - currentRef.current) * 0.06;
       const maxTranslate = (numModels - 1) * 100;
-      const tx = progress * maxTranslate;
-      setTranslateX(tx);
-      setActiveIndex(Math.min(numModels - 1, Math.floor(progress * numModels)));
+      setTranslateX(currentRef.current * maxTranslate);
+      setActiveIndex(Math.min(numModels - 1, Math.floor(currentRef.current * numModels)));
+      if (Math.abs(targetRef.current - currentRef.current) > 0.0002) {
+        rafRef.current = requestAnimationFrame(tick);
+      } else {
+        rafRef.current = null;
+      }
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
     handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    currentRef.current = targetRef.current;
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
   }, [numModels]);
 
   return (
@@ -499,7 +517,7 @@ function RivianModelScroller({ onViewDetails }: { onViewDetails: (model: typeof 
         {/* Sliding models track */}
         <div className="flex-1 relative overflow-hidden">
           <div
-            className="flex h-full transition-transform duration-100 ease-out"
+            className="flex h-full will-change-transform"
             style={{ transform: `translateX(-${translateX}vw)`, width: `${numModels * 100}vw` }}
           >
             {models.map((model) => (
@@ -574,13 +592,13 @@ function RivianModelScroller({ onViewDetails }: { onViewDetails: (model: typeof 
                   <div className="flex justify-center gap-4">
                     <a
                       href="/#contact"
-                      className="small-label inline-block border border-foreground px-6 py-3 text-foreground hover:bg-foreground hover:text-background transition-colors"
+                      className="small-label inline-block border border-foreground px-6 py-3 text-foreground hover:bg-foreground hover:text-background transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                     >
                       On Your Property Now
                     </a>
                     <button
                       onClick={() => onViewDetails(model)}
-                      className="small-label inline-block px-6 py-3 text-muted-foreground hover:text-foreground transition-colors"
+                      className="small-label inline-block px-6 py-3 text-muted-foreground hover:text-foreground transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                     >
                       Learn More
                     </button>
@@ -596,7 +614,7 @@ function RivianModelScroller({ onViewDetails }: { onViewDetails: (model: typeof 
           {models.map((model, i) => (
             <button
               key={model.id}
-              className={`small-label px-4 py-2 transition-colors border-b-2 ${
+              className={`small-label px-4 py-2 transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] border-b-2 ${
                 i === activeIndex
                   ? "text-foreground border-foreground"
                   : "text-muted-foreground border-transparent hover:text-foreground"
@@ -655,7 +673,7 @@ export default function Index() {
           </p>
           <a
             href="#contact"
-            className="small-label inline-block text-white border border-white/60 px-6 py-3 hover:bg-white hover:text-foreground transition-colors"
+            className="small-label inline-block text-white border border-white/60 px-6 py-3 hover:bg-white hover:text-foreground transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
           >
             Feasibility study
           </a>
@@ -691,7 +709,7 @@ export default function Index() {
                 </p>
                 <a
                   href="#contact"
-                  className="small-label inline-block border-b border-foreground pb-1 text-foreground hover:text-accent hover:border-accent transition-colors"
+                  className="small-label inline-block border-b border-foreground pb-1 text-foreground hover:text-accent hover:border-accent transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                 >
                   View solutions →
                 </a>
@@ -758,7 +776,7 @@ export default function Index() {
                 </p>
                 <a
                   href="#contact"
-                  className="small-label inline-block border-b border-foreground pb-1 text-foreground hover:text-accent hover:border-accent transition-colors"
+                  className="small-label inline-block border-b border-foreground pb-1 text-foreground hover:text-accent hover:border-accent transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
                 >
                   View solutions →
                 </a>
