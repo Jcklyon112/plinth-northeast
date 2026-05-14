@@ -73,7 +73,7 @@ function ScrollRevealSection() {
                       ? "hsl(var(--dark-muted))"
                       : "hsl(var(--dark-fg))"
                     : "hsl(var(--dark-fg) / 0.15)",
-                  transition: "color 0.2s ease-out",
+                  transition: "color 0.45s cubic-bezier(0.22, 1, 0.36, 1)",
                 }}
               >
                 {word}{" "}
