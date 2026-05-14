@@ -36,7 +36,7 @@ export default function ModelModal({ model, onClose }: Props) {
         {/* Close */}
         <button
           onClick={onClose}
-          className="fixed top-6 right-6 z-[110] w-10 h-10 flex items-center justify-center text-foreground hover:text-accent transition-colors"
+          className="fixed top-6 right-6 z-[110] w-10 h-10 flex items-center justify-center text-foreground hover:text-accent transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
           aria-label="Close"
         >
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -122,7 +122,7 @@ export default function ModelModal({ model, onClose }: Props) {
             </h3>
             <button
               onClick={scrollToContact}
-              className="small-label bg-primary text-primary-foreground px-8 py-3 hover:bg-accent transition-colors"
+              className="small-label bg-primary text-primary-foreground px-8 py-3 hover:bg-accent transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
             >
               Get in touch
             </button>

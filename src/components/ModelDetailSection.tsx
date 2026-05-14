@@ -89,7 +89,7 @@ export default function ModelDetailSection({ model, showDivider = false }: Props
           </h3>
           <a
             href="/#contact"
-            className="small-label bg-primary text-primary-foreground px-8 py-3 hover:bg-accent transition-colors inline-block"
+            className="small-label bg-primary text-primary-foreground px-8 py-3 hover:bg-accent transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] inline-block"
           >
             Get in touch
           </a>

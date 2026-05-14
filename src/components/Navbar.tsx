@@ -17,7 +17,7 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
         scrolled ? "bg-background/95 backdrop-blur-sm border-b border-border" : "bg-transparent"
       }`}
     >
@@ -25,13 +25,13 @@ export default function Navbar() {
         <div className="flex items-center gap-8">
           <Link
             to="/models"
-            className="small-label text-foreground transition-colors"
+            className="small-label text-foreground transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
           >
             Models
           </Link>
           <Link
             to="/about"
-            className="small-label text-foreground transition-colors"
+            className="small-label text-foreground transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
           >
             About
           </Link>

@@ -27,7 +27,7 @@ export default function ContactForm() {
       <textarea placeholder="Anything we should know? (optional)" maxLength={1000} rows={3} className="underline-input w-full resize-none" />
       <button
         type="submit"
-        className="w-full py-4 transition-colors"
+        className="w-full py-4 transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
         style={{
           background: "hsl(var(--dark-fg))",
           color: "hsl(var(--dark-bg))",

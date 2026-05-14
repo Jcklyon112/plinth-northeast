@@ -7,18 +7,18 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
           <div>
             <p className="display-heading text-lg text-foreground mb-4">PLINTH</p>
-            <a href="mailto:hello@plinth.co" className="text-sm text-muted-foreground hover:text-foreground transition-colors block mb-1">
+            <a href="mailto:hello@plinth.co" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] block mb-1">
               hello@plinth.co
             </a>
-            <a href="tel:+16315551234" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
+            <a href="tel:+16315551234" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] block">
               (631) 555-1234
             </a>
           </div>
           <div>
-            <Link to="/models" className="text-sm text-muted-foreground hover:text-foreground transition-colors block mb-2">
+            <Link to="/models" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] block mb-2">
               Models
             </Link>
-            <Link to="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors block">
+            <Link to="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] block">
               About
             </Link>
           </div>
