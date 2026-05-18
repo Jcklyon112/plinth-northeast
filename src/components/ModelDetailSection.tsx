@@ -22,10 +22,10 @@ export default function ModelDetailSection({ model, showDivider = false }: Props
       )}
 
       <AnimatedSection className="section-light py-16 md:py-20">
-        <div className="content-max grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-start">
+        <div className="content-max flex flex-col gap-10 md:gap-14">
           {/* Carousel */}
           <div className="relative">
-            <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+            <div className="relative aspect-[21/9] overflow-hidden bg-muted">
               <img
                 src={images[idx]}
                 alt={`${model.title} ${idx + 1}`}
