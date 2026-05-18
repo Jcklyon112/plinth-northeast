@@ -129,13 +129,7 @@ export default function ModelDetailSection({ model, showDivider = false }: Props
             >
               {model.title}
             </h2>
-            <p className="small-label text-muted-foreground mb-1">{model.specLine}</p>
-            <p
-              className="display-heading text-foreground mb-8"
-              style={{ fontSize: "clamp(28px, 3.4vw, 44px)" }}
-            >
-              {model.price}
-            </p>
+            <p className="small-label text-muted-foreground mb-8">{model.specLine}</p>
 
             <p className="text-muted-foreground leading-relaxed mb-8">
               {model.description}
@@ -151,31 +145,6 @@ export default function ModelDetailSection({ model, showDivider = false }: Props
                   >
                     <span className="small-label text-muted-foreground">{spec.label}</span>
                     <span className="text-sm text-foreground mt-0.5 sm:mt-0">{spec.value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="mb-8">
-              <p className="small-label text-muted-foreground mb-3">PRICING</p>
-              <div className="space-y-0">
-                {model.pricing.map((item) => (
-                  <div
-                    key={item.label}
-                    className={`flex flex-col sm:flex-row sm:justify-between py-2.5 border-b border-border ${
-                      item.emphasized ? "py-3.5" : ""
-                    }`}
-                  >
-                    <span className="small-label text-muted-foreground">{item.label}</span>
-                    <span
-                      className={`mt-0.5 sm:mt-0 ${
-                        item.emphasized
-                          ? "display-heading text-base text-foreground"
-                          : "text-sm text-foreground"
-                      }`}
-                    >
-                      {item.value}
-                    </span>
                   </div>
                 ))}
               </div>
