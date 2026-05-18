@@ -537,7 +537,7 @@ function RivianModelScroller({ onViewDetails }: { onViewDetails: (model: typeof 
                       paddingTop: "0.18em",
                       paddingBottom: "0.04em",
                       marginTop: 0,
-                      marginBottom: "-0.22em",
+                      marginBottom: 0,
                       position: "relative",
                       zIndex: 0,
                       overflow: "visible",
@@ -546,11 +546,12 @@ function RivianModelScroller({ onViewDetails }: { onViewDetails: (model: typeof 
                     {model.title.replace("The ", "")}
                   </h2>
 
-                  {/* Model image overlapping the bottom of the text */}
+                  {/* Model image overlapping the bottom 1/5 of the text */}
                   <div
                     className="relative z-10 w-full flex items-end justify-center overflow-hidden"
                     style={{
-                      marginTop: 0,
+                      marginTop: "-0.21em",
+                      fontSize: "clamp(64px, 11vw, 170px)",
                       height: "34vh",
                     }}
                   >
