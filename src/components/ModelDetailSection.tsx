@@ -64,11 +64,7 @@ export default function ModelDetailSection({ model, showDivider = false }: Props
       <AnimatedSection className="section-light py-16 md:py-20">
         <div className="content-max flex flex-col gap-10 md:gap-14">
           {/* Auto-advancing carousel */}
-          <div
-            className="relative"
-            onMouseEnter={() => setPaused(true)}
-            onMouseLeave={() => setPaused(false)}
-          >
+          <div className="relative">
             <div className="relative aspect-[21/9] overflow-hidden bg-muted">
               {images.map((src, i) => (
                 <img
@@ -81,11 +77,6 @@ export default function ModelDetailSection({ model, showDivider = false }: Props
                   loading="lazy"
                 />
               ))}
-
-              {/* Countdown */}
-              <div className="absolute top-3 right-3 small-label bg-background/80 text-foreground px-2 py-1">
-                {secondsLeft}s
-              </div>
             </div>
 
             {/* Progress bar */}
