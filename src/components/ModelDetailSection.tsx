@@ -25,7 +25,7 @@ export default function ModelDetailSection({ model, showDivider = false }: Props
         <div className="content-max flex flex-col gap-10 md:gap-14">
           {/* Carousel */}
           <div className="relative">
-            <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+            <div className="relative aspect-[21/9] overflow-hidden bg-muted">
               <img
                 src={images[idx]}
                 alt={`${model.title} ${idx + 1}`}
