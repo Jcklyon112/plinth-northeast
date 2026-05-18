@@ -9,41 +9,49 @@ interface Props {
 
 const ALLOWED_SPECS = ["FOOTPRINT", "CEILING HEIGHT", "BEDROOMS", "BATHROOMS", "KITCHEN"];
 
+const SLIDE_MS = 5000;
+
 export default function ModelDetailSection({ model, showDivider = false }: Props) {
   const images = [model.image, ...model.gallery];
   const specs = model.specs.filter((s) => ALLOWED_SPECS.includes(s.label));
 
-  const scrollerRef = useRef<HTMLDivElement>(null);
   const [idx, setIdx] = useState(0);
+  const [progress, setProgress] = useState(0); // 0..1
+  const [paused, setPaused] = useState(false);
+  const startRef = useRef<number>(performance.now());
+  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    const onScroll = () => {
-      const i = Math.round(el.scrollLeft / el.clientWidth);
-      setIdx(i);
+    startRef.current = performance.now();
+    setProgress(0);
+
+    const tick = (now: number) => {
+      if (!paused) {
+        const elapsed = now - startRef.current;
+        const p = Math.min(elapsed / SLIDE_MS, 1);
+        setProgress(p);
+        if (p >= 1) {
+          setIdx((i) => (i + 1) % images.length);
+          return;
+        }
+      } else {
+        // keep start aligned with current progress while paused
+        startRef.current = now - progress * SLIDE_MS;
+      }
+      rafRef.current = requestAnimationFrame(tick);
     };
-    const onWheel = (e: WheelEvent) => {
-      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-      const atStart = el.scrollLeft <= 0 && delta < 0;
-      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 1 && delta > 0;
-      if (atStart || atEnd) return; // let page scroll
-      e.preventDefault();
-      el.scrollLeft += delta;
-    };
-    el.addEventListener("scroll", onScroll, { passive: true });
-    el.addEventListener("wheel", onWheel, { passive: false });
+    rafRef.current = requestAnimationFrame(tick);
     return () => {
-      el.removeEventListener("scroll", onScroll);
-      el.removeEventListener("wheel", onWheel);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idx, paused, images.length]);
 
   const goTo = (i: number) => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    el.scrollTo({ left: i * el.clientWidth, behavior: "smooth" });
+    setIdx(i);
   };
+
+  const secondsLeft = Math.max(0, Math.ceil((SLIDE_MS * (1 - progress)) / 1000));
 
   return (
     <>
@@ -55,39 +63,60 @@ export default function ModelDetailSection({ model, showDivider = false }: Props
 
       <AnimatedSection className="section-light py-16 md:py-20">
         <div className="content-max flex flex-col gap-10 md:gap-14">
-          {/* Scroll-snap carousel */}
-          <div className="relative">
-            <div
-              ref={scrollerRef}
-              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide aspect-[21/9] bg-muted"
-              style={{ scrollbarWidth: "none" }}
-            >
+          {/* Auto-advancing carousel */}
+          <div
+            className="relative"
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+          >
+            <div className="relative aspect-[21/9] overflow-hidden bg-muted">
               {images.map((src, i) => (
-                <div key={i} className="relative shrink-0 w-full h-full snap-start">
-                  <img
-                    src={src}
-                    alt={`${model.title} ${i + 1}`}
-                    className="absolute inset-0 w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
+                <img
+                  key={i}
+                  src={src}
+                  alt={`${model.title} ${i + 1}`}
+                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+                    i === idx ? "opacity-100" : "opacity-0"
+                  }`}
+                  loading="lazy"
+                />
               ))}
+
+              {/* Countdown */}
+              <div className="absolute top-3 right-3 small-label bg-background/80 text-foreground px-2 py-1">
+                {secondsLeft}s
+              </div>
             </div>
 
-            {/* Variant tabs */}
-            <div className="flex gap-6 md:gap-10 mt-4 border-t border-border pt-3">
+            {/* Progress bar */}
+            <div className="flex gap-1.5 mt-3">
               {images.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => goTo(i)}
-                  className="flex-1 text-left group"
                   aria-label={`Go to image ${i + 1}`}
+                  className="flex-1 h-0.5 bg-border relative overflow-hidden"
                 >
-                  <div
-                    className={`h-px -mt-3 mb-3 transition-colors ${
-                      i === idx ? "bg-foreground" : "bg-transparent"
-                    }`}
+                  <span
+                    className="absolute inset-y-0 left-0 bg-foreground"
+                    style={{
+                      width:
+                        i < idx ? "100%" : i === idx ? `${progress * 100}%` : "0%",
+                      transition: i === idx ? "none" : "width 0.2s linear",
+                    }}
                   />
+                </button>
+              ))}
+            </div>
+
+            {/* Variant labels */}
+            <div className="flex gap-6 md:gap-10 mt-3">
+              {images.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => goTo(i)}
+                  className="flex-1 text-left"
+                >
                   <span
                     className={`small-label transition-colors ${
                       i === idx ? "text-foreground" : "text-muted-foreground"
