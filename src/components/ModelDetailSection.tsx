@@ -23,8 +23,20 @@ export default function ModelDetailSection({ model, showDivider = false }: Props
       const i = Math.round(el.scrollLeft / el.clientWidth);
       setIdx(i);
     };
+    const onWheel = (e: WheelEvent) => {
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      const atStart = el.scrollLeft <= 0 && delta < 0;
+      const atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 1 && delta > 0;
+      if (atStart || atEnd) return; // let page scroll
+      e.preventDefault();
+      el.scrollLeft += delta;
+    };
     el.addEventListener("scroll", onScroll, { passive: true });
-    return () => el.removeEventListener("scroll", onScroll);
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => {
+      el.removeEventListener("scroll", onScroll);
+      el.removeEventListener("wheel", onWheel);
+    };
   }, []);
 
   const goTo = (i: number) => {
