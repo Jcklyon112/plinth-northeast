@@ -1,3 +1,4 @@
+import { useState } from "react";
 import AnimatedSection from "./AnimatedSection";
 import type { PlinthModel } from "@/data/models";
 
@@ -7,6 +8,11 @@ interface Props {
 }
 
 export default function ModelDetailSection({ model, showDivider = false }: Props) {
+  const images = [model.image, ...model.gallery];
+  const [idx, setIdx] = useState(0);
+  const prev = () => setIdx((i) => (i - 1 + images.length) % images.length);
+  const next = () => setIdx((i) => (i + 1) % images.length);
+
   return (
     <>
       {showDivider && (
@@ -15,84 +21,116 @@ export default function ModelDetailSection({ model, showDivider = false }: Props
         </div>
       )}
 
-      {/* Hero image */}
-      <div className="relative h-[70vh] min-h-[400px]">
-        <img src={model.image} alt={model.title} className="absolute inset-0 w-full h-full object-cover" loading="lazy" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-16">
-          <p className="small-label text-white/60 mb-3">MODEL {model.number}</p>
-          <h2 className="display-heading text-4xl md:text-6xl text-white mb-3">{model.title}</h2>
-          <p className="small-label text-white/60 mb-2">{model.specLine}</p>
-          <p className="display-heading text-xl text-white">{model.price}</p>
-        </div>
-      </div>
-
-      {/* Description */}
-      <AnimatedSection className="section-light py-16 md:py-24">
-        <div className="content-max max-w-[680px]">
-          <p className="text-muted-foreground leading-relaxed text-lg">
-            {model.description}
-          </p>
-        </div>
-      </AnimatedSection>
-
-      {/* Specifications */}
-      <AnimatedSection className="section-dark py-16 md:py-24">
-        <div className="content-max max-w-[800px]">
-          <p className="small-label mb-10" style={{ color: "hsl(var(--dark-muted))" }}>SPECIFICATIONS</p>
-          <div className="space-y-0">
-            {model.specs.map((spec) => (
-              <div key={spec.label} className="flex flex-col md:flex-row md:justify-between py-4 border-b" style={{ borderColor: "hsl(var(--dark-border))" }}>
-                <span className="small-label" style={{ color: "hsl(var(--dark-muted))" }}>{spec.label}</span>
-                <span className="text-sm mt-1 md:mt-0" style={{ color: "hsl(var(--dark-fg))" }}>{spec.value}</span>
+      <AnimatedSection className="section-light py-16 md:py-20">
+        <div className="content-max grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 items-start">
+          {/* Carousel */}
+          <div className="relative">
+            <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+              <img
+                src={images[idx]}
+                alt={`${model.title} ${idx + 1}`}
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+              />
+              {images.length > 1 && (
+                <>
+                  <button
+                    onClick={prev}
+                    aria-label="Previous image"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-background/80 hover:bg-background text-foreground transition-colors"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <polyline points="9,2 3,7 9,12" />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={next}
+                    aria-label="Next image"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center bg-background/80 hover:bg-background text-foreground transition-colors"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <polyline points="5,2 11,7 5,12" />
+                    </svg>
+                  </button>
+                </>
+              )}
+            </div>
+            {images.length > 1 && (
+              <div className="flex gap-2 mt-3">
+                {images.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setIdx(i)}
+                    aria-label={`Go to image ${i + 1}`}
+                    className={`h-1 flex-1 transition-colors ${i === idx ? "bg-foreground" : "bg-border"}`}
+                  />
+                ))}
               </div>
-            ))}
+            )}
           </div>
-        </div>
-      </AnimatedSection>
 
-      {/* Pricing */}
-      <AnimatedSection className="section-light py-16 md:py-24">
-        <div className="content-max max-w-[800px]">
-          <p className="small-label text-muted-foreground mb-10">PRICING</p>
-          <div className="space-y-0">
-            {model.pricing.map((item) => (
-              <div key={item.label} className={`flex flex-col md:flex-row md:justify-between py-4 border-b border-border ${item.emphasized ? "py-6" : ""}`}>
-                <span className="small-label text-muted-foreground">{item.label}</span>
-                <span className={`mt-1 md:mt-0 ${item.emphasized ? "display-heading text-xl text-foreground" : "text-sm text-foreground"}`}>
-                  {item.value}
-                </span>
+          {/* Content */}
+          <div>
+            <p className="small-label text-muted-foreground mb-3">MODEL {model.number}</p>
+            <h2 className="display-heading text-foreground mb-2" style={{ fontSize: "clamp(28px, 3.4vw, 44px)" }}>
+              {model.title}
+            </h2>
+            <p className="small-label text-muted-foreground mb-1">{model.specLine}</p>
+            <p className="display-heading text-foreground mb-8" style={{ fontSize: "clamp(28px, 3.4vw, 44px)" }}>
+              {model.price}
+            </p>
+
+            <p className="text-muted-foreground leading-relaxed mb-8">
+              {model.description}
+            </p>
+
+            <div className="mb-8">
+              <p className="small-label text-muted-foreground mb-3">SPECIFICATIONS</p>
+              <div className="space-y-0">
+                {model.specs.map((spec) => (
+                  <div
+                    key={spec.label}
+                    className="flex flex-col sm:flex-row sm:justify-between py-2.5 border-b border-border"
+                  >
+                    <span className="small-label text-muted-foreground">{spec.label}</span>
+                    <span className="text-sm text-foreground mt-0.5 sm:mt-0">{spec.value}</span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      </AnimatedSection>
+            </div>
 
-      {/* Gallery */}
-      <div className="section-light py-8 md:py-16">
-        <div className="content-max">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {model.gallery.map((img, i) => (
-              <div key={i} className="aspect-[4/3] overflow-hidden">
-                <img src={img} alt={`${model.title} gallery ${i + 1}`} className="w-full h-full object-cover" loading="lazy" />
+            <div className="mb-8">
+              <p className="small-label text-muted-foreground mb-3">PRICING</p>
+              <div className="space-y-0">
+                {model.pricing.map((item) => (
+                  <div
+                    key={item.label}
+                    className={`flex flex-col sm:flex-row sm:justify-between py-2.5 border-b border-border ${
+                      item.emphasized ? "py-3.5" : ""
+                    }`}
+                  >
+                    <span className="small-label text-muted-foreground">{item.label}</span>
+                    <span
+                      className={`mt-0.5 sm:mt-0 ${
+                        item.emphasized
+                          ? "display-heading text-base text-foreground"
+                          : "text-sm text-foreground"
+                      }`}
+                    >
+                      {item.value}
+                    </span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-      </div>
+            </div>
 
-      {/* CTA */}
-      <AnimatedSection className="section-light py-16 md:py-24">
-        <div className="content-max">
-          <h3 className="display-heading text-2xl md:text-4xl text-foreground mb-8">
-            Start permitting for {model.title}
-          </h3>
-          <a
-            href="/#contact"
-            className="small-label bg-primary text-primary-foreground px-8 py-3 hover:bg-accent transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] inline-block"
-          >
-            Get in touch
-          </a>
+            <a
+              href="/#contact"
+              className="small-label bg-primary text-primary-foreground px-6 py-3 hover:bg-accent transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] inline-block"
+            >
+              Start permitting
+            </a>
+          </div>
         </div>
       </AnimatedSection>
     </>
