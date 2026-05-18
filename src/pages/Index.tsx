@@ -537,7 +537,7 @@ function RivianModelScroller({ onViewDetails }: { onViewDetails: (model: typeof 
                       paddingTop: "0.18em",
                       paddingBottom: "0.04em",
                       marginTop: 0,
-                      marginBottom: "-0.22em",
+                      marginBottom: 0,
                       position: "relative",
                       zIndex: 0,
                       overflow: "visible",
