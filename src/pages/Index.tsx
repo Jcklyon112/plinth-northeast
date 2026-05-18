@@ -523,7 +523,7 @@ function RivianModelScroller({ onViewDetails }: { onViewDetails: (model: typeof 
             {models.map((model) => (
               <div
                 key={model.id}
-                className="flex flex-col items-center justify-center"
+                className="flex flex-col items-center justify-start"
                 style={{ width: "100vw", minWidth: "100vw" }}
               >
                 {/* Big model name */}
@@ -531,13 +531,13 @@ function RivianModelScroller({ onViewDetails }: { onViewDetails: (model: typeof 
                   <h2
                     className="display-heading text-center select-none"
                     style={{
-                      fontSize: "clamp(80px, 15vw, 220px)",
+                      fontSize: "clamp(64px, 11vw, 170px)",
                       color: "hsl(var(--foreground))",
-                      lineHeight: 1.22,
-                      paddingTop: "0.32em",
+                      lineHeight: 1.05,
+                      paddingTop: "0.18em",
                       paddingBottom: "0.04em",
-                      marginTop: "-0.12em",
-                      marginBottom: "clamp(18px, 3vw, 44px)",
+                      marginTop: 0,
+                      marginBottom: "-0.22em",
                       position: "relative",
                       zIndex: 0,
                       overflow: "visible",
@@ -546,13 +546,12 @@ function RivianModelScroller({ onViewDetails }: { onViewDetails: (model: typeof 
                     {model.title.replace("The ", "")}
                   </h2>
 
-                  {/* Model image overlapping the text — fixed-height box so all elevations
-                      share the same top/bottom baseline regardless of aspect ratio */}
+                  {/* Model image overlapping the bottom of the text */}
                   <div
                     className="relative z-10 w-full flex items-end justify-center overflow-hidden"
                     style={{
                       marginTop: 0,
-                      height: "38vh",
+                      height: "34vh",
                     }}
                   >
                     <img
