@@ -610,7 +610,7 @@ function RivianModelScroller({ onViewDetails }: { onViewDetails: (model: typeof 
         </div>
 
         {/* Model tabs at bottom */}
-        <div className="flex justify-center gap-3 py-6">
+        <div className="flex justify-center gap-3 pt-6 pb-10 md:pb-12 shrink-0">
           {models.map((model, i) => (
             <button
               key={model.id}
