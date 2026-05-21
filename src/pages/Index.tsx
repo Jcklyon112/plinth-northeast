@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import AnimatedSection from "@/components/AnimatedSection";
 import Footer from "@/components/Footer";
+import UnlockYardSection from "@/components/UnlockYardSection";
 import ContactForm from "@/components/ContactForm";
 import ModelModal from "@/components/ModelModal";
 import { models } from "@/data/models";
@@ -684,6 +685,7 @@ export default function Index() {
 
       {/* ——— SECTION 2: THE OPPORTUNITY ——— */}
       <ScrollRevealSection />
+      <UnlockYardSection />
 
       {/* ——— SECTION 4: MODELS ——— */}
       <RivianModelScroller onViewDetails={(model) => setModalModel(model)} />
