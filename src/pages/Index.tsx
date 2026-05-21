@@ -41,22 +41,22 @@ function ScrollRevealSection() {
 
   return (
     <section ref={sectionRef} className="section-dark">
-      <div className="px-6 md:px-12 py-24 md:py-40" style={{ maxWidth: "1400px" }}>
-        <p className="small-label mb-4" style={{ color: "hsl(var(--dark-muted))" }}>*PLINTH-LABS</p>
+      <div className="px-6 md:px-12 py-16 md:py-24 mx-auto" style={{ maxWidth: "1400px" }}>
+        <p className="small-label mb-3" style={{ color: "hsl(var(--dark-muted))" }}>*PLINTH-LABS</p>
         <h2
-          className="display-heading mb-12"
+          className="display-heading mb-8"
           style={{
             color: "hsl(var(--dark-fg))",
-            fontSize: "clamp(36px, 5vw, 72px)",
+            fontSize: "clamp(28px, 3.4vw, 44px)",
           }}
         >
           The Opportunity.
         </h2>
         <p
           style={{
-            fontSize: "clamp(20px, 2.8vw, 32px)",
-            lineHeight: 1.45,
-            maxWidth: "960px",
+            fontSize: "clamp(15px, 1.4vw, 19px)",
+            lineHeight: 1.55,
+            maxWidth: "780px",
           }}
         >
           {ALL_WORDS.map((word, i) => {
@@ -83,7 +83,7 @@ function ScrollRevealSection() {
           })}
         </p>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mt-20 md:mt-32">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 mt-12 md:mt-16">
           {[
             { stat: "$60K+", desc: "in average annual rental income from a permitted ADU in the Northeast." },
             { stat: "30%", desc: "average property value lift from adding a permitted accessory dwelling." },
@@ -92,17 +92,17 @@ function ScrollRevealSection() {
           ].map((item) => (
             <div key={item.stat}>
               <p
-                className="display-heading mb-3"
+                className="display-heading mb-2"
                 style={{
-                  color: "hsl(var(--dark-fg) / 0.5)",
-                  fontSize: "clamp(28px, 4vw, 56px)",
+                  color: "hsl(var(--dark-fg) / 0.55)",
+                  fontSize: "clamp(20px, 2.4vw, 32px)",
                   fontWeight: 400,
                   letterSpacing: "-0.02em",
                 }}
               >
                 {item.stat}
               </p>
-              <p className="text-xs md:text-sm leading-relaxed" style={{ color: "hsl(var(--dark-muted))" }}>
+              <p className="text-xs leading-relaxed" style={{ color: "hsl(var(--dark-muted))" }}>
                 {item.desc}
               </p>
             </div>
@@ -110,6 +110,7 @@ function ScrollRevealSection() {
         </div>
       </div>
     </section>
+
   );
 }
 
