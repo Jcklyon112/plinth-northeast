@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import ContactForm from "@/components/ContactForm";
 import ModelModal from "@/components/ModelModal";
 import { models } from "@/data/models";
+import SipMapApp from "@/sip/SipMapApp";
 import heroHeader from "@/assets/hero-header.png";
 import backyardImg from "@/assets/backyard-deployment.png";
 import clusterImg from "@/assets/cluster-deployment.png";
@@ -825,10 +826,42 @@ export default function Index() {
       {/* ——— SECTION 3: HOW IT WORKS ——— */}
       <ProcessStepsSection />
 
+      {/* ——— PARCEL INTELLIGENCE (SIP map) ——— */}
+      <section id="parcel-map" className="section-dark">
+        <div className="px-6 md:px-12 pt-20 md:pt-28 pb-10" style={{ maxWidth: "1400px" }}>
+          <AnimatedSection>
+            <p className="small-label mb-4" style={{ color: "hsl(var(--dark-muted))" }}>
+              *PLINTH-SIP
+            </p>
+            <h2
+              className="display-heading mb-6"
+              style={{
+                color: "hsl(var(--dark-fg))",
+                fontSize: "clamp(32px, 5vw, 56px)",
+              }}
+            >
+              Scan your parcel.
+            </h2>
+            <p style={{ color: "hsl(var(--dark-muted))", maxWidth: "640px", fontSize: "15px", lineHeight: 1.55 }}>
+              Search an address, zip code, or town to run feasibility scoring — or explore a scanned municipality on the map.
+            </p>
+          </AnimatedSection>
+        </div>
+        <div
+          className="w-full border-t border-b"
+          style={{
+            height: "min(85vh, 920px)",
+            borderColor: "hsl(var(--dark-fg) / 0.12)",
+          }}
+        >
+          <SipMapApp />
+        </div>
+      </section>
+
       {/* ——— SECTION 5: CONTACT ——— */}
 
       {/* ——— SECTION 8: CONTACT ——— */}
-      <section id="contact" className="section-dark">
+      {/* <section id="contact" className="section-dark">
         <div className="content-max py-24 md:py-40">
           <div className="max-w-[560px]">
             <AnimatedSection>
@@ -842,7 +875,7 @@ export default function Index() {
             <ContactForm />
           </div>
         </div>
-      </section>
+      </section> */}
 
       <Footer />
 
