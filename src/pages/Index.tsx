@@ -118,216 +118,86 @@ const PROCESS_STEPS = [
   {
     number: "01",
     title: "Study",
-    heading: "Know What's Possible Before You Commit.",
+    short: "Feasibility & financial projections.",
     body: "We analyze your parcel — zoning, setbacks, utility access, and financial projections — so you have a clear picture of what can be built, what it will cost, and what it will earn. No guesswork, no surprises.",
   },
   {
     number: "02A",
     title: "Permit",
-    heading: "We Handle the Part That Stops Everyone Else.",
+    short: "We handle every agency submission.",
     body: "Permitting is where most ADU projects die. Plinth manages every submission, every agency response, and every approval milestone. You never call the building department.",
-    isOurs: true,
   },
   {
     number: "02B",
     title: "Build",
-    heading: "Your Unit Builds While Permits Process.",
+    short: "Manufacturing runs in parallel.",
     body: "Traditional construction waits for permits. Ours doesn't. Manufacturing runs in parallel — so by the time your permit is approved, your unit is ready to ship.",
   },
   {
     number: "03",
     title: "Install",
-    heading: "From Flatbed to Front Door.",
-    body: "Plinth coordinates delivery, site prep, crane logistics, utility connections, and final inspections.",
+    short: "Delivery, crane, hookups, inspections.",
+    body: "Plinth coordinates delivery, site prep, crane logistics, utility connections, and final inspections — from flatbed to front door.",
   },
 ];
 
 function ProcessStepsSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [progress, setProgress] = useState(0);
-  const rafRef = useRef<number | null>(null);
-  const targetRef = useRef(0);
-  const currentRef = useRef(0);
-
-  useEffect(() => {
-    const computeTarget = () => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const total = sectionRef.current.offsetHeight - window.innerHeight;
-      const scrolled = Math.max(0, -rect.top);
-      targetRef.current = Math.max(0, Math.min(0.9999, scrolled / total));
-    };
-    const tick = () => {
-      // Smooth lerp toward target for buttery transitions
-      currentRef.current += (targetRef.current - currentRef.current) * 0.08;
-      setProgress(currentRef.current);
-      if (Math.abs(targetRef.current - currentRef.current) > 0.0002) {
-        rafRef.current = requestAnimationFrame(tick);
-      } else {
-        rafRef.current = null;
-      }
-    };
-    const onScroll = () => {
-      computeTarget();
-      if (rafRef.current == null) rafRef.current = requestAnimationFrame(tick);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    computeTarget();
-    currentRef.current = targetRef.current;
-    setProgress(targetRef.current);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, []);
-
-  const stepFloat = progress * PROCESS_STEPS.length;
-  const activeStep = Math.min(PROCESS_STEPS.length - 1, Math.floor(stepFloat));
-  const localProgress = Math.max(0, Math.min(1, stepFloat - activeStep));
-
-  const renderRevealBody = (heading: string, body: string) => {
-    const tokens = body.split(/(\s+)/); // keep whitespace tokens
-    const wordCount = tokens.filter((t) => t.trim().length > 0).length;
-    // Stretch so all words finish white before the step ends
-    const reveal = Math.min(1, localProgress / 0.85);
-    let wIdx = -1;
-    return (
-      <>
-        <span style={{ color: "hsl(var(--dark-fg))" }}>{heading}</span>{" "}
-        {tokens.map((tok, i) => {
-          if (!tok.trim()) return <span key={i}>{tok}</span>;
-          wIdx++;
-          const pos = wIdx / Math.max(1, wordCount - 1);
-          const win = 0.2;
-          const t = Math.max(0, Math.min(1, (reveal - pos + win) / win));
-          const eased = t * t * (3 - 2 * t);
-          const opacity = 0.18 + eased * 0.82;
-          return (
-            <span
-              key={i}
-              style={{
-                color: `hsl(var(--dark-fg) / ${opacity})`,
-                transition: "color 220ms cubic-bezier(0.22, 1, 0.36, 1)",
-              }}
-            >
-              {tok}
-            </span>
-          );
-        })}
-      </>
-    );
-  };
-
   return (
-    <section
-      ref={sectionRef}
-      className="section-dark relative"
-      style={{ height: `${PROCESS_STEPS.length * 100}vh` }}
-    >
-      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
-        <div className="px-6 md:px-12 mx-auto w-full" style={{ maxWidth: "1400px" }}>
-          {/* Step headers — 4 columns */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-            {PROCESS_STEPS.map((step, i) => {
-              // Distance from this step to current scroll position (0 = exact)
-              const distance = Math.abs(stepFloat - i);
-              // Smooth proximity 1 (this step) → 0 (far). Falls off across ~1.4 step widths
-              // so adjacent headers overlap and the gray→white change is continuous.
-              const proximity = Math.max(0, 1 - distance / 1.4);
-              // Ease for a softer ramp (smoothstep)
-              const eased = proximity * proximity * (3 - 2 * proximity);
-              // Wide range: deep gray (0.08) → full white (1.0) so the change is obvious
-              const opacity = 0.08 + eased * 0.92;
-              return (
-                <div key={step.number} className="text-left">
-                  <p
-                    className="display-heading mb-2"
-                    style={{
-                      fontSize: "clamp(28px, 4vw, 56px)",
-                      color: `hsl(var(--dark-fg) / ${opacity})`,
-                      fontWeight: 700,
-                      transition: "color 280ms cubic-bezier(0.22, 1, 0.36, 1)",
-                      willChange: "color",
-                    }}
-                  >
-                    {step.number}
-                  </p>
-                  <p
-                    className="display-heading"
-                    style={{
-                      fontSize: "clamp(22px, 3vw, 44px)",
-                      color: `hsl(var(--dark-fg) / ${opacity})`,
-                      fontWeight: 400,
-                      transition: "color 280ms cubic-bezier(0.22, 1, 0.36, 1)",
-                      willChange: "color",
-                    }}
-                  >
-                    {step.title}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
+    <section className="section-light py-24 md:py-32">
+      <div className="content-max">
+        <div className="max-w-2xl mb-16 md:mb-20">
+          <h2
+            className="display-heading text-foreground mb-5"
+            style={{ fontSize: "clamp(36px, 5vw, 64px)" }}
+          >
+            The full service, from backyard to keys.
+          </h2>
+          <p
+            className="text-muted-foreground leading-relaxed"
+            style={{ fontSize: "clamp(15px, 1.2vw, 17px)" }}
+          >
+            Plinth is your single point of contact throughout the entire ADU process. Study, permitting, manufacturing, and install — under one roof.
+          </p>
+        </div>
 
-          {/* Active step content row — appears under the active column */}
-          <div className="hidden md:grid grid-cols-4 gap-6 md:gap-8 mt-8">
-            {PROCESS_STEPS.map((step, i) => (
-              <div key={step.number}>
-                {activeStep === i && (
-                  <div key={`content-${i}`}>
-                    <p
-                      className="mb-6 leading-relaxed step-enter"
-                      style={{
-                        color: "hsl(var(--dark-muted))",
-                        fontSize: "clamp(13px, 1.1vw, 15px)",
-                      }}
-                    >
-                      {renderRevealBody(step.heading, step.body)}
-                    </p>
-                    <div
-                      className="aspect-square rounded-lg overflow-hidden"
-                      style={{ background: "hsl(var(--dark-fg) / 0.08)" }}
-                    >
-                      <div
-                        className="w-full h-full flex items-center justify-center text-xs"
-                        style={{ color: "hsl(var(--dark-muted))" }}
-                      >
-                        Step {step.number}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {/* Mobile: stacked content under headers */}
-          <div className="md:hidden mt-8">
-            <div key={`m-${activeStep}`}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          {PROCESS_STEPS.map((step) => (
+            <div
+              key={step.number}
+              className="p-8 md:p-10 flex flex-col"
+              style={{ background: "hsl(var(--muted))" }}
+            >
               <p
-                className="mb-6 leading-relaxed step-enter"
+                className="display-heading mb-10"
                 style={{
-                  color: "hsl(var(--dark-muted))",
-                  fontSize: "14px",
+                  fontSize: "clamp(36px, 3.4vw, 48px)",
+                  fontWeight: 400,
+                  color: "hsl(var(--muted-foreground) / 0.45)",
+                  letterSpacing: "-0.02em",
                 }}
               >
-                {renderRevealBody(PROCESS_STEPS[activeStep].heading, PROCESS_STEPS[activeStep].body)}
+                {step.number}
               </p>
-              <div
-                className="aspect-square rounded-lg overflow-hidden"
-                style={{ background: "hsl(var(--dark-fg) / 0.08)" }}
+              <h3
+                className="display-heading text-foreground mb-3"
+                style={{ fontSize: "clamp(18px, 1.4vw, 20px)", fontWeight: 700 }}
               >
-                <div
-                  className="w-full h-full flex items-center justify-center text-xs"
-                  style={{ color: "hsl(var(--dark-muted))" }}
-                >
-                  Step {PROCESS_STEPS[activeStep].number}
-                </div>
-              </div>
+                {step.title}
+              </h3>
+              <p
+                className="text-foreground/80 mb-4 leading-snug"
+                style={{ fontSize: "13px", fontWeight: 500 }}
+              >
+                {step.short}
+              </p>
+              <p
+                className="text-muted-foreground leading-relaxed"
+                style={{ fontSize: "13px" }}
+              >
+                {step.body}
+              </p>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
