@@ -30,6 +30,12 @@ export default function Navbar() {
             Models
           </Link>
           <Link
+            to="/how-it-works"
+            className="small-label text-foreground transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
+          >
+            How It Works
+          </Link>
+          <Link
             to="/about"
             className="small-label text-foreground transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
           >
