@@ -21,7 +21,10 @@ export default function Navbar() {
         scrolled ? "bg-background/95 backdrop-blur-sm border-b border-border" : "bg-transparent"
       }`}
     >
-      <div className="content-max flex items-center justify-end h-16 md:h-20">
+      <div className="content-max flex items-center justify-between h-16 md:h-20">
+        <Link to="/" className="small-label text-foreground tracking-[0.16em]">
+          PLINTH
+        </Link>
         <div className="flex items-center gap-8">
           <Link
             to="/models"
