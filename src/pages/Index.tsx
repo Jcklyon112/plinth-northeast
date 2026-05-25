@@ -142,6 +142,35 @@ const PROCESS_STEPS = [
 ];
 
 function ProcessStepsSection() {
+  const gridRef = useRef<HTMLDivElement>(null);
+  const [progresses, setProgresses] = useState<number[]>(() => PROCESS_STEPS.map(() => 0));
+
+  useEffect(() => {
+    const update = () => {
+      const grid = gridRef.current;
+      if (!grid) return;
+      const cards = Array.from(grid.children) as HTMLElement[];
+      const vh = window.innerHeight;
+      const next = cards.map((card) => {
+        const rect = card.getBoundingClientRect();
+        // 0 when card top hits 90% of viewport, 1 when card bottom hits 35%
+        const start = vh * 0.9;
+        const end = vh * 0.35;
+        const center = rect.top + rect.height / 2;
+        const p = (start - center) / (start - end);
+        return Math.max(0, Math.min(1, p));
+      });
+      setProgresses(next);
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
   return (
     <section className="section-light py-24 md:py-32">
       <div className="content-max">
@@ -160,44 +189,72 @@ function ProcessStepsSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-          {PROCESS_STEPS.map((step) => (
-            <div
-              key={step.number}
-              className="p-8 md:p-10 flex flex-col"
-              style={{ background: "hsl(var(--muted))" }}
-            >
-              <p
-                className="display-heading mb-10"
-                style={{
-                  fontSize: "clamp(36px, 3.4vw, 48px)",
-                  fontWeight: 400,
-                  color: "hsl(var(--muted-foreground) / 0.45)",
-                  letterSpacing: "-0.02em",
-                }}
+        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          {PROCESS_STEPS.map((step, i) => {
+            const p = progresses[i] ?? 0;
+            const ease = p * p * (3 - 2 * p);
+            // Number: 0.25 -> 0.6
+            const numOpacity = 0.25 + ease * 0.35;
+            // Title: gray (0.55) -> full foreground (1)
+            const titleOpacity = 0.55 + ease * 0.45;
+            // Short tagline: 0.45 -> 0.95
+            const shortOpacity = 0.45 + ease * 0.5;
+            // Body: 0.35 -> 0.9
+            const bodyOpacity = 0.35 + ease * 0.55;
+            const transition = "color 280ms cubic-bezier(0.22, 1, 0.36, 1)";
+            return (
+              <div
+                key={step.number}
+                className="p-8 md:p-10 flex flex-col"
+                style={{ background: "hsl(var(--muted))" }}
               >
-                {step.number}
-              </p>
-              <h3
-                className="display-heading text-foreground mb-3"
-                style={{ fontSize: "clamp(18px, 1.4vw, 20px)", fontWeight: 700 }}
-              >
-                {step.title}
-              </h3>
-              <p
-                className="text-foreground/80 mb-4 leading-snug"
-                style={{ fontSize: "13px", fontWeight: 500 }}
-              >
-                {step.short}
-              </p>
-              <p
-                className="text-muted-foreground leading-relaxed"
-                style={{ fontSize: "13px" }}
-              >
-                {step.body}
-              </p>
-            </div>
-          ))}
+                <p
+                  className="display-heading mb-10"
+                  style={{
+                    fontSize: "clamp(36px, 3.4vw, 48px)",
+                    fontWeight: 400,
+                    color: `hsl(var(--foreground) / ${numOpacity})`,
+                    letterSpacing: "-0.02em",
+                    transition,
+                  }}
+                >
+                  {step.number}
+                </p>
+                <h3
+                  className="display-heading mb-3"
+                  style={{
+                    fontSize: "clamp(18px, 1.4vw, 20px)",
+                    fontWeight: 700,
+                    color: `hsl(var(--foreground) / ${titleOpacity})`,
+                    transition,
+                  }}
+                >
+                  {step.title}
+                </h3>
+                <p
+                  className="mb-4 leading-snug"
+                  style={{
+                    fontSize: "13px",
+                    fontWeight: 500,
+                    color: `hsl(var(--foreground) / ${shortOpacity})`,
+                    transition,
+                  }}
+                >
+                  {step.short}
+                </p>
+                <p
+                  className="leading-relaxed"
+                  style={{
+                    fontSize: "13px",
+                    color: `hsl(var(--foreground) / ${bodyOpacity})`,
+                    transition,
+                  }}
+                >
+                  {step.body}
+                </p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
