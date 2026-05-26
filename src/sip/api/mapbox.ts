@@ -98,3 +98,30 @@ export async function fetchAddressSuggestions(keyword: string): Promise<MapboxSu
 export function hasMapboxToken(): boolean {
   return Boolean(import.meta.env.VITE_MAPBOX_ACCESS_TOKEN);
 }
+
+export interface MapboxTileLayerConfig {
+  url: string;
+  options: {
+    attribution: string;
+    tileSize: number;
+    zoomOffset: number;
+    maxZoom: number;
+  };
+}
+
+/** Mapbox Dark basemap tiles for Leaflet (requires VITE_MAPBOX_ACCESS_TOKEN). */
+export function mapboxDarkTileLayerConfig(): MapboxTileLayerConfig | null {
+  const token = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
+  if (!token) return null;
+
+  return {
+    url: `https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/{z}/{x}/{y}?access_token=${token}`,
+    options: {
+      attribution:
+        '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      tileSize: 512,
+      zoomOffset: -1,
+      maxZoom: 22,
+    },
+  };
+}

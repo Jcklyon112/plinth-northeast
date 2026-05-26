@@ -1,68 +1,32 @@
 import React, { useState, useCallback } from 'react';
 import { Map } from './components/Map';
-import type { ViewMode } from './components/Map';
-import { FilterBar } from './components/FilterBar';
+import { MapHeader } from './components/MapHeader';
 import { ParcelDetailPanel } from './components/ParcelDetailPanel';
 import { ScanSearchBar } from './components/ScanSearchBar';
-import { exportCsvUrl } from './api/client';
-import type { ParcelCollection, ParcelProperties, FilterState } from './types/parcel';
+import type { ParcelCollection, ParcelProperties } from './types/parcel';
 
-const DEFAULT_MUNICIPALITY = 'ma_acton';
-
-/** Embedded SIP parcel map + search (from standalone frontend App). */
+/** Embedded SIP parcel map + address search. */
 export default function SipMapApp() {
-  const [municipalityId, setMunicipalityId] = useState(DEFAULT_MUNICIPALITY);
   const [parcels, setParcels] = useState<ParcelCollection | null>(null);
   const [selectedParcel, setSelectedParcel] = useState<ParcelProperties | null>(null);
-  const [selectedGeometry, setSelectedGeometry] = useState<GeoJSON.Geometry | null>(null);
-  const [filters, setFilters] = useState<FilterState>({ tier: null, minScore: null, zoningCode: null });
-  const [viewMode, setViewMode] = useState<ViewMode>('tier');
-  const [focusParcelId, setFocusParcelId] = useState<string | null>(null);
+  const [focusAddress, setFocusAddress] = useState<string | null>(null);
 
   const handleParcelClick = useCallback((parcel: ParcelProperties) => {
     setSelectedParcel(parcel);
-    const feature = parcels?.features.find(
-      f => f.properties.parcel_id === parcel.parcel_id
-        && f.properties.municipality_id === parcel.municipality_id
-    );
-    setSelectedGeometry(feature?.geometry ?? null);
-  }, [parcels]);
-
-  const handleExport = () => {
-    window.open(exportCsvUrl(municipalityId, filters), '_blank');
-  };
-
-  const handleScanComplete = useCallback((newMuniId: string, _newMuniName: string) => {
-    setMunicipalityId(newMuniId);
-    setSelectedParcel(null);
-    setSelectedGeometry(null);
-    setParcels(null);
   }, []);
 
   return (
     <div style={styles.app}>
-      <FilterBar
-        filters={filters}
-        onChange={setFilters}
-        onExport={handleExport}
-        parcelCount={parcels?.features.length ?? 0}
-        viewMode={viewMode}
-        onViewModeChange={setViewMode}
-      />
+      <MapHeader parcelCount={parcels?.features.length ?? 0} />
 
       <ScanSearchBar
-        onScanComplete={handleScanComplete}
-        onParcelFound={(parcel, muniId, geom) => {
-          if (muniId && muniId !== municipalityId) {
-            setMunicipalityId(muniId);
-          }
+        onParcelFound={(parcel, geometry) => {
           setSelectedParcel(parcel);
-          setSelectedGeometry(geom);
-          setFocusParcelId(parcel.parcel_id);
-          if (geom) {
+          setFocusAddress(parcel.address ?? null);
+          if (geometry) {
             setParcels({
               type: 'FeatureCollection',
-              features: [{ type: 'Feature', geometry: geom, properties: parcel }],
+              features: [{ type: 'Feature', geometry, properties: parcel }],
               total: 1,
             });
           }
@@ -73,20 +37,16 @@ export default function SipMapApp() {
         <div style={styles.mapContainer}>
           <Map
             parcels={parcels}
-            selectedParcelId={selectedParcel?.parcel_id ?? null}
+            selectedAddress={selectedParcel?.address ?? null}
             onParcelClick={handleParcelClick}
-            viewMode={viewMode}
-            focusParcelId={focusParcelId}
+            focusAddress={focusAddress}
           />
         </div>
 
         {selectedParcel && (
           <ParcelDetailPanel
             parcel={selectedParcel}
-            onClose={() => {
-              setSelectedParcel(null);
-              setSelectedGeometry(null);
-            }}
+            onClose={() => setSelectedParcel(null)}
           />
         )}
       </div>
