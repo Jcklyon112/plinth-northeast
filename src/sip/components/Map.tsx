@@ -129,7 +129,7 @@ export const Map: React.FC<MapProps> = ({ parcels, selectedAddress, onParcelClic
         return {
           fillColor: PARCEL_FILL,
           color: selected ? "#ffffff" : "#111",
-          weight: selected ? 2.5 : 0.4,
+          weight: selected ? 0.25 : 0.4,
           fillOpacity: selected ? 0.3 : 0.72,
         };
       },
