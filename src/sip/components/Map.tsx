@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
-import { mapboxDarkTileLayerConfig } from '../api/mapbox';
-import type { ModelPlacement, ParcelCollection, ParcelProperties } from '../types/parcel';
+import React, { useEffect, useRef, useState } from "react";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import { mapboxDarkTileLayerConfig } from "../api/mapbox";
+import type { ModelPlacement, ParcelCollection, ParcelProperties } from "../types/parcel";
 
-const PARCEL_FILL = '#5de0a0';
-const MODEL_FILL = '#6eaaff';
-const MODEL_STROKE = '#3a7bd5';
+const PARCEL_FILL = "#5de0a0";
+const MODEL_FILL = "#6eaaff";
+const MODEL_STROKE = "#3a7bd5";
 
 function computeCentroid(geometry: GeoJSON.Geometry): [number, number] {
   let totalLng = 0;
@@ -19,9 +19,9 @@ function computeCentroid(geometry: GeoJSON.Geometry): [number, number] {
       count++;
     }
   };
-  if (geometry.type === 'Polygon') {
+  if (geometry.type === "Polygon") {
     processRing((geometry as GeoJSON.Polygon).coordinates[0]);
-  } else if (geometry.type === 'MultiPolygon') {
+  } else if (geometry.type === "MultiPolygon") {
     for (const polygon of (geometry as GeoJSON.MultiPolygon).coordinates) {
       processRing(polygon[0]);
     }
@@ -38,11 +38,11 @@ interface MapProps {
 }
 
 const CARTO_DARK_TILE = {
-  url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+  url: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
   options: {
     attribution:
       '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/">CARTO</a>',
-    subdomains: 'abcd',
+    subdomains: "abcd",
     maxZoom: 20,
   },
 } as const;
@@ -53,34 +53,28 @@ function createDarkBasemapLayer(map: L.Map): L.TileLayer {
   return L.tileLayer(config.url, config.options).addTo(map);
 }
 
-export const Map: React.FC<MapProps> = ({
-  parcels,
-  selectedAddress,
-  onParcelClick,
-  focusAddress,
-  modelPlacement,
-}) => {
-  const mapRef = useRef<L.Map | null>(null); 
+export const Map: React.FC<MapProps> = ({ parcels, selectedAddress, onParcelClick, focusAddress, modelPlacement }) => {
+  const mapRef = useRef<L.Map | null>(null);
   const layerRef = useRef<L.GeoJSON | null>(null);
   const modelLayerRef = useRef<L.GeoJSON | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [basemap, setBasemap] = useState<'satellite' | 'dark'>('dark');
+  const [basemap, setBasemap] = useState<"satellite" | "dark">("dark");
 
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
 
-    map.eachLayer(layer => {
+    map.eachLayer((layer) => {
       if (layer instanceof L.TileLayer) map.removeLayer(layer);
     });
 
-    if (basemap === 'satellite') {
+    if (basemap === "satellite") {
+      L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+        attribution: "Tiles © Esri",
+        maxZoom: 20,
+      }).addTo(map);
       L.tileLayer(
-        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-        { attribution: 'Tiles © Esri', maxZoom: 20 },
-      ).addTo(map);
-      L.tileLayer(
-        'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
+        "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
         { maxZoom: 20, opacity: 0.8 },
       ).addTo(map);
     } else {
@@ -97,13 +91,13 @@ export const Map: React.FC<MapProps> = ({
       zoomControl: true,
     });
 
-    if (basemap === 'satellite') {
+    if (basemap === "satellite") {
+      L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+        attribution: "Tiles © Esri",
+        maxZoom: 20,
+      }).addTo(map);
       L.tileLayer(
-        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-        { attribution: 'Tiles © Esri', maxZoom: 20 },
-      ).addTo(map);
-      L.tileLayer(
-        'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
+        "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
         { maxZoom: 20, opacity: 0.8 },
       ).addTo(map);
     } else {
@@ -134,14 +128,14 @@ export const Map: React.FC<MapProps> = ({
         const selected = selectedAddress != null && props.address === selectedAddress;
         return {
           fillColor: PARCEL_FILL,
-          color: selected ? '#ffffff' : '#111',
+          color: selected ? "#ffffff" : "#111",
           weight: selected ? 2.5 : 0.4,
-          fillOpacity: selected ? 0.95 : 0.72,
+          fillOpacity: selected ? 0.3 : 0.72,
         };
       },
       onEachFeature: (feature, layer) => {
         const props = feature.properties as ParcelProperties;
-        layer.on('click', () => {
+        layer.on("click", () => {
           const centroid = computeCentroid(feature.geometry as GeoJSON.Geometry);
           onParcelClick({
             ...props,
@@ -149,13 +143,11 @@ export const Map: React.FC<MapProps> = ({
             _centroid_lat: centroid[1],
           } as ParcelProperties);
         });
-        const acres = props.lot_area_sqft
-          ? `${(props.lot_area_sqft / 43560).toFixed(2)} ac`
-          : '';
-        layer.bindTooltip(
-          `<strong>${props.address || 'Parcel'}</strong>${acres ? `<br/>${acres}` : ''}`,
-          { sticky: true, className: 'plinth-tooltip' },
-        );
+        const acres = props.lot_area_sqft ? `${(props.lot_area_sqft / 43560).toFixed(2)} ac` : "";
+        layer.bindTooltip(`<strong>${props.address || "Parcel"}</strong>${acres ? `<br/>${acres}` : ""}`, {
+          sticky: true,
+          className: "plinth-tooltip",
+        });
       },
     });
 
@@ -202,45 +194,42 @@ export const Map: React.FC<MapProps> = ({
 
     const features: GeoJSON.Feature[] = [
       {
-        type: 'Feature',
-        properties: { kind: 'model' },
+        type: "Feature",
+        properties: { kind: "model" },
         geometry: modelPlacement.geometry,
       },
     ];
 
-    const modelLayer = L.geoJSON(
-      { type: 'FeatureCollection', features } as GeoJSON.FeatureCollection,
-      {
-        style: feature => {
-          const kind = (feature?.properties as { kind?: string })?.kind;
-          if (kind === 'model') {
-            return {
-              fillColor: MODEL_FILL,
-              color: MODEL_STROKE,
-              weight: 2,
-              fillOpacity: 0.55,
-              dashArray: undefined,
-            };
-          }
+    const modelLayer = L.geoJSON({ type: "FeatureCollection", features } as GeoJSON.FeatureCollection, {
+      style: (feature) => {
+        const kind = (feature?.properties as { kind?: string })?.kind;
+        if (kind === "model") {
           return {
-            fillColor: 'transparent',
-            color: '#888',
-            weight: 1,
-            fillOpacity: 0,
-            dashArray: '4 4',
+            fillColor: MODEL_FILL,
+            color: MODEL_STROKE,
+            weight: 2,
+            fillOpacity: 0.55,
+            dashArray: undefined,
           };
-        },
+        }
+        return {
+          fillColor: "transparent",
+          color: "#888",
+          weight: 1,
+          fillOpacity: 0,
+          dashArray: "4 4",
+        };
       },
-    );
+    });
 
     modelLayer.addTo(mapRef.current);
     modelLayerRef.current = modelLayer;
 
     const label = `${modelPlacement.model_name} · ${modelPlacement.footprint_label}`;
-    modelLayer.eachLayer(layer => {
+    modelLayer.eachLayer((layer) => {
       (layer as L.Path).bindTooltip(label, {
         sticky: true,
-        className: 'plinth-tooltip',
+        className: "plinth-tooltip",
       });
     });
   }, [modelPlacement]);
@@ -258,47 +247,47 @@ export const Map: React.FC<MapProps> = ({
         }
         .plinth-tooltip::before { display: none !important; }
       `}</style>
-      <div ref={containerRef} style={{ width: '100%', height: '100%' }} />
+      <div ref={containerRef} style={{ width: "100%", height: "100%" }} />
 
       <div
         style={{
-          position: 'absolute',
+          position: "absolute",
           bottom: 28,
           right: 10,
           zIndex: 1000,
-          display: 'flex',
+          display: "flex",
           borderRadius: 6,
-          overflow: 'hidden',
-          border: '1px solid #333',
+          overflow: "hidden",
+          border: "1px solid #333",
         }}
       >
         <button
           type="button"
-          onClick={() => setBasemap('satellite')}
+          onClick={() => setBasemap("satellite")}
           style={{
-            background: basemap === 'satellite' ? '#5de0a0' : '#1a1a1a',
-            color: basemap === 'satellite' ? '#000' : '#aaa',
-            border: 'none',
-            padding: '5px 11px',
+            background: basemap === "satellite" ? "#5de0a0" : "#1a1a1a",
+            color: basemap === "satellite" ? "#000" : "#aaa",
+            border: "none",
+            padding: "5px 11px",
             fontSize: 11,
             fontWeight: 700,
-            cursor: 'pointer',
+            cursor: "pointer",
           }}
         >
           Satellite
         </button>
         <button
           type="button"
-          onClick={() => setBasemap('dark')}
+          onClick={() => setBasemap("dark")}
           style={{
-            background: basemap === 'dark' ? '#5de0a0' : '#1a1a1a',
-            color: basemap === 'dark' ? '#000' : '#aaa',
-            border: 'none',
-            borderLeft: '1px solid #333',
-            padding: '5px 11px',
+            background: basemap === "dark" ? "#5de0a0" : "#1a1a1a",
+            color: basemap === "dark" ? "#000" : "#aaa",
+            border: "none",
+            borderLeft: "1px solid #333",
+            padding: "5px 11px",
             fontSize: 11,
             fontWeight: 700,
-            cursor: 'pointer',
+            cursor: "pointer",
           }}
         >
           Dark
