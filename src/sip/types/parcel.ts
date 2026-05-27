@@ -11,7 +11,7 @@ export interface ModelPlacement {
   width_ft: number;
   length_ft: number;
   geometry: GeoJSON.Polygon;
-  available_area_geometry?: GeoJSON.Polygon | GeoJSON.MultiPolygon | null;
+  available_area_geometry?: GeoJSON.Polygon | null;
   building_geometry?: GeoJSON.Polygon | null;
   setbacks_ft?: { building: number; between_models: number };
 }

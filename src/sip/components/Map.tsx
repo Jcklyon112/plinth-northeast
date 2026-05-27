@@ -7,8 +7,6 @@ import type { ModelPlacement, ParcelCollection, ParcelProperties } from '../type
 const PARCEL_FILL = '#5de0a0';
 const MODEL_FILL = '#6eaaff';
 const MODEL_STROKE = '#3a7bd5';
-const AVAILABLE_FILL = '#f5c842';
-const AVAILABLE_STROKE = '#d4a017';
 
 function computeCentroid(geometry: GeoJSON.Geometry): [number, number] {
   let totalLng = 0;
@@ -64,7 +62,6 @@ export const Map: React.FC<MapProps> = ({
 }) => {
   const mapRef = useRef<L.Map | null>(null); 
   const layerRef = useRef<L.GeoJSON | null>(null);
-  const availableAreaLayerRef = useRef<L.GeoJSON | null>(null);
   const modelLayerRef = useRef<L.GeoJSON | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [basemap, setBasemap] = useState<'satellite' | 'dark'>('dark');
@@ -196,60 +193,42 @@ export const Map: React.FC<MapProps> = ({
   useEffect(() => {
     if (!mapRef.current) return;
 
-    if (availableAreaLayerRef.current) {
-      availableAreaLayerRef.current.remove();
-      availableAreaLayerRef.current = null;
-    }
     if (modelLayerRef.current) {
       modelLayerRef.current.remove();
       modelLayerRef.current = null;
     }
 
-    if (!modelPlacement) return;
+    if (!modelPlacement?.geometry) return;
 
-    const setbackFt = modelPlacement.setbacks_ft?.building ?? 10;
-
-    if (modelPlacement.available_area_geometry) {
-      const availableLayer = L.geoJSON(
-        {
-          type: 'Feature',
-          properties: { kind: 'available' },
-          geometry: modelPlacement.available_area_geometry,
-        } as GeoJSON.Feature,
-        {
-          style: {
-            fillColor: AVAILABLE_FILL,
-            color: AVAILABLE_STROKE,
-            weight: 2,
-            fillOpacity: 0.22,
-            dashArray: '6 4',
-          },
-        },
-      );
-      availableLayer.addTo(mapRef.current);
-      availableAreaLayerRef.current = availableLayer;
-      availableLayer.eachLayer(layer => {
-        (layer as L.Path).bindTooltip(
-          `Buildable area (${setbackFt}' building setback)`,
-          { sticky: true, className: 'plinth-tooltip' },
-        );
-      });
-    }
-
-    if (!modelPlacement.geometry) return;
-
-    const modelLayer = L.geoJSON(
+    const features: GeoJSON.Feature[] = [
       {
         type: 'Feature',
         properties: { kind: 'model' },
         geometry: modelPlacement.geometry,
-      } as GeoJSON.Feature,
+      },
+    ];
+
+    const modelLayer = L.geoJSON(
+      { type: 'FeatureCollection', features } as GeoJSON.FeatureCollection,
       {
-        style: {
-          fillColor: MODEL_FILL,
-          color: MODEL_STROKE,
-          weight: 2,
-          fillOpacity: 0.55,
+        style: feature => {
+          const kind = (feature?.properties as { kind?: string })?.kind;
+          if (kind === 'model') {
+            return {
+              fillColor: MODEL_FILL,
+              color: MODEL_STROKE,
+              weight: 2,
+              fillOpacity: 0.55,
+              dashArray: undefined,
+            };
+          }
+          return {
+            fillColor: 'transparent',
+            color: '#888',
+            weight: 1,
+            fillOpacity: 0,
+            dashArray: '4 4',
+          };
         },
       },
     );
