@@ -2,9 +2,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { mapboxDarkTileLayerConfig } from '../api/mapbox';
-import type { ParcelCollection, ParcelProperties } from '../types/parcel';
+import type { ModelPlacement, ParcelCollection, ParcelProperties } from '../types/parcel';
 
 const PARCEL_FILL = '#5de0a0';
+const MODEL_FILL = '#6eaaff';
+const MODEL_STROKE = '#3a7bd5';
+const AVAILABLE_FILL = '#f5c842';
+const AVAILABLE_STROKE = '#d4a017';
 
 function computeCentroid(geometry: GeoJSON.Geometry): [number, number] {
   let totalLng = 0;
@@ -32,6 +36,7 @@ interface MapProps {
   selectedAddress: string | null;
   onParcelClick: (parcel: ParcelProperties) => void;
   focusAddress?: string | null;
+  modelPlacement?: ModelPlacement | null;
 }
 
 const CARTO_DARK_TILE = {
@@ -55,9 +60,12 @@ export const Map: React.FC<MapProps> = ({
   selectedAddress,
   onParcelClick,
   focusAddress,
+  modelPlacement,
 }) => {
-  const mapRef = useRef<L.Map | null>(null);
+  const mapRef = useRef<L.Map | null>(null); 
   const layerRef = useRef<L.GeoJSON | null>(null);
+  const availableAreaLayerRef = useRef<L.GeoJSON | null>(null);
+  const modelLayerRef = useRef<L.GeoJSON | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [basemap, setBasemap] = useState<'satellite' | 'dark'>('dark');
 
@@ -184,6 +192,79 @@ export const Map: React.FC<MapProps> = ({
       }
     });
   }, [focusAddress, parcels]);
+
+  useEffect(() => {
+    if (!mapRef.current) return;
+
+    if (availableAreaLayerRef.current) {
+      availableAreaLayerRef.current.remove();
+      availableAreaLayerRef.current = null;
+    }
+    if (modelLayerRef.current) {
+      modelLayerRef.current.remove();
+      modelLayerRef.current = null;
+    }
+
+    if (!modelPlacement) return;
+
+    const setbackFt = modelPlacement.setbacks_ft?.building ?? 10;
+
+    if (modelPlacement.available_area_geometry) {
+      const availableLayer = L.geoJSON(
+        {
+          type: 'Feature',
+          properties: { kind: 'available' },
+          geometry: modelPlacement.available_area_geometry,
+        } as GeoJSON.Feature,
+        {
+          style: {
+            fillColor: AVAILABLE_FILL,
+            color: AVAILABLE_STROKE,
+            weight: 2,
+            fillOpacity: 0.22,
+            dashArray: '6 4',
+          },
+        },
+      );
+      availableLayer.addTo(mapRef.current);
+      availableAreaLayerRef.current = availableLayer;
+      availableLayer.eachLayer(layer => {
+        (layer as L.Path).bindTooltip(
+          `Buildable area (${setbackFt}' building setback)`,
+          { sticky: true, className: 'plinth-tooltip' },
+        );
+      });
+    }
+
+    if (!modelPlacement.geometry) return;
+
+    const modelLayer = L.geoJSON(
+      {
+        type: 'Feature',
+        properties: { kind: 'model' },
+        geometry: modelPlacement.geometry,
+      } as GeoJSON.Feature,
+      {
+        style: {
+          fillColor: MODEL_FILL,
+          color: MODEL_STROKE,
+          weight: 2,
+          fillOpacity: 0.55,
+        },
+      },
+    );
+
+    modelLayer.addTo(mapRef.current);
+    modelLayerRef.current = modelLayer;
+
+    const label = `${modelPlacement.model_name} · ${modelPlacement.footprint_label}`;
+    modelLayer.eachLayer(layer => {
+      (layer as L.Path).bindTooltip(label, {
+        sticky: true,
+        className: 'plinth-tooltip',
+      });
+    });
+  }, [modelPlacement]);
 
   return (
     <>

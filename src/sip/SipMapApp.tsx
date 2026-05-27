@@ -40,6 +40,7 @@ export default function SipMapApp() {
             selectedAddress={selectedParcel?.address ?? null}
             onParcelClick={handleParcelClick}
             focusAddress={focusAddress}
+            modelPlacement={selectedParcel?.placement ?? null}
           />
         </div>
 

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { ParcelProperties } from '../types/parcel';
+import type { ModelPlacement, ParcelProperties, ParcelRentEstimate } from '../types/parcel';
 
 const BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
@@ -11,6 +11,8 @@ export interface ParcelSearchResult {
   source?: 'rapidapi';
   parcel?: Pick<ParcelProperties, 'address' | 'lot_area_sqft'>;
   geometry?: GeoJSON.Geometry | null;
+  placement?: ModelPlacement | null;
+  rent?: ParcelRentEstimate | null;
 }
 
 export async function searchParcel(

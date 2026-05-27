@@ -90,7 +90,14 @@ export function ScanSearchBar({ onParcelFound }: Props) {
     setSearchResult(result);
 
     if (result.status === 'found' && result.parcel && onParcelFound) {
-      onParcelFound(result.parcel, result.geometry ?? null);
+      onParcelFound(
+        {
+          ...result.parcel,
+          placement: result.placement ?? null,
+          rent: result.rent ?? null,
+        },
+        result.geometry ?? null,
+      );
       setQuery('');
       setSuggestions([]);
       setSuggestOpen(false);
